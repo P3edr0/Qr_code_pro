@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import '../main.dart';
+import 'package:qr_code_pro/ler_qr_code/ler_qr_widgets.dart';
 
 class QRScanPage extends StatefulWidget {
+  const QRScanPage({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _QRScanPageState();
 }
@@ -12,67 +13,31 @@ class _QRScanPageState extends State<QRScanPage> {
   String qrCode = 'Unknown';
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-            //title: Text(MyApp.title),
-            ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'Scan Result',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white54,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                qrCode,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 72),
-              ElevatedButton(
-                  onPressed: () {
-                    onClicked:
-                    () => scanQRCode();
-
-// Navigator.push(context,MaterialPageRoute(builder: (_)=> scanQRCode()));
-//  child: const Text("Start QR Scan");
-
-                    // ButtonWidget(
-
-                    //   onClicked: () => scanQRCode(),
-                    // ),
-                  },
-                  child: const Text("ler Qr Code"))
-            ],
-          ),
-        ),
-      );
-
-  Future<void> scanQRCode() async {
-    try {
-      final qrCode = await FlutterBarcodeScanner.scanBarcode(
-        '#ff6666',
-        'Cancel',
-        true,
-        ScanMode.QR,
-      );
-
-      if (!mounted) return;
-
-      setState(() {
-        this.qrCode = qrCode;
-      });
-    } on PlatformException {
-      qrCode = 'Failed to get platform version.';
-    }
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            backgroundColor: Colors.black,
+            body: LerQrWidgets(context).widgetsPrincipal()));
   }
+
+  // Future<void> scanQRCode() async {
+  //   try {
+  //     final qrCode = await FlutterBarcodeScanner.scanBarcode(
+  //       '#ff6666',
+  //       'Cancel',
+  //       true,
+  //       ScanMode.QR,
+  //     );
+
+  //     print("Qr Code >>> $qrCode");
+  //     if (!mounted) return;
+
+  //     setState(() {
+  //       this.qrCode = qrCode;
+  //     });
+  //   } on PlatformException {
+  //     qrCode = 'Failed to get platform version.';
+  //   }
+  // }
 }

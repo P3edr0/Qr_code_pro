@@ -1,74 +1,23 @@
-// import 'package:barcode_widget/barcode_widget.dart';
-import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
-// import 'package:qr_code_scanner/main.dart';
+import 'package:qr_code_pro/criar_qr_code/criar_qr_widgets.dart';
 
-import '../main.dart';
-
-class QRCreatePage extends StatefulWidget {
+class CriarQrPage extends StatefulWidget {
+  const CriarQrPage({Key? key}) : super(key: key);
   @override
-  _QRCreatePageState createState() => _QRCreatePageState();
+  _CriarQrPageState createState() => _CriarQrPageState();
 }
 
-class _QRCreatePageState extends State<QRCreatePage> {
+class _CriarQrPageState extends State<CriarQrPage> {
   final controller = TextEditingController();
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-            // title: Text(MyApp.title),
-            ),
-        body: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                BarcodeWidget(
-                  barcode: Barcode.qrCode(),
-                  color: Colors.white,
-                  data: controller.text,
-                  width: 200,
-                  height: 200,
-                ),
-                const SizedBox(height: 40),
-                Row(
-                  children: [
-                    Expanded(child: buildTextField(context)),
-                    const SizedBox(width: 12),
-                    FloatingActionButton(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      child: const Icon(Icons.done, size: 30),
-                      onPressed: () => setState(() {}),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-
-  Widget buildTextField(BuildContext context) => TextField(
-        controller: controller,
-        style: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
-        ),
-        decoration: InputDecoration(
-          hintText: 'Enter the data',
-          hintStyle: const TextStyle(color: Colors.grey),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: const BorderSide(color: Colors.white),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-        ),
-      );
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        color: Colors.black,
+        home: Scaffold(
+          backgroundColor: Colors.black,
+          body: CriarQrWidgets(context).widgetPrincipal(),
+        ));
+  }
 }

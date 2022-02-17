@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
 
-class ButtonWidget extends StatelessWidget {
-  final String text;
-  final VoidCallback onClicked;
+class HomeWidgets {
+  BuildContext context;
+  HomeWidgets(this.context);
 
-  const ButtonWidget({
-    required this.text,
-    required this.onClicked,
-    required Key key,
-  }) : super(key: key);
+  // final String text;
+  // final VoidCallback onClicked;
 
-  @override
-  Widget build(BuildContext context) => ElevatedButton(
-        child: Text(
-          text,
-          style: const TextStyle(fontSize: 24),
-        ),
-        style: ElevatedButton.styleFrom(
-          //const StadiumBorder(),
-          primary: Theme.of(context).primaryColor,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        ),
-        //: Colors.white,
-        onPressed: onClicked,
-      );
+  Widget widgetPrincipal() {
+    return Container();
+//  ElevatedButton(
+//         child: Text(
+//           text,
+//           style: const TextStyle(fontSize: 24),
+//         ),
+//         style: ElevatedButton.styleFrom(
+//           //const StadiumBorder(),
+//           primary: Theme.of(context).primaryColor,
+//           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+//         ),
+//         //: Colors.white,
+//         onPressed: onClicked,
+//       );
+  }
 }
