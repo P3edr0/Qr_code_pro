@@ -24,8 +24,49 @@ mixin _$LerQrStore on _LerQrStoreBase, Store {
     });
   }
 
+  final _$codigoCriadoAtom = Atom(name: '_LerQrStoreBase.codigoCriado');
+
+  @override
+  TextEditingController get codigoCriado {
+    _$codigoCriadoAtom.reportRead();
+    return super.codigoCriado;
+  }
+
+  @override
+  set codigoCriado(TextEditingController value) {
+    _$codigoCriadoAtom.reportWrite(value, super.codigoCriado, () {
+      super.codigoCriado = value;
+    });
+  }
+
+  final _$tamanhoAtom = Atom(name: '_LerQrStoreBase.tamanho');
+
+  @override
+  double get tamanho {
+    _$tamanhoAtom.reportRead();
+    return super.tamanho;
+  }
+
+  @override
+  set tamanho(double value) {
+    _$tamanhoAtom.reportWrite(value, super.tamanho, () {
+      super.tamanho = value;
+    });
+  }
+
   final _$_LerQrStoreBaseActionController =
       ActionController(name: '_LerQrStoreBase');
+
+  @override
+  dynamic setTamanho() {
+    final _$actionInfo = _$_LerQrStoreBaseActionController.startAction(
+        name: '_LerQrStoreBase.setTamanho');
+    try {
+      return super.setTamanho();
+    } finally {
+      _$_LerQrStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   String setCodigoLido(dynamic value) {
@@ -39,9 +80,22 @@ mixin _$LerQrStore on _LerQrStoreBase, Store {
   }
 
   @override
+  dynamic setListaQr() {
+    final _$actionInfo = _$_LerQrStoreBaseActionController.startAction(
+        name: '_LerQrStoreBase.setListaQr');
+    try {
+      return super.setListaQr();
+    } finally {
+      _$_LerQrStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-codigoLido: ${codigoLido}
+codigoLido: ${codigoLido},
+codigoCriado: ${codigoCriado},
+tamanho: ${tamanho}
     ''';
   }
 }

@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_pro/ler_qr_code/store/ler_qr_store.dart';
 import 'package:qr_code_pro/qr_code_functions.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 //import 'package:mobx/mobx.dart';
 //import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -14,21 +15,26 @@ class LerQrWidgets {
 
   Widget widgetsPrincipal() {
     return Column(children: [
-      _appBar(),
-      _body(),
+      Expanded(
+        child: ListView(children: [
+          _appBar(),
+          _body(),
+        ]),
+      ),
     ]);
   }
 
   Widget _appBar() {
     return Container(
-      padding: const EdgeInsets.only(top: 40, left: 20),
+      padding: const EdgeInsets.only(top: 20, bottom: 5),
       width: MediaQuery.of(context).size.width,
-      height: 70,
+      height: 50,
       child: const Text(
-        "Qr Code Pro | Ler Qr Code",
+        "Ler Qr Code",
         style: TextStyle(
             color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
       ),
+      alignment: Alignment.center,
       color: Colors.blue.shade700,
     );
   }
@@ -37,6 +43,7 @@ class LerQrWidgets {
     final qrCodeFunctions =
         Provider.of<QrCodeFunctions>(context, listen: false);
     final lerQrStore = Provider.of<LerQrStore>(context, listen: false);
+    print("Tamanho = ${lerQrStore.tamanho}");
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -50,6 +57,24 @@ class LerQrWidgets {
               fontWeight: FontWeight.bold,
             ),
           ),
+          const SizedBox(height: 14),
+          Observer(builder: (_) {
+            return Container(
+              height: 150,
+              width: 150,
+              color: Colors.white,
+              child: QrImage(
+                data: lerQrStore.codigoLido,
+                version: QrVersions.auto,
+                size: 320,
+                gapless: false,
+                // embeddedImage:  //AssetImage('assets/images/logo.png'),
+                embeddedImageStyle: QrEmbeddedImageStyle(
+                  size: Size(80, 80),
+                ),
+              ),
+            );
+          }),
           const SizedBox(height: 14),
           Observer(builder: (_) {
             return lerQrStore.codigoLido != ""
@@ -127,9 +152,48 @@ class LerQrWidgets {
                     .setCodigoLido(await QrCodeFunctions(context).scanQRCode());
                 lerQrStore.setListaQr();
                 print("Lista >>>> ${lerQrStore.listaQr}");
+                lerQrStore.setTamanho();
                 // print("Codigo Lido 2222 >>>> ${lerQrStore.codigoLido}");
               },
-              child: const Text("ler Qr Code"))
+              child: const Text("ler Qr Code")),
+          const SizedBox(height: 50),
+          const Text("Histórico", style: TextStyle(color: Colors.white)),
+          const SizedBox(height: 10),
+          Observer(builder: (_) {
+            return Observer(builder: (_) {
+              return lerQrStore.tamanho != 0.0
+                  ? Container(
+                      padding: const EdgeInsets.all(10),
+                      color: Colors.white,
+                      height: lerQrStore.tamanho,
+                      width: MediaQuery.of(context).size.width,
+                      child: ListView.builder(
+                          itemCount: lerQrStore.listaQr.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    height: 50,
+                                    child: Text("${index + 1} - "),
+                                  ),
+                                  SizedBox(
+                                    height: 50,
+                                    child: Text(lerQrStore.listaQr[index]),
+                                  ),
+                                ],
+                              ),
+                              onTap: () async {
+                                await QrCodeFunctions(context)
+                                    .abrirUrl(lerQrStore.listaQr[index]);
+//qrCodeFunctions(context).
+                              },
+                            );
+                          }),
+                    )
+                  : const Text("Vazio", style: TextStyle(color: Colors.white));
+            });
+          }),
         ],
       ),
     );

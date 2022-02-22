@@ -1,6 +1,10 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+import 'package:qr_code_pro/ler_qr_code/store/ler_qr_store.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class CriarQrWidgets {
   BuildContext context;
@@ -28,20 +32,31 @@ class CriarQrWidgets {
   }
 
   Widget _body() {
-    final controller = TextEditingController();
+    final lerQrStore = Provider.of<LerQrStore>(context, listen: false);
+    //final controller = TextEditingController();
     return Center(
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BarcodeWidget(
-              barcode: Barcode.qrCode(),
-              color: Colors.white,
-              data: controller.text,
-              width: 200,
-              height: 200,
-            ),
+            Observer(builder: (_) {
+              return Container(
+                height: 150,
+                width: 150,
+                color: Colors.white,
+                child: QrImage(
+                  data: lerQrStore.codigoCriado.text,
+                  version: QrVersions.auto,
+                  size: 320,
+                  gapless: false,
+                  // embeddedImage:  //AssetImage('assets/images/logo.png'),
+                  embeddedImageStyle: QrEmbeddedImageStyle(
+                    size: Size(80, 80),
+                  ),
+                ),
+              );
+            }),
             const SizedBox(height: 40),
             Row(
               children: [
@@ -50,7 +65,9 @@ class CriarQrWidgets {
                 FloatingActionButton(
                   backgroundColor: Theme.of(context).primaryColor,
                   child: const Icon(Icons.done, size: 30),
-                  onPressed: () {}, // setState(() {}),
+                  onPressed: () {
+                    print("Criado = ${lerQrStore.codigoCriado.text}");
+                  }, // setState(() {}),
                 )
               ],
             ),
@@ -61,13 +78,14 @@ class CriarQrWidgets {
   }
 
   Widget buildTextField(BuildContext context) {
-    final controller = TextEditingController();
+    final lerQrStore = Provider.of<LerQrStore>(context, listen: false);
+    // final controller = TextEditingController();
     return TextField(
-      controller: controller,
+      controller: lerQrStore.codigoCriado,
       style: const TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,
-        fontSize: 20,
+        fontSize: 16,
       ),
       decoration: InputDecoration(
         hintText: 'Enter the data',

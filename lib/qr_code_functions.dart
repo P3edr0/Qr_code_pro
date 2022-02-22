@@ -1,7 +1,12 @@
+import 'dart:io';
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class QrCodeFunctions {
   BuildContext context;
@@ -37,10 +42,30 @@ class QrCodeFunctions {
   abrirUrl(url) async {
     print("URL >>> $url");
     // const url = 'https://flutterando.com.br/';
-    if (await canLaunch(url)) {
+    try {
       await launch(url);
-    } else {
+    } catch (_) {
       print("Nao conseguiu acessar o Site");
     }
   }
+
+  // Future<void> _captureAndSharePng() async {
+  //   try {
+  //     RenderRepaintBoundary boundary = globalKey.currentContext.findRenderObject();
+  //     var image = await boundary.toImage();
+  //     ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
+  //   //  Uint8List pngBytes = byteData.buffer.asUint8List();
+
+  //    // final tempDir = await getTemporaryDirectory();
+  //     final file = await new File('${tempDir.path}/image.png').create();
+  //     await file.writeAsBytes(pngBytes);
+
+  //     final channel = const MethodChannel('channel:me.alfian.share/share');
+  //     channel.invokeMethod('shareFile', 'image.png');
+
+  //   } catch(e) {
+  //     print(e.toString());
+  //   }
+  // }
+
 }
