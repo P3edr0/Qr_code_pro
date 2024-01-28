@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LerImagemWidgets {
@@ -18,9 +17,10 @@ class LerImagemWidgets {
       width: MediaQuery.of(context).size.width,
       height: 70,
       child: const Text(
-        "Qr Code Pro | Ler Imagem",
+        "LER IMAGEM",
         style: TextStyle(
             color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
       ),
       color: Colors.green.shade800,
     );
@@ -30,17 +30,18 @@ class LerImagemWidgets {
     return Container(
       height: MediaQuery.of(context).size.height - 139,
       width: MediaQuery.of(context).size.width,
-      color: Colors.black,
-      child: Column(
+      color: Colors.white,
+      child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[
+        children: <Widget>[
           Text(
-            'Ler Imagem',
+            'LER IMAGEM',
             style: TextStyle(
               fontSize: 16,
               color: Colors.white54,
               fontWeight: FontWeight.bold,
             ),
+            textAlign: TextAlign.center,
           ),
           SizedBox(height: 8),
           Text(

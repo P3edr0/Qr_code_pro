@@ -1,9 +1,7 @@
-import 'package:barcode_widget/barcode_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_code_pro/ler_qr_code/store/ler_qr_store.dart';
+import 'package:qr_code_pro/presentation/ui/pages/ler_qr_code/store/ler_qr_store.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class CriarQrWidgets {
@@ -23,9 +21,10 @@ class CriarQrWidgets {
       width: MediaQuery.of(context).size.width,
       height: 70,
       child: const Text(
-        "Qr Code Pro | Criar Qr Code",
+        "CRIAR QR CODE",
         style: TextStyle(
             color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
       ),
       color: Colors.red.shade700,
     );
@@ -52,7 +51,7 @@ class CriarQrWidgets {
                   gapless: false,
                   // embeddedImage:  //AssetImage('assets/images/logo.png'),
                   embeddedImageStyle: QrEmbeddedImageStyle(
-                    size: Size(80, 80),
+                    size: const Size(80, 80),
                   ),
                 ),
               );

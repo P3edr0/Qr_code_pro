@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_pro/criar_qr_code/criar_qr_widgets.dart';
+import 'package:qr_code_pro/presentation/ui/pages/criar_qr_code/criar_qr_widgets.dart';
 
 class CriarQrPage extends StatefulWidget {
   const CriarQrPage({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class _CriarQrPageState extends State<CriarQrPage> {
         debugShowCheckedModeBanner: false,
         color: Colors.black,
         home: Scaffold(
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.white,
           body: CriarQrWidgets(context).widgetPrincipal(),
         ));
   }

@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_code_pro/ler_qr_code/store/ler_qr_store.dart';
+import 'package:qr_code_pro/presentation/ui/pages/ler_qr_code/store/ler_qr_store.dart';
 import 'package:qr_code_pro/qr_code_functions.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 //import 'package:mobx/mobx.dart';
@@ -30,7 +29,7 @@ class LerQrWidgets {
       width: MediaQuery.of(context).size.width,
       height: 50,
       child: const Text(
-        "Ler Qr Code",
+        "LER QR CODE",
         style: TextStyle(
             color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
       ),
@@ -40,17 +39,14 @@ class LerQrWidgets {
   }
 
   Widget _body() {
-    final qrCodeFunctions =
-        Provider.of<QrCodeFunctions>(context, listen: false);
     final lerQrStore = Provider.of<LerQrStore>(context, listen: false);
-    print("Tamanho = ${lerQrStore.tamanho}");
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           const SizedBox(height: 20),
           const Text(
-            'Qr Code Lido',
+            'QR CODE LIDO',
             style: TextStyle(
               fontSize: 20,
               color: Colors.white54,
@@ -70,7 +66,7 @@ class LerQrWidgets {
                 gapless: false,
                 // embeddedImage:  //AssetImage('assets/images/logo.png'),
                 embeddedImageStyle: QrEmbeddedImageStyle(
-                  size: Size(80, 80),
+                  size: const Size(80, 80),
                 ),
               ),
             );
@@ -125,9 +121,9 @@ class LerQrWidgets {
                     padding: const EdgeInsets.only(left: 20),
                     height: 50,
                     width: MediaQuery.of(context).size.width * 0.8,
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
+                      children: [
                         Icon(
                           FontAwesomeIcons.qrcode,
                           color: Colors.white,
@@ -151,7 +147,6 @@ class LerQrWidgets {
                 lerQrStore
                     .setCodigoLido(await QrCodeFunctions(context).scanQRCode());
                 lerQrStore.setListaQr();
-                print("Lista >>>> ${lerQrStore.listaQr}");
                 lerQrStore.setTamanho();
                 // print("Codigo Lido 2222 >>>> ${lerQrStore.codigoLido}");
               },

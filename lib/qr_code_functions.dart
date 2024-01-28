@@ -1,12 +1,6 @@
-import 'dart:io';
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class QrCodeFunctions {
   BuildContext context;
@@ -67,5 +61,4 @@ class QrCodeFunctions {
   //     print(e.toString());
   //   }
   // }
-
 }
