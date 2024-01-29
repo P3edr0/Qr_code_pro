@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
+
 part 'ler_qr_store.g.dart';
 
 class LerQrStore = _LerQrStoreBase with _$LerQrStore;
@@ -17,7 +18,7 @@ abstract class _LerQrStoreBase with Store {
 
   @action
   setTamanho() {
-    tamanho = listaQr != null ? listaQr.length * 50 : 0;
+    tamanho = listaQr.length * 50;
     tamanho > 200 ? tamanho = 200 : null;
   }
 
@@ -26,7 +27,9 @@ abstract class _LerQrStoreBase with Store {
 
   @action
   setListaQr() {
-    if (codigoLido != "" && codigoLido != "-1") {
+    if (codigoLido == '-1') {
+      codigoLido = 'Leia um código';
+    } else if (codigoLido != "" && codigoLido != "-1") {
       listaQr.insert(0, codigoLido);
     }
   }
