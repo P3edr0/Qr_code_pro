@@ -6,10 +6,11 @@ part of 'ler_qr_store.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$LerQrStore on _LerQrStoreBase, Store {
-  final _$codigoLidoAtom = Atom(name: '_LerQrStoreBase.codigoLido');
+  late final _$codigoLidoAtom =
+      Atom(name: '_LerQrStoreBase.codigoLido', context: context);
 
   @override
   String get codigoLido {
@@ -24,7 +25,8 @@ mixin _$LerQrStore on _LerQrStoreBase, Store {
     });
   }
 
-  final _$codigoCriadoAtom = Atom(name: '_LerQrStoreBase.codigoCriado');
+  late final _$codigoCriadoAtom =
+      Atom(name: '_LerQrStoreBase.codigoCriado', context: context);
 
   @override
   TextEditingController get codigoCriado {
@@ -39,7 +41,8 @@ mixin _$LerQrStore on _LerQrStoreBase, Store {
     });
   }
 
-  final _$tamanhoAtom = Atom(name: '_LerQrStoreBase.tamanho');
+  late final _$tamanhoAtom =
+      Atom(name: '_LerQrStoreBase.tamanho', context: context);
 
   @override
   double get tamanho {
@@ -54,8 +57,8 @@ mixin _$LerQrStore on _LerQrStoreBase, Store {
     });
   }
 
-  final _$_LerQrStoreBaseActionController =
-      ActionController(name: '_LerQrStoreBase');
+  late final _$_LerQrStoreBaseActionController =
+      ActionController(name: '_LerQrStoreBase', context: context);
 
   @override
   dynamic setTamanho() {

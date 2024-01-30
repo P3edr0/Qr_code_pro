@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_code_pro/presentation/ui/pages/ler_qr_code/store/ler_qr_store.dart';
+import 'package:qr_code_pro/presentation/ui/controller/store/ler_qr_store.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class CriarQrWidgets {
@@ -10,7 +10,7 @@ class CriarQrWidgets {
 
   Widget widgetPrincipal() {
     return Column(children: <Widget>[
-      _appBar(),
+      // _appBar(),
       _body(),
     ]);
   }
@@ -31,7 +31,7 @@ class CriarQrWidgets {
   }
 
   Widget _body() {
-    final lerQrStore = Provider.of<LerQrStore>(context, listen: false);
+    final LerQrStore lerQrStore = LerQrStore();
     //final controller = TextEditingController();
     return Center(
       child: SingleChildScrollView(
@@ -44,14 +44,14 @@ class CriarQrWidgets {
                 height: 150,
                 width: 150,
                 color: Colors.white,
-                child: QrImage(
+                child: QrImageView(
                   data: lerQrStore.codigoCriado.text,
                   version: QrVersions.auto,
                   size: 320,
                   gapless: false,
                   // embeddedImage:  //AssetImage('assets/images/logo.png'),
-                  embeddedImageStyle: QrEmbeddedImageStyle(
-                    size: const Size(80, 80),
+                  embeddedImageStyle: const QrEmbeddedImageStyle(
+                    size: Size(80, 80),
                   ),
                 ),
               );

@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 
-part 'ler_qr_store.g.dart';
+part "ler_qr_store.g.dart";
 
 class LerQrStore = _LerQrStoreBase with _$LerQrStore;
 
 abstract class _LerQrStoreBase with Store {
   ObservableList listaQr = ObservableList();
   @observable
-  String codigoLido = "";
+  String codigoLido = 'Leia um código...';
 
   @observable
   TextEditingController codigoCriado = TextEditingController();
@@ -28,7 +28,7 @@ abstract class _LerQrStoreBase with Store {
   @action
   setListaQr() {
     if (codigoLido == '-1') {
-      codigoLido = 'Leia um código';
+      codigoLido = 'Leia um código...';
     } else if (codigoLido != "" && codigoLido != "-1") {
       listaQr.insert(0, codigoLido);
     }

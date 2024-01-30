@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:qr_code_pro/presentation/ui/pages/ler_qr_code/store/ler_qr_store.dart';
+import 'package:qr_code_pro/presentation/ui/controller/store/ler_qr_store.dart';
 import 'package:qr_code_pro/qr_code_functions.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 //import 'package:mobx/mobx.dart';
@@ -39,7 +38,7 @@ class LerQrWidgets {
   }
 
   Widget _body() {
-    final lerQrStore = Provider.of<LerQrStore>(context, listen: false);
+    final LerQrStore lerQrStore = LerQrStore();
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -59,14 +58,14 @@ class LerQrWidgets {
               height: 150,
               width: 150,
               color: Colors.white,
-              child: QrImage(
+              child: QrImageView(
                 data: lerQrStore.codigoLido,
                 version: QrVersions.auto,
                 size: 320,
                 gapless: false,
                 // embeddedImage:  //AssetImage('assets/images/logo.png'),
-                embeddedImageStyle: QrEmbeddedImageStyle(
-                  size: const Size(80, 80),
+                embeddedImageStyle: const QrEmbeddedImageStyle(
+                  size: Size(80, 80),
                 ),
               ),
             );

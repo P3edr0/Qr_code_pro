@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_code_pro/presentation/ui/controller/store/ler_qr_store.dart';
 import 'package:qr_code_pro/presentation/ui/pages/criar_qr_code/criar_qr_page.dart';
 import 'package:qr_code_pro/presentation/ui/pages/ler_imagem/ler_imagem_page.dart';
 import 'package:qr_code_pro/presentation/ui/pages/ler_qr_code/ler_qr_page.dart';
-import 'package:qr_code_pro/presentation/ui/pages/ler_qr_code/store/ler_qr_store.dart';
 import 'package:qr_code_pro/qr_code_functions.dart';
 
 void main() {
