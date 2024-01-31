@@ -8,5 +8,6 @@ class CreateQrStore = _CreateQrStoreBase with _$CreateQrStore;
 abstract class _CreateQrStoreBase with Store {
   ObservableList listadelete = ObservableList();
   @observable
-  TextEditingController codigoCriado = TextEditingController();
+  TextEditingController codigoCriado =
+      TextEditingController(text: "Crie um Qr Code...");
 }
