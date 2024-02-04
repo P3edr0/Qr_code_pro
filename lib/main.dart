@@ -3,9 +3,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_code_pro/presentation/ui/pages/criar_qr_code/criar_qr_page.dart';
 import 'package:qr_code_pro/presentation/ui/pages/ler_imagem/ler_imagem_page.dart';
 import 'package:qr_code_pro/presentation/ui/pages/ler_qr_code/ler_qr_page.dart';
+import 'package:qr_code_pro/presentation/ui/pages/splash_screen/splash_screen.dart';
 
 void main() {
-  runApp(const Home());
+  runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: "Qr Code Pro",
+      theme: ThemeData(
+        // primaryColor: Colors.red,
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      home: const SplashScreen()));
 }
 
 class Home extends StatefulWidget {
