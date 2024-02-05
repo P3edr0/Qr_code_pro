@@ -36,49 +36,40 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "Qr Code Pro",
-        theme: ThemeData(
-          // primaryColor: Colors.red,
-          scaffoldBackgroundColor: Colors.white,
-        ),
-        home: Scaffold(
-            bottomNavigationBar: BottomNavigationBar(
-              fixedColor: Colors.white,
-              showUnselectedLabels: false,
-              iconSize: 30,
-              selectedFontSize: 18,
-              backgroundColor: Colors.black,
-              type: BottomNavigationBarType.fixed,
-              currentIndex: _indiceAtual,
-              onTap: onTabTapped,
-              items: [
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      FontAwesomeIcons.qrcode,
-                      color: Colors.blue.shade700,
-                    ),
-                    label: ("Ler")),
-                BottomNavigationBarItem(
-                    icon: Icon(FontAwesomeIcons.qrcode,
-                        color: Colors.red.shade700),
-                    label: ("Criar")),
-                BottomNavigationBarItem(
-                  icon: Icon(FontAwesomeIcons.qrcode,
-                      color: Colors.green.shade700),
-                  label: ("Imagem"),
+    return Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+          fixedColor: Colors.white,
+          showUnselectedLabels: false,
+          iconSize: 30,
+          selectedFontSize: 18,
+          backgroundColor: Colors.black,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _indiceAtual,
+          onTap: onTabTapped,
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(
+                  FontAwesomeIcons.qrcode,
+                  color: Colors.blue.shade700,
                 ),
-              ],
+                label: ("Ler")),
+            BottomNavigationBarItem(
+                icon: Icon(FontAwesomeIcons.qrcode, color: Colors.red.shade700),
+                label: ("Criar")),
+            BottomNavigationBarItem(
+              icon: Icon(FontAwesomeIcons.qrcode, color: Colors.green.shade700),
+              label: ("Imagem"),
             ),
-            body: PageView(
-              onPageChanged: onTabTapped,
-              controller: controller,
-              children: const <Widget>[
-                QRScanPage(),
-                CriarQrPage(),
-                LerImagemPage(),
-              ],
-            )));
+          ],
+        ),
+        body: PageView(
+          onPageChanged: onTabTapped,
+          controller: controller,
+          children: const <Widget>[
+            QRScanPage(),
+            CriarQrPage(),
+            LerImagemPage(),
+          ],
+        ));
   }
 }

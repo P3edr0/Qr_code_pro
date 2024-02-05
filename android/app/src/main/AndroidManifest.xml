@@ -3,6 +3,7 @@
    <application
         android:label="qr_code_pro"
         android:icon="@mipmap/ic_launcher"
+        android:requestLegacyExternalStorage="true"
         android:name="${applicationName}">
         <activity
             android:exported="true"
