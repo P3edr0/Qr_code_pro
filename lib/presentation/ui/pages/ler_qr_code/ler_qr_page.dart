@@ -1,13 +1,13 @@
-import 'dart:developer';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_code_pro/presentation/ui/controller/store/ler_qr_store.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/custom_appbar.dart';
+import 'package:qr_code_pro/presentation/ui/pages/widgets/qr_code_preview.dart';
 import 'package:qr_code_pro/qr_code_functions.dart';
 import 'package:qr_code_pro/utils/constants.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -59,103 +59,118 @@ class _QRScanPageState extends State<QRScanPage> {
                           ),
                         ),
                   const SizedBox(height: 14),
-                  Observer(builder: (_) {
-                    return lerQrStore.codigoLido == 'Leia um código...'
-                        ? const Icon(
-                            Icons.search,
-                            size: 150,
-                            color: Colors.grey,
-                          )
-                        : _load
-                            ? Container(
-                                height: 150,
-                                width: 150,
-                                color: Colors.white,
-                                child: Image.asset(ImageProjectPath.loadQrcode))
-                            : Container(
-                                height: 150,
-                                width: 150,
-                                color: Colors.white,
-                                child: QrImageView(
-                                  data: lerQrStore.codigoLido,
-                                  version: QrVersions.auto,
-                                  size: 320,
-                                  gapless: false,
-                                  embeddedImageStyle:
-                                      const QrEmbeddedImageStyle(
-                                    size: Size(80, 80),
-                                  ),
-                                ),
-                              );
-                  }),
+                  QrCodePreview(
+                      firstValidation:
+                          (lerQrStore.codigoLido == 'Leia um código...'),
+                      secondvalidation: _load,
+                      qrData: lerQrStore.codigoLido),
                   const SizedBox(height: 14),
                   Observer(builder: (_) {
-                    return lerQrStore.codigoLido != ""
-                        ? GestureDetector(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: ProjectColors.darkblue,
-                                  border: Border.all(width: 1),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(10),
-                                  )),
-                              padding: const EdgeInsets.only(left: 20),
-                              height: 45,
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    FontAwesomeIcons.qrcode,
-                                    color: Colors.white,
-                                  ),
-                                  const SizedBox(width: 30),
-                                  Flexible(
-                                    child: Text(
-                                      lerQrStore.codigoLido,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            onTap: () async {
-                              await QrCodeFunctions(context)
-                                  .abrirUrl(lerQrStore.codigoLido);
-                            },
-                          )
-                        : Container(
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          child: Container(
                             decoration: BoxDecoration(
-                                color: ProjectColors.darkblue,
+                                color: ProjectColors.lightblue,
                                 border: Border.all(width: 1),
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(10),
                                 )),
-                            padding: const EdgeInsets.only(left: 20),
-                            height: 40,
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  FontAwesomeIcons.qrcode,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(width: 30),
-                                Text(
-                                  'Leia um código...',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            height: 45,
+                            // width: MediaQuery.of(context).size.width * 0.8,
+                            child: const Icon(
+                              FontAwesomeIcons.copy,
+                              color: Colors.white,
                             ),
-                          );
+                          ),
+                          onTap: lerQrStore.codigoLido != 'Leia um código...'
+                              ? () async {
+                                  Clipboard.setData(ClipboardData(
+                                          text: lerQrStore.codigoLido))
+                                      .then((_) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            backgroundColor:
+                                                ProjectColors.darkGreen,
+                                            content: const Text(
+                                              "Código QR copiado.",
+                                              textAlign: TextAlign.center,
+                                            )));
+                                  });
+                                }
+                              : null,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        InkWell(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: ProjectColors.lightblue,
+                                border: Border.all(width: 1),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10),
+                                )),
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            height: 45,
+                            // width: MediaQuery.of(context).size.width * 0.8,
+                            child: const Icon(
+                              FontAwesomeIcons.globe,
+                              color: Colors.white,
+                            ),
+                          ),
+                          onTap: () async {
+                            bool launch = await QrCodeFunctions(context)
+                                .abrirUrl(lerQrStore.codigoLido);
+                            if (!launch) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                      backgroundColor: ProjectColors.darkRed,
+                                      content: const Text(
+                                        "Não foi possível acessar o site",
+                                        textAlign: TextAlign.center,
+                                      )));
+                            }
+                          },
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: ProjectColors.darkblue,
+                              border: Border.all(width: 1),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10),
+                              )),
+                          padding: const EdgeInsets.only(left: 20),
+                          height: 45,
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                FontAwesomeIcons.qrcode,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(width: 30),
+                              Flexible(
+                                child: SelectableText(
+                                  lerQrStore.codigoLido,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
                   }),
                   const SizedBox(height: 40),
                   Row(
@@ -242,14 +257,20 @@ class _QRScanPageState extends State<QRScanPage> {
                                                           'QR Code compartilhado com sucesso')),
                                                 )));
                                   } catch (e) {
-                                    // Lidar com erros ao compartilhar a imagem
-                                    log('Erro ao compartilhar imagem: $e');
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            backgroundColor:
+                                                ProjectColors.darkRed,
+                                            content: const Text(
+                                              "Não foi possível compartilhar QR Code",
+                                              textAlign: TextAlign.center,
+                                            )));
                                   }
                                 }
                               : null,
                           child: Container(
                             decoration: BoxDecoration(
-                                color: ProjectColors.darkblue,
+                                color: ProjectColors.lightblue,
                                 border: Border.all(width: 1),
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(10),

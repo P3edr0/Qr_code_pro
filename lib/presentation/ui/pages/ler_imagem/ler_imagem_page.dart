@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_code_pro/presentation/ui/controller/store/read_qr_image_store.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/custom_appbar.dart';
+import 'package:qr_code_pro/presentation/ui/pages/widgets/qr_code_preview.dart';
 import 'package:qr_code_pro/qr_code_functions.dart';
 import 'package:qr_code_pro/utils/constants.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -43,38 +44,13 @@ class _LerImagemState extends State<LerImagemPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 10),
-                  Observer(builder: (_) {
-                    return _readQrImageStore.codigoCapturado ==
-                                'Código capturado...' ||
-                            _readQrImageStore.codigoCapturado ==
-                                'Código não lido'
-                        ? const Icon(
-                            Icons.search,
-                            size: 150,
-                            color: Colors.grey,
-                          )
-                        : _load
-                            ? Container(
-                                height: 150,
-                                width: 150,
-                                color: Colors.white,
-                                child: Image.asset(ImageProjectPath.loadQrcode))
-                            : Container(
-                                height: 150,
-                                width: 150,
-                                color: Colors.white,
-                                child: QrImageView(
-                                  data: _readQrImageStore.codigoCapturado,
-                                  version: QrVersions.auto,
-                                  size: 320,
-                                  gapless: false,
-                                  embeddedImageStyle:
-                                      const QrEmbeddedImageStyle(
-                                    size: Size(80, 80),
-                                  ),
-                                ),
-                              );
-                  }),
+                  QrCodePreview(
+                      firstValidation: (_readQrImageStore.codigoCapturado ==
+                              'Código capturado...' ||
+                          _readQrImageStore.codigoCapturado ==
+                              'Código não lido'),
+                      secondvalidation: _load,
+                      qrData: _readQrImageStore.codigoCapturado),
                   const SizedBox(height: 14),
                   Container(
                     decoration: BoxDecoration(

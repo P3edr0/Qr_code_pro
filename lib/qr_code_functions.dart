@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class QrCodeFunctions {
   BuildContext context;
@@ -26,13 +26,12 @@ class QrCodeFunctions {
     }
   }
 
-  abrirUrl(url) async {
-    print("URL >>> $url");
-    // const url = 'https://flutterando.com.br/';
-    try {
-      await launch(url);
-    } catch (_) {
-      print("Nao conseguiu acessar o Site");
+  Future<bool> abrirUrl(url) async {
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
+      return true;
+    } else {
+      return false;
     }
   }
 }
