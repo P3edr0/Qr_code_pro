@@ -4,6 +4,7 @@ import 'package:qr_code_pro/presentation/ui/pages/criar_qr_code/criar_qr_page.da
 import 'package:qr_code_pro/presentation/ui/pages/ler_imagem/ler_imagem_page.dart';
 import 'package:qr_code_pro/presentation/ui/pages/ler_qr_code/ler_qr_page.dart';
 import 'package:qr_code_pro/presentation/ui/pages/splash_screen/splash_screen.dart';
+import 'package:qr_code_pro/utils/constants.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -50,14 +51,16 @@ class _HomeState extends State<Home> {
             BottomNavigationBarItem(
                 icon: Icon(
                   FontAwesomeIcons.qrcode,
-                  color: Colors.blue.shade700,
+                  color: ProjectColors.darkblue,
                 ),
                 label: ("Ler")),
             BottomNavigationBarItem(
-                icon: Icon(FontAwesomeIcons.qrcode, color: Colors.red.shade700),
+                icon:
+                    Icon(FontAwesomeIcons.qrcode, color: ProjectColors.darkRed),
                 label: ("Criar")),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.qrcode, color: Colors.green.shade700),
+              icon:
+                  Icon(FontAwesomeIcons.qrcode, color: ProjectColors.darkGreen),
               label: ("Imagem"),
             ),
           ],

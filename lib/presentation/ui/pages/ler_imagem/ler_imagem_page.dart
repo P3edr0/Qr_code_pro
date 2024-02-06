@@ -7,7 +7,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:qr_code_pro/presentation/ui/controller/store/create_qr_store.dart';
+import 'package:qr_code_pro/presentation/ui/controller/store/read_qr_image_store.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/custom_appbar.dart';
 import 'package:qr_code_pro/qr_code_functions.dart';
 import 'package:qr_code_pro/utils/constants.dart';
@@ -22,8 +22,8 @@ class LerImagemPage extends StatefulWidget {
 }
 
 class _LerImagemState extends State<LerImagemPage> {
-  final CreateQrStore createQrStore = CreateQrStore();
-  final bool _load = false;
+  final ReadQrImageStore _readQrImageStore = ReadQrImageStore();
+  bool _load = false;
   final picker = ImagePicker();
 
   @override
@@ -33,7 +33,7 @@ class _LerImagemState extends State<LerImagemPage> {
           appBar: customAppbar(
             context,
             "LER IMAGEM",
-            Colors.green.shade700,
+            ProjectColors.darkGreen,
           ),
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
@@ -44,7 +44,10 @@ class _LerImagemState extends State<LerImagemPage> {
                 children: [
                   const SizedBox(height: 10),
                   Observer(builder: (_) {
-                    return createQrStore.codigoCriado.text == 'Inserir texto...'
+                    return _readQrImageStore.codigoCapturado ==
+                                'Código capturado...' ||
+                            _readQrImageStore.codigoCapturado ==
+                                'Código não lido'
                         ? const Icon(
                             Icons.search,
                             size: 150,
@@ -61,7 +64,7 @@ class _LerImagemState extends State<LerImagemPage> {
                                 width: 150,
                                 color: Colors.white,
                                 child: QrImageView(
-                                  data: createQrStore.codigoCriado.text,
+                                  data: _readQrImageStore.codigoCapturado,
                                   version: QrVersions.auto,
                                   size: 320,
                                   gapless: false,
@@ -75,7 +78,7 @@ class _LerImagemState extends State<LerImagemPage> {
                   const SizedBox(height: 14),
                   Container(
                     decoration: BoxDecoration(
-                        color: Colors.green.shade700,
+                        color: ProjectColors.darkGreen,
                         border: Border.all(width: 1),
                         borderRadius: const BorderRadius.all(
                           Radius.circular(10),
@@ -86,7 +89,7 @@ class _LerImagemState extends State<LerImagemPage> {
                     height: 45,
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Icon(
@@ -96,10 +99,8 @@ class _LerImagemState extends State<LerImagemPage> {
                         const SizedBox(width: 30),
                         Flexible(
                             child: Form(
-                          child: TextFormField(
-                            decoration:
-                                const InputDecoration(border: InputBorder.none),
-                            controller: createQrStore.codigoCriado,
+                          child: Text(
+                            _readQrImageStore.codigoCapturado,
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -115,44 +116,39 @@ class _LerImagemState extends State<LerImagemPage> {
                     children: [
                       InkWell(
                           onTap: () async {
+                            setState(() {});
+                            _load = true;
                             final pickedFile = await picker.pickImage(
                                 source: ImageSource.gallery);
 
                             if (pickedFile != null) {
-                              // Aqui, você pode usar pickedFile.path para obter o caminho da imagem
-                              // File imageFile = File(pickedFile.path);
                               String? result =
                                   await Scan.parse(pickedFile.path);
 
-                              // imagePath: pickedFile.path,
-                              log("Imagem correta !");
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                              if (result == null) {
+                                _readQrImageStore.codigoCapturado =
+                                    'Código não lido';
+                                _load = false;
+                                setState(() {});
+                              } else {
+                                _readQrImageStore.codigoCapturado = result;
+                                Future.delayed(const Duration(seconds: 2), () {
+                                  _load = false;
+                                  _readQrImageStore.setListaQr();
+                                  _readQrImageStore.setlistViewSize();
+                                  setState(() {});
+                                });
+                              }
 
-                              // // Converta a imagem em bytes
-                              // Uint8List bytes = imageFile.readAsBytesSync();
-
-                              // // Converta os bytes em uma string base64
-                              // String base64Image = base64Encode(bytes);
-
-                              // // Use a string base64 como conteúdo do QR code
                               log(result!, name: "Conteudo do qr code");
-
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                             } else {
-                              // Usuário cancelou a seleção
+                              _load = false;
+                              setState(() {});
                             }
-                            // _load = true;
-                            // setState(() {});
-                            // createQrStore.setListaQr();
-                            // createQrStore.setlistViewSize();
-                            // Future.delayed(const Duration(seconds: 2), () {
-                            //   _load = false;
-                            //   setState(() {});
-                            // });
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                                color: Colors.green.shade700,
+                                color: ProjectColors.darkGreen,
                                 border: Border.all(width: 1),
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(10),
@@ -180,59 +176,63 @@ class _LerImagemState extends State<LerImagemPage> {
                           )),
                       const SizedBox(width: 20),
                       InkWell(
-                          onTap: () async {
-                            try {
-                              ByteData? byteData = await QrPainter(
-                                      data: createQrStore.codigoCriado.text,
-                                      dataModuleStyle: const QrDataModuleStyle(
-                                          color: Colors.green,
-                                          dataModuleShape:
-                                              QrDataModuleShape.square),
-                                      gapless: true,
-                                      version: QrVersions.auto,
-                                      eyeStyle: const QrEyeStyle(
-                                          color: Colors.green,
-                                          eyeShape: QrEyeShape.square))
-                                  .toImageData(878);
+                          onTap: _readQrImageStore.codigoCapturado !=
+                                      'Código capturado...' &&
+                                  _readQrImageStore.codigoCapturado !=
+                                      'Código não lido'
+                              ? () async {
+                                  try {
+                                    ByteData? byteData = await QrPainter(
+                                            data: _readQrImageStore
+                                                .codigoCapturado,
+                                            dataModuleStyle:
+                                                const QrDataModuleStyle(
+                                                    color: Colors.green,
+                                                    dataModuleShape:
+                                                        QrDataModuleShape
+                                                            .square),
+                                            gapless: true,
+                                            version: QrVersions.auto,
+                                            eyeStyle: const QrEyeStyle(
+                                                color: Colors.green,
+                                                eyeShape: QrEyeShape.square))
+                                        .toImageData(878);
 
-                              final Uint8List pngBytes =
-                                  byteData!.buffer.asUint8List();
+                                    final Uint8List pngBytes =
+                                        byteData!.buffer.asUint8List();
 
-                              final directory =
-                                  await getApplicationDocumentsDirectory();
-                              final imagePath =
-                                  await File('${directory.path}/image.png')
-                                      .create();
-                              await imagePath.writeAsBytes(pngBytes);
-                              await Share.shareFiles([imagePath.path],
-                                      subject: pngBytes.toString(),
-                                      text: 'Compartilhamento do QR Code')
-                                  .then((value) async =>
-                                      Future.delayed(const Duration(seconds: 2))
-                                          .whenComplete(() =>
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                    content: Text(
-                                                        'QR Code compartilhado com sucesso')),
-                                              )));
-
-                              // Mostre algum feedback para o usuário
-                            } catch (e) {
-                              // Lidar com erros ao compartilhar a imagem
-                              log('Erro ao compartilhar imagem: $e');
-                            }
-                          },
+                                    final directory =
+                                        await getApplicationDocumentsDirectory();
+                                    final imagePath = await File(
+                                            '${directory.path}/image.png')
+                                        .create();
+                                    await imagePath.writeAsBytes(pngBytes);
+                                    await Share.shareFiles([imagePath.path],
+                                            subject: pngBytes.toString(),
+                                            text: 'Compartilhamento do QR Code')
+                                        .then((value) async => Future.delayed(
+                                                const Duration(seconds: 4))
+                                            .whenComplete(() =>
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                      content: Text(
+                                                          'QR Code compartilhado com sucesso')),
+                                                )));
+                                  } catch (e) {
+                                    log('Erro ao compartilhar imagem: $e');
+                                  }
+                                }
+                              : null,
                           child: Container(
                             decoration: BoxDecoration(
-                                color: Colors.green.shade500,
+                                color: ProjectColors.lightGreen,
                                 border: Border.all(width: 1),
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(10),
                                 )),
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             height: 40,
-                            // width: MediaQuery.of(context).size.width * 0.5,
                             child: const Icon(
                               FontAwesomeIcons.share,
                               color: Colors.white,
@@ -242,22 +242,23 @@ class _LerImagemState extends State<LerImagemPage> {
                   ),
                   const SizedBox(height: 50),
                   Text(
-                    "Códigos gerados",
+                    "Códigos capturados",
                     style: TextStyle(
                         fontSize: 16,
-                        color: Colors.green.shade700,
+                        color: ProjectColors.darkGreen,
                         fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
                   Observer(builder: (_) {
                     return Observer(builder: (_) {
-                      return createQrStore.listViewSize != 0.0
+                      return _readQrImageStore.listViewSize != 0.0
                           ? Container(
                               color: Colors.white,
-                              height: createQrStore.listViewSize,
+                              height: _readQrImageStore.listViewSize,
                               width: MediaQuery.of(context).size.width * 0.85,
                               child: ListView.builder(
-                                  itemCount: createQrStore.createdQrList.length,
+                                  itemCount:
+                                      _readQrImageStore.capturedQrList.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return GestureDetector(
@@ -265,7 +266,7 @@ class _LerImagemState extends State<LerImagemPage> {
                                         margin: const EdgeInsets.symmetric(
                                             vertical: 3),
                                         decoration: BoxDecoration(
-                                            color: Colors.green.shade400,
+                                            color: ProjectColors.lightGreen,
                                             border: Border.all(width: 1),
                                             borderRadius:
                                                 const BorderRadius.all(
@@ -295,8 +296,8 @@ class _LerImagemState extends State<LerImagemPage> {
                                             SizedBox(
                                               width: 228,
                                               child: Text(
-                                                createQrStore
-                                                    .createdQrList[index],
+                                                _readQrImageStore
+                                                    .capturedQrList[index],
                                                 style: const TextStyle(
                                                     fontSize: 16,
                                                     color: Colors.white,
@@ -309,7 +310,8 @@ class _LerImagemState extends State<LerImagemPage> {
                                       ),
                                       onTap: () async {
                                         await QrCodeFunctions(context).abrirUrl(
-                                            createQrStore.createdQrList[index]);
+                                            _readQrImageStore
+                                                .capturedQrList[index]);
                                       },
                                     );
                                   }),
@@ -318,8 +320,8 @@ class _LerImagemState extends State<LerImagemPage> {
                               alignment: Alignment.center,
                               height: 120,
                               child: Text("nenhum código gerado...",
-                                  style:
-                                      TextStyle(color: Colors.green.shade700)),
+                                  style: TextStyle(
+                                      color: ProjectColors.darkGreen)),
                             );
                     });
                   }),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_pro/utils/constants.dart';
 
 class LerImagemWidgets {
   BuildContext context;
@@ -22,7 +23,7 @@ class LerImagemWidgets {
             color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       ),
-      color: Colors.green.shade800,
+      color: ProjectColors.darkGreen,
     );
   }
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'create_qr_store.dart';
+part of 'read_qr_image_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,9 +8,9 @@ part of 'create_qr_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$CreateQrStore on _CreateQrStoreBase, Store {
+mixin _$ReadQrImageStore on _ReadQrImageStoreBase, Store {
   late final _$listViewSizeAtom =
-      Atom(name: '_CreateQrStoreBase.listViewSize', context: context);
+      Atom(name: '_ReadQrImageStoreBase.listViewSize', context: context);
 
   @override
   double get listViewSize {
@@ -25,44 +25,44 @@ mixin _$CreateQrStore on _CreateQrStoreBase, Store {
     });
   }
 
-  late final _$codigoCriadoAtom =
-      Atom(name: '_CreateQrStoreBase.codigoCriado', context: context);
+  late final _$codigoCapturadoAtom =
+      Atom(name: '_ReadQrImageStoreBase.codigoCapturado', context: context);
 
   @override
-  TextEditingController get codigoCriado {
-    _$codigoCriadoAtom.reportRead();
-    return super.codigoCriado;
+  String get codigoCapturado {
+    _$codigoCapturadoAtom.reportRead();
+    return super.codigoCapturado;
   }
 
   @override
-  set codigoCriado(TextEditingController value) {
-    _$codigoCriadoAtom.reportWrite(value, super.codigoCriado, () {
-      super.codigoCriado = value;
+  set codigoCapturado(String value) {
+    _$codigoCapturadoAtom.reportWrite(value, super.codigoCapturado, () {
+      super.codigoCapturado = value;
     });
   }
 
-  late final _$_CreateQrStoreBaseActionController =
-      ActionController(name: '_CreateQrStoreBase', context: context);
+  late final _$_ReadQrImageStoreBaseActionController =
+      ActionController(name: '_ReadQrImageStoreBase', context: context);
 
   @override
   dynamic setListaQr() {
-    final _$actionInfo = _$_CreateQrStoreBaseActionController.startAction(
-        name: '_CreateQrStoreBase.setListaQr');
+    final _$actionInfo = _$_ReadQrImageStoreBaseActionController.startAction(
+        name: '_ReadQrImageStoreBase.setListaQr');
     try {
       return super.setListaQr();
     } finally {
-      _$_CreateQrStoreBaseActionController.endAction(_$actionInfo);
+      _$_ReadQrImageStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic setlistViewSize() {
-    final _$actionInfo = _$_CreateQrStoreBaseActionController.startAction(
-        name: '_CreateQrStoreBase.setlistViewSize');
+    final _$actionInfo = _$_ReadQrImageStoreBaseActionController.startAction(
+        name: '_ReadQrImageStoreBase.setlistViewSize');
     try {
       return super.setlistViewSize();
     } finally {
-      _$_CreateQrStoreBaseActionController.endAction(_$actionInfo);
+      _$_ReadQrImageStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
@@ -70,7 +70,7 @@ mixin _$CreateQrStore on _CreateQrStoreBase, Store {
   String toString() {
     return '''
 listViewSize: ${listViewSize},
-codigoCriado: ${codigoCriado}
+codigoCapturado: ${codigoCapturado}
     ''';
   }
 }

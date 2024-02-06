@@ -12,7 +12,6 @@ class QrCodeFunctions {
 
   Future scanQRCode() async {
     try {
-      //  var ok = Colors.blue.shade700,
       qrCode = await FlutterBarcodeScanner.scanBarcode(
         '#ff1976D2',
         'Cancelar',
@@ -20,12 +19,6 @@ class QrCodeFunctions {
         ScanMode.DEFAULT,
       );
 
-      //    print("Qr Code >>> $qrCode");
-      // if (!mounted) return;
-
-      // setState(() {
-      //   this.qrCode = qrCode;
-      // });
       return qrCode;
     } catch (_) {
       return -1;
@@ -42,23 +35,4 @@ class QrCodeFunctions {
       print("Nao conseguiu acessar o Site");
     }
   }
-
-  // Future<void> _captureAndSharePng() async {
-  //   try {
-  //     RenderRepaintBoundary boundary = globalKey.currentContext.findRenderObject();
-  //     var image = await boundary.toImage();
-  //     ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
-  //   //  Uint8List pngBytes = byteData.buffer.asUint8List();
-
-  //    // final tempDir = await getTemporaryDirectory();
-  //     final file = await new File('${tempDir.path}/image.png').create();
-  //     await file.writeAsBytes(pngBytes);
-
-  //     final channel = const MethodChannel('channel:me.alfian.share/share');
-  //     channel.invokeMethod('shareFile', 'image.png');
-
-  //   } catch(e) {
-  //     print(e.toString());
-  //   }
-  // }
 }

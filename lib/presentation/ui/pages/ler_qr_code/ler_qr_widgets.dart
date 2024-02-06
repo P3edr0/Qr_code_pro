@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_code_pro/presentation/ui/controller/store/ler_qr_store.dart';
 import 'package:qr_code_pro/qr_code_functions.dart';
+import 'package:qr_code_pro/utils/constants.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 //import 'package:mobx/mobx.dart';
 //import 'package:flutter_mobx/flutter_mobx.dart';
@@ -33,7 +34,7 @@ class LerQrWidgets {
             color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
       ),
       alignment: Alignment.center,
-      color: Colors.blue.shade700,
+      color: ProjectColors.darkblue,
     );
   }
 
@@ -76,7 +77,7 @@ class LerQrWidgets {
                 ? GestureDetector(
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.blue.shade700,
+                          color: ProjectColors.darkblue,
                           border: Border.all(width: 4),
                           borderRadius: const BorderRadius.all(
                             Radius.circular(10),
@@ -112,7 +113,7 @@ class LerQrWidgets {
                   )
                 : Container(
                     decoration: BoxDecoration(
-                        color: Colors.blue.shade700,
+                        color: ProjectColors.darkblue,
                         border: Border.all(width: 4),
                         borderRadius: const BorderRadius.all(
                           Radius.circular(10),

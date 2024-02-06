@@ -38,7 +38,7 @@ class _QRScanPageState extends State<QRScanPage> {
         appBar: customAppbar(
           context,
           'LER QR CODE',
-          Colors.blue.shade700,
+          ProjectColors.darkblue,
         ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -94,7 +94,7 @@ class _QRScanPageState extends State<QRScanPage> {
                         ? GestureDetector(
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: Colors.blue.shade700,
+                                  color: ProjectColors.darkblue,
                                   border: Border.all(width: 1),
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(10),
@@ -130,7 +130,7 @@ class _QRScanPageState extends State<QRScanPage> {
                           )
                         : Container(
                             decoration: BoxDecoration(
-                                color: Colors.blue.shade700,
+                                color: ProjectColors.darkblue,
                                 border: Border.all(width: 1),
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(10),
@@ -176,7 +176,7 @@ class _QRScanPageState extends State<QRScanPage> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                                color: Colors.blue.shade500,
+                                color: ProjectColors.lightblue,
                                 border: Border.all(width: 1),
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(10),
@@ -204,52 +204,52 @@ class _QRScanPageState extends State<QRScanPage> {
                           )),
                       const SizedBox(width: 20),
                       InkWell(
-                          onTap: () async {
-                            try {
-                              ByteData? byteData = await QrPainter(
-                                      data: lerQrStore.codigoLido,
-                                      dataModuleStyle: QrDataModuleStyle(
-                                          color: Colors.blue.shade700,
-                                          dataModuleShape:
-                                              QrDataModuleShape.square),
-                                      gapless: true,
-                                      version: QrVersions.auto,
-                                      eyeStyle: QrEyeStyle(
-                                          color: Colors.blue.shade700,
-                                          eyeShape: QrEyeShape.square))
-                                  .toImageData(878);
+                          onTap: lerQrStore.codigoLido != 'Leia um código...'
+                              ? () async {
+                                  try {
+                                    ByteData? byteData = await QrPainter(
+                                            data: lerQrStore.codigoLido,
+                                            dataModuleStyle: QrDataModuleStyle(
+                                                color: ProjectColors.darkblue,
+                                                dataModuleShape:
+                                                    QrDataModuleShape.square),
+                                            gapless: true,
+                                            version: QrVersions.auto,
+                                            eyeStyle: QrEyeStyle(
+                                                color: ProjectColors.darkblue,
+                                                eyeShape: QrEyeShape.square))
+                                        .toImageData(878);
 
-                              final Uint8List pngBytes =
-                                  byteData!.buffer.asUint8List();
+                                    final Uint8List pngBytes =
+                                        byteData!.buffer.asUint8List();
 
-                              final directory =
-                                  await getApplicationDocumentsDirectory();
-                              final imagePath =
-                                  await File('${directory.path}/image.png')
-                                      .create();
-                              await imagePath.writeAsBytes(pngBytes);
-                              await Share.shareFiles([imagePath.path],
-                                      subject: pngBytes.toString(),
-                                      text: lerQrStore.codigoLido)
-                                  .then((value) async =>
-                                      Future.delayed(const Duration(seconds: 2))
-                                          .whenComplete(() =>
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                    content: Text(
-                                                        'QR Code compartilhado com sucesso')),
-                                              )));
-
-                              // Mostre algum feedback para o usuário
-                            } catch (e) {
-                              // Lidar com erros ao compartilhar a imagem
-                              log('Erro ao compartilhar imagem: $e');
-                            }
-                          },
+                                    final directory =
+                                        await getApplicationDocumentsDirectory();
+                                    final imagePath = await File(
+                                            '${directory.path}/image.png')
+                                        .create();
+                                    await imagePath.writeAsBytes(pngBytes);
+                                    await Share.shareFiles([imagePath.path],
+                                            subject: pngBytes.toString(),
+                                            text: lerQrStore.codigoLido)
+                                        .then((value) async => Future.delayed(
+                                                const Duration(seconds: 2))
+                                            .whenComplete(() =>
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                      content: Text(
+                                                          'QR Code compartilhado com sucesso')),
+                                                )));
+                                  } catch (e) {
+                                    // Lidar com erros ao compartilhar a imagem
+                                    log('Erro ao compartilhar imagem: $e');
+                                  }
+                                }
+                              : null,
                           child: Container(
                             decoration: BoxDecoration(
-                                color: Colors.blue.shade700,
+                                color: ProjectColors.darkblue,
                                 border: Border.all(width: 1),
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(10),
@@ -288,7 +288,7 @@ class _QRScanPageState extends State<QRScanPage> {
                                         margin: const EdgeInsets.symmetric(
                                             vertical: 3),
                                         decoration: BoxDecoration(
-                                            color: Colors.blue.shade700,
+                                            color: ProjectColors.darkblue,
                                             border: Border.all(width: 1),
                                             borderRadius:
                                                 const BorderRadius.all(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_pro/presentation/ui/controller/store/ler_qr_store.dart';
+import 'package:qr_code_pro/utils/constants.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class CriarQrWidgets {
@@ -26,7 +27,7 @@ class CriarQrWidgets {
             color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       ),
-      color: Colors.red.shade700,
+      color: ProjectColors.darkRed,
     );
   }
 
