@@ -25,6 +25,37 @@ mixin _$LerQrStore on _LerQrStoreBase, Store {
     });
   }
 
+  late final _$selectedIndexAtom =
+      Atom(name: '_LerQrStoreBase.selectedIndex', context: context);
+
+  @override
+  int get selectedIndex {
+    _$selectedIndexAtom.reportRead();
+    return super.selectedIndex;
+  }
+
+  @override
+  set selectedIndex(int value) {
+    _$selectedIndexAtom.reportWrite(value, super.selectedIndex, () {
+      super.selectedIndex = value;
+    });
+  }
+
+  late final _$loadAtom = Atom(name: '_LerQrStoreBase.load', context: context);
+
+  @override
+  bool get load {
+    _$loadAtom.reportRead();
+    return super.load;
+  }
+
+  @override
+  set load(bool value) {
+    _$loadAtom.reportWrite(value, super.load, () {
+      super.load = value;
+    });
+  }
+
   late final _$codigoCriadoAtom =
       Atom(name: '_LerQrStoreBase.codigoCriado', context: context);
 
@@ -94,9 +125,44 @@ mixin _$LerQrStore on _LerQrStoreBase, Store {
   }
 
   @override
+  void setSelectedIndex(int newIndex) {
+    final _$actionInfo = _$_LerQrStoreBaseActionController.startAction(
+        name: '_LerQrStoreBase.setSelectedIndex');
+    try {
+      return super.setSelectedIndex(newIndex);
+    } finally {
+      _$_LerQrStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void startLoading() {
+    final _$actionInfo = _$_LerQrStoreBaseActionController.startAction(
+        name: '_LerQrStoreBase.startLoading');
+    try {
+      return super.startLoading();
+    } finally {
+      _$_LerQrStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void stopLoading() {
+    final _$actionInfo = _$_LerQrStoreBaseActionController.startAction(
+        name: '_LerQrStoreBase.stopLoading');
+    try {
+      return super.stopLoading();
+    } finally {
+      _$_LerQrStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 codigoLido: ${codigoLido},
+selectedIndex: ${selectedIndex},
+load: ${load},
 codigoCriado: ${codigoCriado},
 tamanho: ${tamanho}
     ''';

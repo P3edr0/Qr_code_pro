@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
+import 'package:qr_code_pro/qr_code_functions.dart';
 
 part "ler_qr_store.g.dart";
 
@@ -9,6 +10,12 @@ abstract class _LerQrStoreBase with Store {
   ObservableList listaQr = ObservableList();
   @observable
   String codigoLido = 'Leia um código...';
+
+  @observable
+  int selectedIndex = -1;
+
+  @observable
+  bool load = false;
 
   @observable
   TextEditingController codigoCriado = TextEditingController();
@@ -23,7 +30,7 @@ abstract class _LerQrStoreBase with Store {
   }
 
   @action
-  String setCodigoLido(value) => codigoLido = value;
+  String setCodigoLido(String value) => codigoLido = value;
 
   @action
   setListaQr() {
@@ -32,5 +39,35 @@ abstract class _LerQrStoreBase with Store {
     } else if (codigoLido != "" && codigoLido != "-1") {
       listaQr.insert(0, codigoLido);
     }
+  }
+
+  @action
+  Future readQrCodeFunction(
+    BuildContext context,
+  ) async {
+    setCodigoLido(await QrCodeFunctions(context).scanQRCode());
+    startLoading();
+
+    setListaQr();
+    setTamanho();
+    setSelectedIndex(-1);
+    Future.delayed(const Duration(seconds: 2), () {
+      stopLoading();
+    });
+  }
+
+  @action
+  void setSelectedIndex(int newIndex) {
+    selectedIndex = newIndex;
+  }
+
+  @action
+  void startLoading() {
+    load = true;
+  }
+
+  @action
+  void stopLoading() {
+    load = false;
   }
 }
