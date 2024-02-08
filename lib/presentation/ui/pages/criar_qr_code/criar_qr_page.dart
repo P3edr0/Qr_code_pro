@@ -75,8 +75,6 @@ class _CriarQrPageState extends State<CriarQrPage> {
                             decoration:
                                 const InputDecoration(border: InputBorder.none),
                             controller: createQrStore.codigoCriado,
-                            // onChanged: ((value) =>
-                            //     createQrStore.setCodigoMirrorCriado(value)),
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -140,7 +138,6 @@ class _CriarQrPageState extends State<CriarQrPage> {
                                                           'QR Code compartilhado com sucesso')),
                                                 )));
                                   } catch (e) {
-                                    // Lidar com erros ao compartilhar a imagem
                                     log('Erro ao compartilhar imagem: $e');
                                   }
                                 }
@@ -154,7 +151,6 @@ class _CriarQrPageState extends State<CriarQrPage> {
                                 )),
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             height: 40,
-                            // width: MediaQuery.of(context).size.width * 0.5,
                             child: const Icon(
                               FontAwesomeIcons.share,
                               color: Colors.white,
@@ -185,68 +181,6 @@ class _CriarQrPageState extends State<CriarQrPage> {
                               setselectedIndex: createQrStore.setSelectedIndex,
                               startLoading: createQrStore.startLoading,
                               stopLoading: createQrStore.stopLoading)
-                          // ? Container(
-                          //     color: Colors.white,
-                          //     height: createQrStore.listViewSize,
-                          //     width: MediaQuery.of(context).size.width * 0.85,
-                          //     child: ListView.builder(
-                          //         itemCount: createQrStore.createdQrList.length,
-                          //         itemBuilder:
-                          //             (BuildContext context, int index) {
-                          //           return GestureDetector(
-                          //             child: Container(
-                          //               margin: const EdgeInsets.symmetric(
-                          //                   vertical: 3),
-                          //               decoration: BoxDecoration(
-                          //                   color: ProjectColors.lightRed,
-                          //                   border: Border.all(width: 1),
-                          //                   borderRadius:
-                          //                       const BorderRadius.all(
-                          //                     Radius.circular(10),
-                          //                   )),
-                          //               padding:
-                          //                   const EdgeInsets.only(left: 20),
-                          //               height: 40,
-                          //               child: Row(
-                          //                 mainAxisAlignment:
-                          //                     MainAxisAlignment.start,
-                          //                 children: [
-                          //                   const Icon(
-                          //                     FontAwesomeIcons.qrcode,
-                          //                     color: Colors.white,
-                          //                   ),
-                          //                   const SizedBox(
-                          //                     width: 10,
-                          //                   ),
-                          //                   Text(
-                          //                     "${index + 1} - ",
-                          //                     style: const TextStyle(
-                          //                       fontSize: 16,
-                          //                       color: Colors.white,
-                          //                     ),
-                          //                   ),
-                          //                   SizedBox(
-                          //                     width: 228,
-                          //                     child: Text(
-                          //                       createQrStore
-                          //                           .createdQrList[index],
-                          //                       style: const TextStyle(
-                          //                           fontSize: 16,
-                          //                           color: Colors.white,
-                          //                           overflow:
-                          //                               TextOverflow.ellipsis),
-                          //                     ),
-                          //                   ),
-                          //                 ],
-                          //               ),
-                          //             ),
-                          //             onTap: () async {
-                          //               await QrCodeFunctions(context).abrirUrl(
-                          //                   createQrStore.createdQrList[index]);
-                          //             },
-                          //           );
-                          //         }),
-                          //   )
                           : Container(
                               alignment: Alignment.center,
                               height: 120,
