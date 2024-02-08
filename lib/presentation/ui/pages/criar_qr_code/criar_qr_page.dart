@@ -7,9 +7,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_code_pro/presentation/ui/controller/store/create_qr_store.dart';
+import 'package:qr_code_pro/presentation/ui/pages/widgets/action_button.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/custom_appbar.dart';
+import 'package:qr_code_pro/presentation/ui/pages/widgets/links_listview.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/qr_code_preview.dart';
-import 'package:qr_code_pro/qr_code_functions.dart';
 import 'package:qr_code_pro/utils/constants.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share/share.dart';
@@ -22,7 +23,6 @@ class CriarQrPage extends StatefulWidget {
 
 class _CriarQrPageState extends State<CriarQrPage> {
   final CreateQrStore createQrStore = CreateQrStore();
-  bool _load = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -40,11 +40,13 @@ class _CriarQrPageState extends State<CriarQrPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 10),
-                  QrCodePreview(
-                      firstValidation: (createQrStore.codigoCriado.text ==
-                          'Inserir texto...'),
-                      secondvalidation: _load,
-                      qrData: createQrStore.codigoCriado.text),
+                  Observer(builder: (context) {
+                    return QrCodePreview(
+                        firstValidation: (createQrStore.codigoCriadoMirror ==
+                            'Inserir texto...'),
+                        secondvalidation: createQrStore.load,
+                        qrData: createQrStore.codigoCriadoMirror);
+                  }),
                   const SizedBox(height: 14),
                   Container(
                     decoration: BoxDecoration(
@@ -73,6 +75,8 @@ class _CriarQrPageState extends State<CriarQrPage> {
                             decoration:
                                 const InputDecoration(border: InputBorder.none),
                             controller: createQrStore.codigoCriado,
+                            // onChanged: ((value) =>
+                            //     createQrStore.setCodigoMirrorCriado(value)),
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -86,49 +90,15 @@ class _CriarQrPageState extends State<CriarQrPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      InkWell(
-                          onTap: () async {
-                            _load = true;
-                            setState(() {});
-
-                            Future.delayed(const Duration(seconds: 2), () {
-                              _load = false;
-                              createQrStore.setListaQr();
-                              createQrStore.setlistViewSize();
-                              setState(() {});
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: ProjectColors.lightRed,
-                                border: Border.all(width: 1),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(10),
-                                )),
-                            padding: const EdgeInsets.only(left: 20),
-                            height: 40,
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  FontAwesomeIcons.arrowCircleUp,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  "GERAR QR CODE",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          )),
+                      ActionButton(
+                          actionFunction: (() async =>
+                              await createQrStore.createQrButton()),
+                          buttonText: "GERAR QR CODE",
+                          iconbutton: FontAwesomeIcons.arrowCircleUp,
+                          buttonColor: ProjectColors.lightRed),
                       const SizedBox(width: 20),
                       InkWell(
-                          onTap: createQrStore.codigoCriado.text !=
+                          onTap: createQrStore.codigoCriadoMirror !=
                                   'Inserir texto...'
                               ? () async {
                                   try {
@@ -204,68 +174,79 @@ class _CriarQrPageState extends State<CriarQrPage> {
                   Observer(builder: (_) {
                     return Observer(builder: (_) {
                       return createQrStore.listViewSize != 0.0
-                          ? Container(
-                              color: Colors.white,
-                              height: createQrStore.listViewSize,
-                              width: MediaQuery.of(context).size.width * 0.85,
-                              child: ListView.builder(
-                                  itemCount: createQrStore.createdQrList.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return GestureDetector(
-                                      child: Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 3),
-                                        decoration: BoxDecoration(
-                                            color: ProjectColors.lightRed,
-                                            border: Border.all(width: 1),
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(10),
-                                            )),
-                                        padding:
-                                            const EdgeInsets.only(left: 20),
-                                        height: 40,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            const Icon(
-                                              FontAwesomeIcons.qrcode,
-                                              color: Colors.white,
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              "${index + 1} - ",
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 228,
-                                              child: Text(
-                                                createQrStore
-                                                    .createdQrList[index],
-                                                style: const TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.white,
-                                                    overflow:
-                                                        TextOverflow.ellipsis),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      onTap: () async {
-                                        await QrCodeFunctions(context).abrirUrl(
-                                            createQrStore.createdQrList[index]);
-                                      },
-                                    );
-                                  }),
-                            )
+                          ? LinksListview(
+                              currentList: createQrStore.createdQrList,
+                              listColor: ProjectColors.darkRed,
+                              listHeight: createQrStore.listViewSize,
+                              listItemCount: createQrStore.createdQrList.length,
+                              selectedIndex: createQrStore.selectedIndex,
+                              setCodigoLido: createQrStore.setCodigoCriado,
+                              setListaQr: createQrStore.setListaQr,
+                              setselectedIndex: createQrStore.setSelectedIndex,
+                              startLoading: createQrStore.startLoading,
+                              stopLoading: createQrStore.stopLoading)
+                          // ? Container(
+                          //     color: Colors.white,
+                          //     height: createQrStore.listViewSize,
+                          //     width: MediaQuery.of(context).size.width * 0.85,
+                          //     child: ListView.builder(
+                          //         itemCount: createQrStore.createdQrList.length,
+                          //         itemBuilder:
+                          //             (BuildContext context, int index) {
+                          //           return GestureDetector(
+                          //             child: Container(
+                          //               margin: const EdgeInsets.symmetric(
+                          //                   vertical: 3),
+                          //               decoration: BoxDecoration(
+                          //                   color: ProjectColors.lightRed,
+                          //                   border: Border.all(width: 1),
+                          //                   borderRadius:
+                          //                       const BorderRadius.all(
+                          //                     Radius.circular(10),
+                          //                   )),
+                          //               padding:
+                          //                   const EdgeInsets.only(left: 20),
+                          //               height: 40,
+                          //               child: Row(
+                          //                 mainAxisAlignment:
+                          //                     MainAxisAlignment.start,
+                          //                 children: [
+                          //                   const Icon(
+                          //                     FontAwesomeIcons.qrcode,
+                          //                     color: Colors.white,
+                          //                   ),
+                          //                   const SizedBox(
+                          //                     width: 10,
+                          //                   ),
+                          //                   Text(
+                          //                     "${index + 1} - ",
+                          //                     style: const TextStyle(
+                          //                       fontSize: 16,
+                          //                       color: Colors.white,
+                          //                     ),
+                          //                   ),
+                          //                   SizedBox(
+                          //                     width: 228,
+                          //                     child: Text(
+                          //                       createQrStore
+                          //                           .createdQrList[index],
+                          //                       style: const TextStyle(
+                          //                           fontSize: 16,
+                          //                           color: Colors.white,
+                          //                           overflow:
+                          //                               TextOverflow.ellipsis),
+                          //                     ),
+                          //                   ),
+                          //                 ],
+                          //               ),
+                          //             ),
+                          //             onTap: () async {
+                          //               await QrCodeFunctions(context).abrirUrl(
+                          //                   createQrStore.createdQrList[index]);
+                          //             },
+                          //           );
+                          //         }),
+                          //   )
                           : Container(
                               alignment: Alignment.center,
                               height: 120,

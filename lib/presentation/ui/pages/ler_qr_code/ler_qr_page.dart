@@ -172,7 +172,8 @@ class _QRScanPageState extends State<QRScanPage> {
                         actionFunction: (() async =>
                             await lerQrStore.readQrCodeFunction(context)),
                         buttonText: 'LER QR CODE',
-                        iconbutton: FontAwesomeIcons.plusCircle),
+                        iconbutton: FontAwesomeIcons.plusCircle,
+                        buttonColor: ProjectColors.lightblue),
                     const SizedBox(width: 20),
                     InkWell(
                         onTap: lerQrStore.codigoLido != 'Leia um código...'

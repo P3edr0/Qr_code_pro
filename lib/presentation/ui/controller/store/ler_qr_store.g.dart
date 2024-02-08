@@ -88,6 +88,15 @@ mixin _$LerQrStore on _LerQrStoreBase, Store {
     });
   }
 
+  late final _$readQrCodeFunctionAsyncAction =
+      AsyncAction('_LerQrStoreBase.readQrCodeFunction', context: context);
+
+  @override
+  Future<dynamic> readQrCodeFunction(BuildContext context) {
+    return _$readQrCodeFunctionAsyncAction
+        .run(() => super.readQrCodeFunction(context));
+  }
+
   late final _$_LerQrStoreBaseActionController =
       ActionController(name: '_LerQrStoreBase', context: context);
 
@@ -103,7 +112,7 @@ mixin _$LerQrStore on _LerQrStoreBase, Store {
   }
 
   @override
-  String setCodigoLido(dynamic value) {
+  String setCodigoLido(String value) {
     final _$actionInfo = _$_LerQrStoreBaseActionController.startAction(
         name: '_LerQrStoreBase.setCodigoLido');
     try {

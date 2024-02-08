@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:qr_code_pro/utils/constants.dart';
 
 class ActionButton extends StatelessWidget {
   const ActionButton(
       {Key? key,
       required this.actionFunction,
       required this.buttonText,
-      required this.iconbutton})
+      required this.iconbutton,
+      required this.buttonColor})
       : super(key: key);
   final Function() actionFunction;
   final String buttonText;
   final IconData iconbutton;
+  final Color buttonColor;
   @override
   Widget build(
     BuildContext context,
@@ -22,7 +22,7 @@ class ActionButton extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-              color: ProjectColors.lightblue,
+              color: buttonColor,
               border: Border.all(width: 1),
               borderRadius: const BorderRadius.all(
                 Radius.circular(10),
@@ -33,8 +33,8 @@ class ActionButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Icon(
-                FontAwesomeIcons.plusCircle,
+              Icon(
+                iconbutton,
                 color: Colors.white,
               ),
               const SizedBox(width: 20),
