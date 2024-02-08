@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:qr_code_pro/presentation/ui/controller/store/ler_qr_store.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/action_button.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/custom_appbar.dart';
+import 'package:qr_code_pro/presentation/ui/pages/widgets/links_listview.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/qr_code_preview.dart';
 import 'package:qr_code_pro/qr_code_functions.dart';
 import 'package:qr_code_pro/utils/constants.dart';
@@ -250,105 +251,17 @@ class _QRScanPageState extends State<QRScanPage> {
                 const SizedBox(height: 10),
                 Observer(builder: (_) {
                   return lerQrStore.tamanho != 0.0
-                      ? Container(
-                          color: Colors.white,
-                          height: lerQrStore.tamanho,
-                          width: MediaQuery.of(context).size.width * 0.85,
-                          child: Observer(builder: (context) {
-                            return ListView.builder(
-                                itemCount: lerQrStore.listaQr.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                    child: Observer(builder: (context) {
-                                      return Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 3),
-                                        decoration: BoxDecoration(
-                                            color: lerQrStore.selectedIndex !=
-                                                    index
-                                                ? Colors.white
-                                                : ProjectColors.darkblue,
-                                            border: Border.all(
-                                                width: 1,
-                                                color:
-                                                    lerQrStore.selectedIndex !=
-                                                            index
-                                                        ? ProjectColors.darkblue
-                                                        : Colors.black),
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(10),
-                                            )),
-                                        padding:
-                                            const EdgeInsets.only(left: 20),
-                                        height: 40,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Icon(
-                                              lerQrStore.selectedIndex == index
-                                                  ? FontAwesomeIcons
-                                                      .arrowAltCircleRight
-                                                  : FontAwesomeIcons.qrcode,
-                                              color: lerQrStore.selectedIndex !=
-                                                      index
-                                                  ? ProjectColors.darkblue
-                                                  : Colors.white,
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              "${index + 1} - ",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                color:
-                                                    lerQrStore.selectedIndex !=
-                                                            index
-                                                        ? ProjectColors.darkblue
-                                                        : Colors.white,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 228,
-                                              child: Text(
-                                                lerQrStore.listaQr[index],
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    color: lerQrStore
-                                                                .selectedIndex !=
-                                                            index
-                                                        ? ProjectColors.darkblue
-                                                        : Colors.white,
-                                                    overflow:
-                                                        TextOverflow.ellipsis),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    }),
-                                    onTap: () async {
-                                      if (lerQrStore.selectedIndex == index) {
-                                        lerQrStore.selectedIndex = -1;
-                                        lerQrStore.setCodigoLido('-1');
-                                        lerQrStore.setListaQr();
-                                      } else {
-                                        lerQrStore.startLoading();
-                                        lerQrStore.setCodigoLido(
-                                            lerQrStore.listaQr[index]);
-                                        lerQrStore.setSelectedIndex(index);
-                                        Future.delayed(
-                                            const Duration(seconds: 2), () {
-                                          lerQrStore.stopLoading();
-                                        });
-                                      }
-                                    },
-                                  );
-                                });
-                          }),
-                        )
+                      ? LinksListview(
+                          currentList: lerQrStore.listaQr,
+                          listColor: ProjectColors.darkblue,
+                          listHeight: lerQrStore.tamanho,
+                          listItemCount: lerQrStore.listaQr.length,
+                          selectedIndex: lerQrStore.selectedIndex,
+                          setCodigoLido: lerQrStore.setCodigoLido,
+                          setListaQr: lerQrStore.setListaQr,
+                          setselectedIndex: lerQrStore.setSelectedIndex,
+                          startLoading: lerQrStore.startLoading,
+                          stopLoading: lerQrStore.stopLoading)
                       : Container(
                           alignment: Alignment.center,
                           height: 120,

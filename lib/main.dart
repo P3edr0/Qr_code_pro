@@ -11,7 +11,6 @@ void main() {
       debugShowCheckedModeBanner: false,
       title: "Qr Code Pro",
       theme: ThemeData(
-        // primaryColor: Colors.red,
         scaffoldBackgroundColor: Colors.white,
       ),
       home: const SplashScreen()));
