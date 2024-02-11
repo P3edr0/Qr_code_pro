@@ -89,8 +89,12 @@ class _CriarQrPageState extends State<CriarQrPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ActionButton(
-                          actionFunction: (() async =>
-                              await createQrStore.createQrButton()),
+                          actionFunction: (() async {
+                            createQrStore.setCodigoMirrorCriado(
+                                createQrStore.codigoCriado.text);
+
+                            await createQrStore.createQrButton();
+                          }),
                           buttonText: "GERAR QR CODE",
                           iconbutton: FontAwesomeIcons.arrowCircleUp,
                           buttonColor: ProjectColors.lightRed),
@@ -168,28 +172,26 @@ class _CriarQrPageState extends State<CriarQrPage> {
                   ),
                   const SizedBox(height: 10),
                   Observer(builder: (_) {
-                    return Observer(builder: (_) {
-                      return createQrStore.listViewSize != 0.0
-                          ? LinksListview(
-                              currentList: createQrStore.createdQrList,
-                              listColor: ProjectColors.darkRed,
-                              listHeight: createQrStore.listViewSize,
-                              listItemCount: createQrStore.createdQrList.length,
-                              selectedIndex: createQrStore.selectedIndex,
-                              setCodigoLido: createQrStore.setCodigoCriado,
-                              setListaQr: createQrStore.setListaQr,
-                              setselectedIndex: createQrStore.setSelectedIndex,
-                              startLoading: createQrStore.startLoading,
-                              stopLoading: createQrStore.stopLoading)
-                          : Container(
-                              alignment: Alignment.center,
-                              height: 120,
-                              child: Text("nenhum código gerado...",
-                                  style:
-                                      TextStyle(color: ProjectColors.lightRed)),
-                            );
-                    });
-                  }),
+                    return createQrStore.listViewSize != 0.0
+                        ? LinksListview(
+                            currentList: createQrStore.createdQrList,
+                            listColor: ProjectColors.darkRed,
+                            listHeight: createQrStore.listViewSize,
+                            listItemCount: createQrStore.createdQrList.length,
+                            selectedIndex: createQrStore.selectedIndex,
+                            setCodigoLido: createQrStore.setCodigoCriado,
+                            setListaQr: createQrStore.setListaQr,
+                            setselectedIndex: createQrStore.setSelectedIndex,
+                            startLoading: createQrStore.startLoading,
+                            stopLoading: createQrStore.stopLoading)
+                        : Container(
+                            alignment: Alignment.center,
+                            height: 120,
+                            child: Text("nenhum código gerado...",
+                                style:
+                                    TextStyle(color: ProjectColors.lightRed)),
+                          );
+                  })
                 ],
               ),
             ),

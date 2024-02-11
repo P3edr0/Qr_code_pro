@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 
@@ -33,7 +35,11 @@ abstract class _CreateQrStoreBase with Store {
 
   @action
   setCodigoCriado(String newCodigo) {
-    // codigoCriado = TextEditingController(text: newCodigo);
+    if (newCodigo == '-1') {
+      newCodigo = 'Inserir texto...';
+    }
+    log(newCodigo);
+
     codigoCriado.text = newCodigo;
     codigoCriadoMirror = newCodigo;
   }
@@ -62,7 +68,6 @@ abstract class _CreateQrStoreBase with Store {
   Future createQrButton() async {
     if (codigoCriado.text != "Inserir texto..." && codigoCriado.text != "") {
       startLoading();
-
       Future.delayed(const Duration(seconds: 2), () {
         setListaQr();
         setlistViewSize();
