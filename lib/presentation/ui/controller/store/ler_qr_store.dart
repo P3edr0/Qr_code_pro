@@ -18,9 +18,6 @@ abstract class _LerQrStoreBase with Store {
   bool load = false;
 
   @observable
-  TextEditingController codigoCriado = TextEditingController();
-
-  @observable
   double tamanho = 0;
 
   @action

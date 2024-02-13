@@ -56,22 +56,6 @@ mixin _$LerQrStore on _LerQrStoreBase, Store {
     });
   }
 
-  late final _$codigoCriadoAtom =
-      Atom(name: '_LerQrStoreBase.codigoCriado', context: context);
-
-  @override
-  TextEditingController get codigoCriado {
-    _$codigoCriadoAtom.reportRead();
-    return super.codigoCriado;
-  }
-
-  @override
-  set codigoCriado(TextEditingController value) {
-    _$codigoCriadoAtom.reportWrite(value, super.codigoCriado, () {
-      super.codigoCriado = value;
-    });
-  }
-
   late final _$tamanhoAtom =
       Atom(name: '_LerQrStoreBase.tamanho', context: context);
 
@@ -172,7 +156,6 @@ mixin _$LerQrStore on _LerQrStoreBase, Store {
 codigoLido: ${codigoLido},
 selectedIndex: ${selectedIndex},
 load: ${load},
-codigoCriado: ${codigoCriado},
 tamanho: ${tamanho}
     ''';
   }
