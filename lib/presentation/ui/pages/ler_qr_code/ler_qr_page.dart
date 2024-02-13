@@ -1,19 +1,15 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:qr_code_pro/presentation/ui/controller/store/ler_qr_store.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/action_button.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/custom_appbar.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/links_listview.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/qr_code_preview.dart';
+import 'package:qr_code_pro/presentation/ui/pages/widgets/shared_button.dart';
 import 'package:qr_code_pro/qr_code_functions.dart';
 import 'package:qr_code_pro/utils/constants.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:share/share.dart';
 
 class QRScanPage extends StatefulWidget {
   const QRScanPage({Key? key}) : super(key: key);
@@ -175,70 +171,11 @@ class _QRScanPageState extends State<QRScanPage> {
                         iconbutton: FontAwesomeIcons.plusCircle,
                         buttonColor: ProjectColors.lightblue),
                     const SizedBox(width: 20),
-                    InkWell(
-                        onTap: lerQrStore.codigoLido != 'Leia um código...'
-                            ? () async {
-                                try {
-                                  ByteData? byteData = await QrPainter(
-                                          data: lerQrStore.codigoLido,
-                                          dataModuleStyle: QrDataModuleStyle(
-                                              color: ProjectColors.darkblue,
-                                              dataModuleShape:
-                                                  QrDataModuleShape.square),
-                                          gapless: true,
-                                          version: QrVersions.auto,
-                                          eyeStyle: QrEyeStyle(
-                                              color: ProjectColors.darkblue,
-                                              eyeShape: QrEyeShape.square))
-                                      .toImageData(878);
-
-                                  final Uint8List pngBytes =
-                                      byteData!.buffer.asUint8List();
-
-                                  final directory =
-                                      await getApplicationDocumentsDirectory();
-                                  final imagePath =
-                                      await File('${directory.path}/image.png')
-                                          .create();
-                                  await imagePath.writeAsBytes(pngBytes);
-                                  await Share.shareFiles([imagePath.path],
-                                          subject: pngBytes.toString(),
-                                          text: lerQrStore.codigoLido)
-                                      .then((value) async => Future.delayed(
-                                              const Duration(seconds: 2))
-                                          .whenComplete(() =>
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                    content: Text(
-                                                        'QR Code compartilhado com sucesso')),
-                                              )));
-                                } catch (e) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          backgroundColor:
-                                              ProjectColors.darkRed,
-                                          content: const Text(
-                                            "Não foi possível compartilhar QR Code",
-                                            textAlign: TextAlign.center,
-                                          )));
-                                }
-                              }
-                            : null,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: ProjectColors.lightblue,
-                              border: Border.all(width: 1),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(10),
-                              )),
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          height: 40,
-                          child: const Icon(
-                            FontAwesomeIcons.share,
-                            color: Colors.white,
-                          ),
-                        )),
+                    SharedQrCodeButton(
+                        validation:
+                            (lerQrStore.codigoLido != 'Leia um código...'),
+                        qrCodeData: lerQrStore.codigoLido,
+                        sharedButtonColor: ProjectColors.lightblue)
                   ],
                 ),
                 const SizedBox(height: 50),
@@ -266,7 +203,7 @@ class _QRScanPageState extends State<QRScanPage> {
                       : Container(
                           alignment: Alignment.center,
                           height: 120,
-                          child: const Text("nenhum código lido...",
+                          child: const Text("nenhum código lido",
                               style: TextStyle(color: Colors.blue)),
                         );
                 }),

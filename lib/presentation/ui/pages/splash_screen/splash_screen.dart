@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen>
                   style: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
-                      color: ProjectColors.lightRed),
+                      color: ProjectColors.darkRed),
                 ),
                 Text(
                   " PRO",
