@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
-import 'package:qr_code_pro/main.dart';
+import 'package:qr_code_pro/presentation/ui/pages/home_page/home.dart';
 import 'package:qr_code_pro/utils/constants.dart';
 
 class SplashScreen extends StatefulWidget {

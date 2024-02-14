@@ -8,6 +8,9 @@ class ImageProjectPath {
 class ProjectColors {
   static const black = Colors.black;
   static const white = Colors.white;
+  static final lightGrey = Colors.grey.shade100;
+  static final grey = Colors.grey.shade300;
+  static const darkGrey = Colors.grey;
   static final darkGreen = Colors.green.shade700;
   static final lightGreen = Colors.green.shade400;
   static final darkblue = Colors.blue.shade700;

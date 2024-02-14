@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 
@@ -38,7 +36,6 @@ abstract class _CreateQrStoreBase with Store {
     if (newCodigo == '-1') {
       newCodigo = 'Inserir texto...';
     }
-    log(newCodigo);
 
     codigoCriado.text = newCodigo;
     codigoCriadoMirror = newCodigo;

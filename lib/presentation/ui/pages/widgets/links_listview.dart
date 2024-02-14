@@ -36,7 +36,7 @@ class LlinksListviewState extends State<LinksListview> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Colors.transparent,
       height: widget.listHeight,
       width: MediaQuery.of(context).size.width * 0.85,
       child: ListView.builder(

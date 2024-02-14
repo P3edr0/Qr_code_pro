@@ -30,7 +30,7 @@ class _QRScanPageState extends State<QRScanPage> {
           'LER QR CODE',
           ProjectColors.darkblue,
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey.shade100,
         body: SingleChildScrollView(
           child: Center(
             child: Column(

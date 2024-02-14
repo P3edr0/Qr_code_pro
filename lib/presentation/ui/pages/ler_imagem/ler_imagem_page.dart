@@ -26,10 +26,10 @@ class _LerImagemState extends State<LerImagemPage> {
       child: Scaffold(
           appBar: customAppbar(
             context,
-            "LER IMAGEM",
+            "INSERIR IMAGEM",
             ProjectColors.darkGreen,
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: ProjectColors.lightGrey,
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             child: Center(

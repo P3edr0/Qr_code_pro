@@ -26,7 +26,7 @@ class _CriarQrPageState extends State<CriarQrPage> {
             "CRIAR QR CODE",
             ProjectColors.darkRed,
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: ProjectColors.lightGrey,
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             child: Center(
