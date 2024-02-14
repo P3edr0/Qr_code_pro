@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_pro/presentation/ui/controller/store/home_store.dart';
-import 'package:qr_code_pro/presentation/ui/pages/criar_qr_code/criar_qr_page.dart';
+import 'package:qr_code_pro/presentation/ui/pages/create_qr_code/create_qr_page.dart';
 import 'package:qr_code_pro/presentation/ui/pages/home_page/home_widgets.dart';
-import 'package:qr_code_pro/presentation/ui/pages/ler_imagem/ler_imagem_page.dart';
+import 'package:qr_code_pro/presentation/ui/pages/insert_image/insert_image_page.dart';
 import 'package:qr_code_pro/presentation/ui/pages/ler_qr_code/ler_qr_page.dart';
 import 'package:qr_code_pro/utils/constants.dart';
 
@@ -37,9 +37,9 @@ class _HomeState extends State<Home> {
           onPageChanged: _homeStore.onPageChanged,
           controller: controller,
           children: const <Widget>[
-            CriarQrPage(),
+            CreateQrPage(),
             QRScanPage(),
-            LerImagemPage(),
+            InsertImagePage(),
           ],
         ));
   }

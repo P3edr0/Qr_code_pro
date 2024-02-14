@@ -9,13 +9,13 @@ import 'package:qr_code_pro/presentation/ui/pages/widgets/qr_code_preview.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/shared_button.dart';
 import 'package:qr_code_pro/utils/constants.dart';
 
-class CriarQrPage extends StatefulWidget {
-  const CriarQrPage({Key? key}) : super(key: key);
+class CreateQrPage extends StatefulWidget {
+  const CreateQrPage({Key? key}) : super(key: key);
   @override
-  _CriarQrPageState createState() => _CriarQrPageState();
+  _CreateQrPageState createState() => _CreateQrPageState();
 }
 
-class _CriarQrPageState extends State<CriarQrPage> {
+class _CreateQrPageState extends State<CreateQrPage> {
   final CreateQrStore createQrStore = CreateQrStore();
   @override
   Widget build(BuildContext context) {

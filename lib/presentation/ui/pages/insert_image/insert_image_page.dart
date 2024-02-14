@@ -10,13 +10,13 @@ import 'package:qr_code_pro/presentation/ui/pages/widgets/qr_code_preview.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/shared_button.dart';
 import 'package:qr_code_pro/utils/constants.dart';
 
-class LerImagemPage extends StatefulWidget {
-  const LerImagemPage({Key? key}) : super(key: key);
+class InsertImagePage extends StatefulWidget {
+  const InsertImagePage({Key? key}) : super(key: key);
   @override
-  State<StatefulWidget> createState() => _LerImagemState();
+  State<StatefulWidget> createState() => _InsertImageState();
 }
 
-class _LerImagemState extends State<LerImagemPage> {
+class _InsertImageState extends State<InsertImagePage> {
   final ReadQrImageStore _readQrImageStore = ReadQrImageStore();
   final picker = ImagePicker();
 
