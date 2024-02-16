@@ -14,9 +14,9 @@ class FetcReadQrCodeSqlite implements IFetchAllQrCodeDatasource {
     try {
       List<Map> tempQrCodeList = await db
           .rawQuery('SELECT * FROM qrcodes WHERE type =?', ['readCode']);
-
-      return Right(
-          tempQrCodeList.map((qrCode) => QrCodeDto().fromMap(qrCode)).toList());
+      List<QrCodeEntity> lister =
+          tempQrCodeList.map((qrCode) => QrCodeDto.fromMap(qrCode)).toList();
+      return Right(lister);
     } catch (e) {
       return Left(NotFoundQrCodeException());
     }

@@ -79,13 +79,11 @@ abstract class _LerQrStoreBase with Store {
     var response = await FetchQrCodeUsecase().call(_fetcReadQrCodeSqlite);
 
     response.fold((l) => log(l.toString()), (r) {
-      log(r.toString(), name: 'oklist');
-      var testList = <String>[];
       listaQr.clear();
       for (var element in r) {
-        testList.add(element.code!);
+        listaQr.insert(0, element.code!);
       }
-      listaQr.addAll(testList);
+      setTamanho();
       log(listaQr.toString(), name: 'finalList');
     });
   }
