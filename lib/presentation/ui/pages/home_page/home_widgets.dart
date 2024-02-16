@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_code_pro/presentation/ui/controller/store/home_store.dart';
-import 'package:qr_code_pro/utils/constants.dart';
+import 'package:qr_code_pro/presentation/utils/constants.dart';
 
 class CustomNavBar extends StatelessWidget {
   const CustomNavBar({Key? key, required this.ontap, required this.homeStore})

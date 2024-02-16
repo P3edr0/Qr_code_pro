@@ -7,7 +7,7 @@ import 'package:qr_code_pro/presentation/ui/pages/widgets/custom_appbar.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/links_listview.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/qr_code_preview.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/shared_button.dart';
-import 'package:qr_code_pro/utils/constants.dart';
+import 'package:qr_code_pro/presentation/utils/constants.dart';
 
 class CreateQrPage extends StatefulWidget {
   const CreateQrPage({Key? key}) : super(key: key);

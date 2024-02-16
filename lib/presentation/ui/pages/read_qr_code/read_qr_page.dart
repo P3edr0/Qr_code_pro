@@ -8,18 +8,24 @@ import 'package:qr_code_pro/presentation/ui/pages/widgets/custom_appbar.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/links_listview.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/qr_code_preview.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/shared_button.dart';
-import 'package:qr_code_pro/qr_code_functions.dart';
-import 'package:qr_code_pro/utils/constants.dart';
+import 'package:qr_code_pro/presentation/utils/constants.dart';
+import 'package:qr_code_pro/presentation/utils/qr_code_functions.dart';
 
-class QRScanPage extends StatefulWidget {
-  const QRScanPage({Key? key}) : super(key: key);
+class ReadQrCodePage extends StatefulWidget {
+  const ReadQrCodePage({Key? key}) : super(key: key);
   @override
-  State<StatefulWidget> createState() => _QRScanPageState();
+  State<StatefulWidget> createState() => _ReadQrCodePageState();
 }
 
-class _QRScanPageState extends State<QRScanPage> {
+class _ReadQrCodePageState extends State<ReadQrCodePage> {
   String qrCode = 'Unknown';
   final LerQrStore lerQrStore = LerQrStore();
+
+  @override
+  void initState() {
+    lerQrStore.fetchList();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

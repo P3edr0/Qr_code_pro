@@ -72,6 +72,14 @@ mixin _$LerQrStore on _LerQrStoreBase, Store {
     });
   }
 
+  late final _$setListaQrAsyncAction =
+      AsyncAction('_LerQrStoreBase.setListaQr', context: context);
+
+  @override
+  Future<dynamic> setListaQr() {
+    return _$setListaQrAsyncAction.run(() => super.setListaQr());
+  }
+
   late final _$readQrCodeFunctionAsyncAction =
       AsyncAction('_LerQrStoreBase.readQrCodeFunction', context: context);
 
@@ -79,6 +87,14 @@ mixin _$LerQrStore on _LerQrStoreBase, Store {
   Future<dynamic> readQrCodeFunction(BuildContext context) {
     return _$readQrCodeFunctionAsyncAction
         .run(() => super.readQrCodeFunction(context));
+  }
+
+  late final _$fetchListAsyncAction =
+      AsyncAction('_LerQrStoreBase.fetchList', context: context);
+
+  @override
+  Future<void> fetchList() {
+    return _$fetchListAsyncAction.run(() => super.fetchList());
   }
 
   late final _$_LerQrStoreBaseActionController =
@@ -101,17 +117,6 @@ mixin _$LerQrStore on _LerQrStoreBase, Store {
         name: '_LerQrStoreBase.setCodigoLido');
     try {
       return super.setCodigoLido(value);
-    } finally {
-      _$_LerQrStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setListaQr() {
-    final _$actionInfo = _$_LerQrStoreBaseActionController.startAction(
-        name: '_LerQrStoreBase.setListaQr');
-    try {
-      return super.setListaQr();
     } finally {
       _$_LerQrStoreBaseActionController.endAction(_$actionInfo);
     }

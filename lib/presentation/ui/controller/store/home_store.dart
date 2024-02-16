@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:qr_code_pro/utils/constants.dart';
+import 'package:qr_code_pro/presentation/utils/constants.dart';
 
 part "home_store.g.dart";
 

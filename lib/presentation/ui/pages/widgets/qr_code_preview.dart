@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_pro/utils/constants.dart';
+import 'package:qr_code_pro/presentation/utils/constants.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrCodePreview extends StatefulWidget {

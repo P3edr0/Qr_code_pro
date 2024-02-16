@@ -22,7 +22,6 @@ class QrCodeFunctions {
       return qrCode;
     } catch (_) {
       return -1;
-      //  qrCode = 'Failed to get platform version.';
     }
   }
 

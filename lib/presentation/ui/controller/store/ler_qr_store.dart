@@ -1,13 +1,25 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
-import 'package:qr_code_pro/qr_code_functions.dart';
+import 'package:qr_code_pro/data/datasources/sqlite/read_qr_code_sqlite_datasources/fetch_read_qr_code_sqlite.dart';
+import 'package:qr_code_pro/data/datasources/sqlite/read_qr_code_sqlite_datasources/insert_read_qr_code_sqlite.dart';
+import 'package:qr_code_pro/domain/entities/qr_code_entity.dart';
+import 'package:qr_code_pro/domain/usecases/read_qr_code_usecases/fetch_read_qrcode_usecase.dart';
+import 'package:qr_code_pro/domain/usecases/read_qr_code_usecases/insert_read_qrcode_usecase.dart';
+import 'package:qr_code_pro/presentation/utils/qr_code_functions.dart';
 
 part "ler_qr_store.g.dart";
 
 class LerQrStore = _LerQrStoreBase with _$LerQrStore;
 
 abstract class _LerQrStoreBase with Store {
-  ObservableList listaQr = ObservableList();
+  final InsertQrCodeUsecase _insertQrCodeUsecase = InsertQrCodeUsecase();
+  final InsertReadQrCodeSqlite _insertReadQrCodeSqlite =
+      InsertReadQrCodeSqlite();
+  final FetcReadQrCodeSqlite _fetcReadQrCodeSqlite = FetcReadQrCodeSqlite();
+
+  ObservableList<String> listaQr = ObservableList();
   @observable
   String codigoLido = 'Leia um código...';
 
@@ -30,10 +42,15 @@ abstract class _LerQrStoreBase with Store {
   String setCodigoLido(String value) => codigoLido = value;
 
   @action
-  setListaQr() {
+  Future setListaQr() async {
     if (codigoLido == '-1') {
       codigoLido = 'Leia um código...';
     } else if (codigoLido != "" && codigoLido != "-1") {
+      QrCodeEntity qrCodeEntity = QrCodeEntity(
+          codigoLido, QrCodeTypes.readCode, DateTime.now().toString());
+      var result = await _insertQrCodeUsecase.call(
+          _insertReadQrCodeSqlite, qrCodeEntity);
+      result.fold((l) => log(l.toString()), (r) => log(r.toString()));
       listaQr.insert(0, codigoLido);
     }
   }
@@ -45,17 +62,32 @@ abstract class _LerQrStoreBase with Store {
     setCodigoLido(await QrCodeFunctions(context).scanQRCode());
     startLoading();
 
-    setListaQr();
     setTamanho();
     setSelectedIndex(-1);
     Future.delayed(const Duration(seconds: 2), () {
-      stopLoading();
+      setListaQr().then((value) => stopLoading());
     });
   }
 
   @action
   void setSelectedIndex(int newIndex) {
     selectedIndex = newIndex;
+  }
+
+  @action
+  Future<void> fetchList() async {
+    var response = await FetchQrCodeUsecase().call(_fetcReadQrCodeSqlite);
+
+    response.fold((l) => log(l.toString()), (r) {
+      log(r.toString(), name: 'oklist');
+      var testList = <String>[];
+      listaQr.clear();
+      for (var element in r) {
+        testList.add(element.code!);
+      }
+      listaQr.addAll(testList);
+      log(listaQr.toString(), name: 'finalList');
+    });
   }
 
   @action

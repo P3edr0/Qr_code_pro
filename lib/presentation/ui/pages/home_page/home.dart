@@ -3,8 +3,8 @@ import 'package:qr_code_pro/presentation/ui/controller/store/home_store.dart';
 import 'package:qr_code_pro/presentation/ui/pages/create_qr_code/create_qr_page.dart';
 import 'package:qr_code_pro/presentation/ui/pages/home_page/home_widgets.dart';
 import 'package:qr_code_pro/presentation/ui/pages/insert_image/insert_image_page.dart';
-import 'package:qr_code_pro/presentation/ui/pages/ler_qr_code/ler_qr_page.dart';
-import 'package:qr_code_pro/utils/constants.dart';
+import 'package:qr_code_pro/presentation/ui/pages/read_qr_code/read_qr_page.dart';
+import 'package:qr_code_pro/presentation/utils/constants.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
           controller: controller,
           children: const <Widget>[
             CreateQrPage(),
-            QRScanPage(),
+            ReadQrCodePage(),
             InsertImagePage(),
           ],
         ));
