@@ -76,7 +76,7 @@ mixin _$LerQrStore on _LerQrStoreBase, Store {
       AsyncAction('_LerQrStoreBase.setListaQr', context: context);
 
   @override
-  Future<dynamic> setListaQr() {
+  Future<void> setListaQr() {
     return _$setListaQrAsyncAction.run(() => super.setListaQr());
   }
 

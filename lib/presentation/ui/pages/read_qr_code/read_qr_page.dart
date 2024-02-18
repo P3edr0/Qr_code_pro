@@ -196,10 +196,10 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                 Observer(builder: (_) {
                   return lerQrStore.tamanho != 0.0
                       ? LinksListview(
-                          currentList: lerQrStore.listaQr,
+                          currentList: lerQrStore.readQrList,
                           listColor: ProjectColors.darkblue,
                           listHeight: lerQrStore.tamanho,
-                          listItemCount: lerQrStore.listaQr.length,
+                          listItemCount: lerQrStore.readQrList.length,
                           selectedIndex: lerQrStore.selectedIndex,
                           setCodigoLido: lerQrStore.setCodigoLido,
                           setListaQr: lerQrStore.setListaQr,

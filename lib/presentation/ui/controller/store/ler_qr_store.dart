@@ -5,8 +5,8 @@ import 'package:mobx/mobx.dart';
 import 'package:qr_code_pro/data/datasources/sqlite/read_qr_code_sqlite_datasources/fetch_read_qr_code_sqlite.dart';
 import 'package:qr_code_pro/data/datasources/sqlite/read_qr_code_sqlite_datasources/insert_read_qr_code_sqlite.dart';
 import 'package:qr_code_pro/domain/entities/qr_code_entity.dart';
-import 'package:qr_code_pro/domain/usecases/read_qr_code_usecases/fetch_read_qrcode_usecase.dart';
-import 'package:qr_code_pro/domain/usecases/read_qr_code_usecases/insert_read_qrcode_usecase.dart';
+import 'package:qr_code_pro/domain/usecases/read_qr_code_usecases/fetch_read_qr_code_usecase.dart';
+import 'package:qr_code_pro/domain/usecases/read_qr_code_usecases/insert_read_qr_code_usecase.dart';
 import 'package:qr_code_pro/presentation/utils/qr_code_functions.dart';
 
 part "ler_qr_store.g.dart";
@@ -14,12 +14,13 @@ part "ler_qr_store.g.dart";
 class LerQrStore = _LerQrStoreBase with _$LerQrStore;
 
 abstract class _LerQrStoreBase with Store {
-  final InsertQrCodeUsecase _insertQrCodeUsecase = InsertQrCodeUsecase();
+  final InsertReadQrCodeUsecase _insertQrCodeUsecase =
+      InsertReadQrCodeUsecase();
   final InsertReadQrCodeSqlite _insertReadQrCodeSqlite =
       InsertReadQrCodeSqlite();
   final FetcReadQrCodeSqlite _fetcReadQrCodeSqlite = FetcReadQrCodeSqlite();
 
-  ObservableList<String> listaQr = ObservableList();
+  ObservableList<QrCodeEntity> readQrList = ObservableList();
   @observable
   String codigoLido = 'Leia um código...';
 
@@ -34,7 +35,7 @@ abstract class _LerQrStoreBase with Store {
 
   @action
   setTamanho() {
-    tamanho = listaQr.length * 50;
+    tamanho = readQrList.length * 50;
     tamanho > 200 ? tamanho = 200 : null;
   }
 
@@ -42,7 +43,7 @@ abstract class _LerQrStoreBase with Store {
   String setCodigoLido(String value) => codigoLido = value;
 
   @action
-  Future setListaQr() async {
+  Future<void> setListaQr() async {
     if (codigoLido == '-1') {
       codigoLido = 'Leia um código...';
     } else if (codigoLido != "" && codigoLido != "-1") {
@@ -51,7 +52,7 @@ abstract class _LerQrStoreBase with Store {
       var result = await _insertQrCodeUsecase.call(
           _insertReadQrCodeSqlite, qrCodeEntity);
       result.fold((l) => log(l.toString()), (r) => log(r.toString()));
-      listaQr.insert(0, codigoLido);
+      readQrList.insert(0, qrCodeEntity);
     }
   }
 
@@ -79,12 +80,12 @@ abstract class _LerQrStoreBase with Store {
     var response = await FetchQrCodeUsecase().call(_fetcReadQrCodeSqlite);
 
     response.fold((l) => log(l.toString()), (r) {
-      listaQr.clear();
+      readQrList.clear();
       for (var element in r) {
-        listaQr.insert(0, element.code!);
+        readQrList.insert(0, element);
       }
       setTamanho();
-      log(listaQr.toString(), name: 'finalList');
+      // log(readQrList.toString(), name: 'finalList');
     });
   }
 

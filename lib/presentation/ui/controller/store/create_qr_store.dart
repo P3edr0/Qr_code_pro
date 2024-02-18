@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
+import 'package:qr_code_pro/domain/entities/qr_code_entity.dart';
 
 part 'create_qr_store.g.dart';
 
 class CreateQrStore = _CreateQrStoreBase with _$CreateQrStore;
 
 abstract class _CreateQrStoreBase with Store {
-  ObservableList createdQrList = ObservableList();
+  ObservableList<QrCodeEntity> createdQrList = ObservableList();
 
   @observable
   bool load = false;
@@ -27,7 +28,7 @@ abstract class _CreateQrStoreBase with Store {
   setListaQr() {
     if (codigoCriado.text != '' && codigoCriado.text != 'Inserir texto...') {
       codigoCriadoMirror = codigoCriado.text;
-      createdQrList.insert(0, codigoCriadoMirror);
+      // createdQrList.insert(0, codigoCriadoMirror);
     }
   }
 

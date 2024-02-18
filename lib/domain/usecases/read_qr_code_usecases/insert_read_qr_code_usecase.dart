@@ -1,12 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:qr_code_pro/data/repository/read_qr_code_repository_impl.dart';
-import 'package:qr_code_pro/domain/repositories/read_qrcode_repository.dart';
-import 'package:qr_code_pro/domain/usecases/read_qr_code_usecases/read_qr_code_exceptions.dart';
+import 'package:qr_code_pro/domain/repositories/read_qr_code_repository.dart';
+import 'package:qr_code_pro/domain/usecases/read_qr_code_exceptions.dart';
 
-class InsertQrCodeUsecase implements IInsertQrCodeRepository {
+class InsertReadQrCodeUsecase implements IInsertReadQrCodeRepository {
   @override
-  Future<Either<IReadQrCodeUsercaseExceptions, int>> call(
-      datasource, qrCode) async {
+  Future<Either<IQrCodeUsecaseExceptions, int>> call(datasource, qrCode) async {
     if (qrCode.code == null) {
       return Left(DataQrCodeException('O código não pode ser nulo'));
     }

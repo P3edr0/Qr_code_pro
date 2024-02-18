@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'read_qr_image_store.dart';
+part of 'qr_code_image_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,9 +8,9 @@ part of 'read_qr_image_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$ReadQrImageStore on _ReadQrImageStoreBase, Store {
+mixin _$QrCodeImageStore on _QrCodeImageStoreBase, Store {
   late final _$listViewSizeAtom =
-      Atom(name: '_ReadQrImageStoreBase.listViewSize', context: context);
+      Atom(name: '_QrCodeImageStoreBase.listViewSize', context: context);
 
   @override
   double get listViewSize {
@@ -26,7 +26,7 @@ mixin _$ReadQrImageStore on _ReadQrImageStoreBase, Store {
   }
 
   late final _$capturedCodeMirrorAtom =
-      Atom(name: '_ReadQrImageStoreBase.capturedCodeMirror', context: context);
+      Atom(name: '_QrCodeImageStoreBase.capturedCodeMirror', context: context);
 
   @override
   String get capturedCodeMirror {
@@ -42,7 +42,7 @@ mixin _$ReadQrImageStore on _ReadQrImageStoreBase, Store {
   }
 
   late final _$codigoCapturadoAtom =
-      Atom(name: '_ReadQrImageStoreBase.codigoCapturado', context: context);
+      Atom(name: '_QrCodeImageStoreBase.codigoCapturado', context: context);
 
   @override
   String get codigoCapturado {
@@ -58,7 +58,7 @@ mixin _$ReadQrImageStore on _ReadQrImageStoreBase, Store {
   }
 
   late final _$selectedIndexAtom =
-      Atom(name: '_ReadQrImageStoreBase.selectedIndex', context: context);
+      Atom(name: '_QrCodeImageStoreBase.selectedIndex', context: context);
 
   @override
   int get selectedIndex {
@@ -74,7 +74,7 @@ mixin _$ReadQrImageStore on _ReadQrImageStoreBase, Store {
   }
 
   late final _$loadAtom =
-      Atom(name: '_ReadQrImageStoreBase.load', context: context);
+      Atom(name: '_QrCodeImageStoreBase.load', context: context);
 
   @override
   bool get load {
@@ -89,91 +89,96 @@ mixin _$ReadQrImageStore on _ReadQrImageStoreBase, Store {
     });
   }
 
+  late final _$setListaQrAsyncAction =
+      AsyncAction('_QrCodeImageStoreBase.setListaQr', context: context);
+
+  @override
+  Future<void> setListaQr() {
+    return _$setListaQrAsyncAction.run(() => super.setListaQr());
+  }
+
   late final _$readImageAsyncAction =
-      AsyncAction('_ReadQrImageStoreBase.readImage', context: context);
+      AsyncAction('_QrCodeImageStoreBase.readImage', context: context);
 
   @override
   Future<dynamic> readImage() {
     return _$readImageAsyncAction.run(() => super.readImage());
   }
 
-  late final _$_ReadQrImageStoreBaseActionController =
-      ActionController(name: '_ReadQrImageStoreBase', context: context);
+  late final _$fetchListAsyncAction =
+      AsyncAction('_QrCodeImageStoreBase.fetchList', context: context);
 
   @override
-  dynamic setListaQr() {
-    final _$actionInfo = _$_ReadQrImageStoreBaseActionController.startAction(
-        name: '_ReadQrImageStoreBase.setListaQr');
-    try {
-      return super.setListaQr();
-    } finally {
-      _$_ReadQrImageStoreBaseActionController.endAction(_$actionInfo);
-    }
+  Future<void> fetchList() {
+    return _$fetchListAsyncAction.run(() => super.fetchList());
   }
+
+  late final _$_QrCodeImageStoreBaseActionController =
+      ActionController(name: '_QrCodeImageStoreBase', context: context);
 
   @override
   dynamic setlistViewSize() {
-    final _$actionInfo = _$_ReadQrImageStoreBaseActionController.startAction(
-        name: '_ReadQrImageStoreBase.setlistViewSize');
+    final _$actionInfo = _$_QrCodeImageStoreBaseActionController.startAction(
+        name: '_QrCodeImageStoreBase.setlistViewSize');
     try {
       return super.setlistViewSize();
     } finally {
-      _$_ReadQrImageStoreBaseActionController.endAction(_$actionInfo);
+      _$_QrCodeImageStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setSelectedIndex(int newIndex) {
-    final _$actionInfo = _$_ReadQrImageStoreBaseActionController.startAction(
-        name: '_ReadQrImageStoreBase.setSelectedIndex');
+    final _$actionInfo = _$_QrCodeImageStoreBaseActionController.startAction(
+        name: '_QrCodeImageStoreBase.setSelectedIndex');
     try {
       return super.setSelectedIndex(newIndex);
     } finally {
-      _$_ReadQrImageStoreBaseActionController.endAction(_$actionInfo);
+      _$_QrCodeImageStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setCodigoCapturado(String newCodigo) {
-    final _$actionInfo = _$_ReadQrImageStoreBaseActionController.startAction(
-        name: '_ReadQrImageStoreBase.setCodigoCapturado');
+    final _$actionInfo = _$_QrCodeImageStoreBaseActionController.startAction(
+        name: '_QrCodeImageStoreBase.setCodigoCapturado');
     try {
       return super.setCodigoCapturado(newCodigo);
     } finally {
-      _$_ReadQrImageStoreBaseActionController.endAction(_$actionInfo);
+      _$_QrCodeImageStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setcapturedCodeMirror(String newCodigo) {
-    final _$actionInfo = _$_ReadQrImageStoreBaseActionController.startAction(
-        name: '_ReadQrImageStoreBase.setcapturedCodeMirror');
+    final _$actionInfo = _$_QrCodeImageStoreBaseActionController.startAction(
+        name: '_QrCodeImageStoreBase.setcapturedCodeMirror');
     try {
       return super.setcapturedCodeMirror(newCodigo);
     } finally {
-      _$_ReadQrImageStoreBaseActionController.endAction(_$actionInfo);
+      _$_QrCodeImageStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void startLoading() {
-    final _$actionInfo = _$_ReadQrImageStoreBaseActionController.startAction(
-        name: '_ReadQrImageStoreBase.startLoading');
+    final _$actionInfo = _$_QrCodeImageStoreBaseActionController.startAction(
+        name: '_QrCodeImageStoreBase.startLoading');
     try {
       return super.startLoading();
     } finally {
-      _$_ReadQrImageStoreBaseActionController.endAction(_$actionInfo);
+      _$_QrCodeImageStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void stopLoading() {
-    final _$actionInfo = _$_ReadQrImageStoreBaseActionController.startAction(
-        name: '_ReadQrImageStoreBase.stopLoading');
+    final _$actionInfo = _$_QrCodeImageStoreBaseActionController.startAction(
+        name: '_QrCodeImageStoreBase.stopLoading');
     try {
       return super.stopLoading();
     } finally {
-      _$_ReadQrImageStoreBaseActionController.endAction(_$actionInfo);
+      _$_QrCodeImageStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 

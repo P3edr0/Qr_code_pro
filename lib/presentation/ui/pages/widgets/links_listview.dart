@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mobx/mobx.dart';
+import 'package:qr_code_pro/domain/entities/qr_code_entity.dart';
 
 class LinksListview extends StatefulWidget {
   const LinksListview(
@@ -21,7 +22,7 @@ class LinksListview extends StatefulWidget {
   final int listItemCount;
   final int selectedIndex;
   final Color listColor;
-  final ObservableList currentList;
+  final ObservableList<QrCodeEntity> currentList;
   final Function() startLoading;
   final Function() stopLoading;
   final Function(String codigo) setCodigoLido;
@@ -86,7 +87,7 @@ class LlinksListviewState extends State<LinksListview> {
                       SizedBox(
                         width: 228,
                         child: Text(
-                          widget.currentList[index],
+                          widget.currentList[index].code!,
                           style: TextStyle(
                               fontSize: 16,
                               color: widget.selectedIndex != index
@@ -106,7 +107,7 @@ class LlinksListviewState extends State<LinksListview> {
                   widget.setListaQr();
                 } else {
                   widget.startLoading();
-                  widget.setCodigoLido(widget.currentList[index]);
+                  widget.setCodigoLido(widget.currentList[index].code!);
                   widget.setselectedIndex(index);
                   Future.delayed(const Duration(seconds: 2), () {
                     widget.stopLoading();

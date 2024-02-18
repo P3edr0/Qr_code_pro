@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:qr_code_pro/presentation/ui/controller/store/read_qr_image_store.dart';
+import 'package:qr_code_pro/presentation/ui/controller/store/qr_code_image_store.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/action_button.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/custom_appbar.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/links_listview.dart';
@@ -17,8 +17,13 @@ class InsertImagePage extends StatefulWidget {
 }
 
 class _InsertImageState extends State<InsertImagePage> {
-  final ReadQrImageStore _readQrImageStore = ReadQrImageStore();
+  final QrCodeImageStore _qrCodeImageStore = QrCodeImageStore();
   final picker = ImagePicker();
+  @override
+  void initState() {
+    _qrCodeImageStore.fetchList();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +45,12 @@ class _InsertImageState extends State<InsertImagePage> {
                   Observer(builder: (context) {
                     return QrCodePreview(
                         firstValidation:
-                            (_readQrImageStore.capturedCodeMirror ==
+                            (_qrCodeImageStore.capturedCodeMirror ==
                                     'Código capturado...' ||
-                                _readQrImageStore.capturedCodeMirror ==
+                                _qrCodeImageStore.capturedCodeMirror ==
                                     'Código não lido'),
-                        secondvalidation: _readQrImageStore.load,
-                        qrData: _readQrImageStore.codigoCapturado);
+                        secondvalidation: _qrCodeImageStore.load,
+                        qrData: _qrCodeImageStore.codigoCapturado);
                   }),
                   const SizedBox(height: 14),
                   Container(
@@ -72,7 +77,7 @@ class _InsertImageState extends State<InsertImagePage> {
                           const SizedBox(width: 30),
                           Flexible(
                               child: Text(
-                            _readQrImageStore.codigoCapturado,
+                            _qrCodeImageStore.codigoCapturado,
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -88,17 +93,17 @@ class _InsertImageState extends State<InsertImagePage> {
                     children: [
                       ActionButton(
                           actionFunction: (() async =>
-                              await _readQrImageStore.readImage()),
+                              await _qrCodeImageStore.readImage()),
                           buttonText: 'INSERIR',
                           iconbutton: FontAwesomeIcons.image,
                           buttonColor: ProjectColors.lightGreen),
                       const SizedBox(width: 20),
                       SharedQrCodeButton(
-                          validation: (_readQrImageStore.capturedCodeMirror !=
+                          validation: (_qrCodeImageStore.capturedCodeMirror !=
                                   'Código capturado...' &&
-                              _readQrImageStore.capturedCodeMirror !=
+                              _qrCodeImageStore.capturedCodeMirror !=
                                   'Código não lido'),
-                          qrCodeData: _readQrImageStore.codigoCapturado,
+                          qrCodeData: _qrCodeImageStore.codigoCapturado,
                           sharedButtonColor: ProjectColors.lightGreen)
                     ],
                   ),
@@ -112,20 +117,20 @@ class _InsertImageState extends State<InsertImagePage> {
                   ),
                   const SizedBox(height: 10),
                   Observer(builder: (_) {
-                    return _readQrImageStore.listViewSize != 0.0
+                    return _qrCodeImageStore.listViewSize != 0.0
                         ? LinksListview(
-                            currentList: _readQrImageStore.capturedQrList,
+                            currentList: _qrCodeImageStore.capturedQrList,
                             listColor: ProjectColors.darkGreen,
-                            listHeight: _readQrImageStore.listViewSize,
+                            listHeight: _qrCodeImageStore.listViewSize,
                             listItemCount:
-                                _readQrImageStore.capturedQrList.length,
-                            selectedIndex: _readQrImageStore.selectedIndex,
-                            setCodigoLido: _readQrImageStore.setCodigoCapturado,
-                            setListaQr: _readQrImageStore.setListaQr,
+                                _qrCodeImageStore.capturedQrList.length,
+                            selectedIndex: _qrCodeImageStore.selectedIndex,
+                            setCodigoLido: _qrCodeImageStore.setCodigoCapturado,
+                            setListaQr: _qrCodeImageStore.setListaQr,
                             setselectedIndex:
-                                _readQrImageStore.setSelectedIndex,
-                            startLoading: _readQrImageStore.startLoading,
-                            stopLoading: _readQrImageStore.stopLoading)
+                                _qrCodeImageStore.setSelectedIndex,
+                            startLoading: _qrCodeImageStore.startLoading,
+                            stopLoading: _qrCodeImageStore.stopLoading)
                         : Container(
                             alignment: Alignment.center,
                             height: 120,
