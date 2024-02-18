@@ -177,11 +177,13 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                         iconbutton: FontAwesomeIcons.plusCircle,
                         buttonColor: ProjectColors.lightblue),
                     const SizedBox(width: 20),
-                    SharedQrCodeButton(
-                        validation:
-                            (lerQrStore.codigoLido != 'Leia um código...'),
-                        qrCodeData: lerQrStore.codigoLido,
-                        sharedButtonColor: ProjectColors.lightblue)
+                    Observer(builder: (_) {
+                      return SharedQrCodeButton(
+                          validation:
+                              (lerQrStore.codigoLido != 'Leia um código...'),
+                          qrCodeData: lerQrStore.codigoLido,
+                          sharedButtonColor: ProjectColors.lightblue);
+                    })
                   ],
                 ),
                 const SizedBox(height: 50),

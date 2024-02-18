@@ -37,44 +37,44 @@ class SharedQrCodeButton extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      onTap: validation
-          ? () async {
-              log('Pertado e é');
-              try {
-                ByteData? byteData = await QrPainter(
-                        data: qrCodeData,
-                        dataModuleStyle: const QrDataModuleStyle(
-                            color: ProjectColors.white,
-                            dataModuleShape: QrDataModuleShape.square),
-                        gapless: true,
-                        version: QrVersions.auto,
-                        eyeStyle: const QrEyeStyle(
-                            color: ProjectColors.white,
-                            eyeShape: QrEyeShape.square))
-                    .toImageData(878);
+      onTap: () async {
+        log(validation.toString(), name: "Validador");
+        if (validation) {
+          try {
+            ByteData? byteData = await QrPainter(
+                    data: qrCodeData,
+                    dataModuleStyle: const QrDataModuleStyle(
+                        color: ProjectColors.white,
+                        dataModuleShape: QrDataModuleShape.square),
+                    gapless: true,
+                    version: QrVersions.auto,
+                    eyeStyle: const QrEyeStyle(
+                        color: ProjectColors.white,
+                        eyeShape: QrEyeShape.square))
+                .toImageData(878);
 
-                final Uint8List pngBytes = byteData!.buffer.asUint8List();
+            final Uint8List pngBytes = byteData!.buffer.asUint8List();
 
-                final directory = await getApplicationDocumentsDirectory();
-                final imagePath =
-                    await File('${directory.path}/image.png').create();
-                await imagePath.writeAsBytes(pngBytes);
-                await Share.shareFiles([imagePath.path],
-                        subject: pngBytes.toString(),
-                        text:
-                            'Conteúdo do qr code: \n\n$qrCodeData \n\n Gerado por Qr Code Pro.')
-                    .then((value) async =>
-                        Future.delayed(const Duration(seconds: 4)).whenComplete(
-                            () => ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          'QR Code compartilhado com sucesso')),
-                                )));
-              } catch (e) {
-                log('Erro ao compartilhar imagem: $e');
-              }
-            }
-          : null,
+            final directory = await getApplicationDocumentsDirectory();
+            final imagePath =
+                await File('${directory.path}/image.png').create();
+            await imagePath.writeAsBytes(pngBytes);
+            await Share.shareFiles([imagePath.path],
+                    subject: pngBytes.toString(),
+                    text:
+                        'Conteúdo do qr code: \n\n$qrCodeData \n\n Gerado por Qr Code Pro.')
+                .then((value) async =>
+                    Future.delayed(const Duration(seconds: 4)).whenComplete(
+                        () => ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      'QR Code compartilhado com sucesso')),
+                            )));
+          } catch (e) {
+            log('Erro ao compartilhar imagem: $e');
+          }
+        }
+      },
     );
   }
 }

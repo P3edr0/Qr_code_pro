@@ -98,13 +98,15 @@ class _InsertImageState extends State<InsertImagePage> {
                           iconbutton: FontAwesomeIcons.image,
                           buttonColor: ProjectColors.lightGreen),
                       const SizedBox(width: 20),
-                      SharedQrCodeButton(
-                          validation: (_qrCodeImageStore.capturedCodeMirror !=
-                                  'Código capturado...' &&
-                              _qrCodeImageStore.capturedCodeMirror !=
-                                  'Código não lido'),
-                          qrCodeData: _qrCodeImageStore.codigoCapturado,
-                          sharedButtonColor: ProjectColors.lightGreen)
+                      Observer(builder: (_) {
+                        return SharedQrCodeButton(
+                            validation: (_qrCodeImageStore.capturedCodeMirror !=
+                                    'Código capturado...' &&
+                                _qrCodeImageStore.capturedCodeMirror !=
+                                    'Código não lido'),
+                            qrCodeData: _qrCodeImageStore.codigoCapturado,
+                            sharedButtonColor: ProjectColors.lightGreen);
+                      })
                     ],
                   ),
                   const SizedBox(height: 50),
