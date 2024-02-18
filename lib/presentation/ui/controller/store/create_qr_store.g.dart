@@ -89,6 +89,14 @@ mixin _$CreateQrStore on _CreateQrStoreBase, Store {
     });
   }
 
+  late final _$setListaQrAsyncAction =
+      AsyncAction('_CreateQrStoreBase.setListaQr', context: context);
+
+  @override
+  Future<void> setListaQr() {
+    return _$setListaQrAsyncAction.run(() => super.setListaQr());
+  }
+
   late final _$createQrButtonAsyncAction =
       AsyncAction('_CreateQrStoreBase.createQrButton', context: context);
 
@@ -97,19 +105,16 @@ mixin _$CreateQrStore on _CreateQrStoreBase, Store {
     return _$createQrButtonAsyncAction.run(() => super.createQrButton());
   }
 
-  late final _$_CreateQrStoreBaseActionController =
-      ActionController(name: '_CreateQrStoreBase', context: context);
+  late final _$fetchListAsyncAction =
+      AsyncAction('_CreateQrStoreBase.fetchList', context: context);
 
   @override
-  dynamic setListaQr() {
-    final _$actionInfo = _$_CreateQrStoreBaseActionController.startAction(
-        name: '_CreateQrStoreBase.setListaQr');
-    try {
-      return super.setListaQr();
-    } finally {
-      _$_CreateQrStoreBaseActionController.endAction(_$actionInfo);
-    }
+  Future<void> fetchList() {
+    return _$fetchListAsyncAction.run(() => super.fetchList());
   }
+
+  late final _$_CreateQrStoreBaseActionController =
+      ActionController(name: '_CreateQrStoreBase', context: context);
 
   @override
   dynamic setCodigoCriado(String newCodigo) {

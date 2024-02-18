@@ -17,6 +17,13 @@ class CreateQrPage extends StatefulWidget {
 
 class _CreateQrPageState extends State<CreateQrPage> {
   final CreateQrStore createQrStore = CreateQrStore();
+
+  @override
+  void initState() {
+    createQrStore.fetchList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

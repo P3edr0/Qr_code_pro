@@ -53,6 +53,8 @@ abstract class _LerQrStoreBase with Store {
           _insertReadQrCodeSqlite, qrCodeEntity);
       result.fold((l) => log(l.toString()), (r) => log(r.toString()));
       readQrList.insert(0, qrCodeEntity);
+      tamanho = readQrList.length * 50;
+      tamanho > 200 ? tamanho = 200 : null;
     }
   }
 
