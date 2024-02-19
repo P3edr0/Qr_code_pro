@@ -56,8 +56,9 @@ abstract class _QrCodeImageStoreBase with Store {
   @action
   Future readImage() async {
     startLoading();
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
 
     if (pickedFile != null) {
       String? result = await Scan.parse(pickedFile.path);

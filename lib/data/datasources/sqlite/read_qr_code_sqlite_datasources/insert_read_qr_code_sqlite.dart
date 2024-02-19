@@ -13,19 +13,21 @@ class InsertReadQrCodeSqlite implements IInsertQrCodeDatasource {
       QrCodeEntity qrCode) async {
     Database db = await SqlfliteProvider().database;
     try {
-      List<Map<String, dynamic>> columns =
-          await db.rawQuery('PRAGMA table_info(qrcodes)');
+      // List<Map<String, dynamic>> columns =
+      //     await db.rawQuery('PRAGMA table_info(qrcodes)');
 
-      for (var column in columns) {
-        log('Column: ${column['name']} - Type: ${column['type']}');
-      }
+      // for (var column in columns) {
+      //   log('Column: ${column['name']} - Type: ${column['type']}');
+      // }
 
       int id = await db.rawInsert(
           'INSERT INTO qrcodes(code, type,createAt) VALUES("${qrCode.code}", "${qrCode.type.toString().split('.').last}","${qrCode.createAt}")');
       log(id.toString(), name: 'Id Save');
+
       return Right(id);
     } catch (e) {
       log('Falhou');
+
       return Left(NotFoundQrCodeException());
     }
   }

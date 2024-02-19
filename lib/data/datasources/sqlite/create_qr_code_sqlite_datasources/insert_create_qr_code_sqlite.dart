@@ -16,6 +16,7 @@ class InsertCreateQrCodeSqlite implements IInsertCreateQrCodeDatasource {
       int id = await db.rawInsert(
           'INSERT INTO qrcodes(code, type,createAt) VALUES("${qrCode.code}", "${qrCode.type.toString().split('.').last}","${qrCode.createAt}")');
       log(id.toString(), name: 'Id Save');
+
       return Right(id);
     } catch (e) {
       log('Falhou ${e.toString()}');

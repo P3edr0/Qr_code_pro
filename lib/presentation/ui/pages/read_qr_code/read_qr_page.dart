@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:qr_code_pro/presentation/ui/controller/store/ler_qr_store.dart';
+import 'package:qr_code_pro/presentation/ui/controller/store/read_qr_store.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/action_button.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/custom_appbar.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/links_listview.dart';
@@ -19,7 +19,7 @@ class ReadQrCodePage extends StatefulWidget {
 
 class _ReadQrCodePageState extends State<ReadQrCodePage> {
   String qrCode = 'Unknown';
-  final LerQrStore lerQrStore = LerQrStore();
+  final ReadQrStore lerQrStore = ReadQrStore();
 
   @override
   void initState() {
@@ -196,11 +196,11 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                 ),
                 const SizedBox(height: 10),
                 Observer(builder: (_) {
-                  return lerQrStore.tamanho != 0.0
+                  return lerQrStore.listviewHeight != 0.0
                       ? LinksListview(
                           currentList: lerQrStore.readQrList,
                           listColor: ProjectColors.darkblue,
-                          listHeight: lerQrStore.tamanho,
+                          listHeight: lerQrStore.listviewHeight,
                           listItemCount: lerQrStore.readQrList.length,
                           selectedIndex: lerQrStore.selectedIndex,
                           setCodigoLido: lerQrStore.setCodigoLido,

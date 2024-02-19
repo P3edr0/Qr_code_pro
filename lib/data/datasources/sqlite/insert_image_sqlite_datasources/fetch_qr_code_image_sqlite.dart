@@ -16,6 +16,7 @@ class FetcQrCodeImageSqlite implements IFetchAllQrCodeImageDatasource {
           .rawQuery('SELECT * FROM qrcodes WHERE type =?', ['imageCode']);
       List<QrCodeEntity> lister =
           tempQrCodeList.map((qrCode) => QrCodeDto.fromMap(qrCode)).toList();
+
       return Right(lister);
     } catch (e) {
       return Left(NotFoundQrCodeException());

@@ -9,11 +9,11 @@ import 'package:qr_code_pro/domain/usecases/read_qr_code_usecases/fetch_read_qr_
 import 'package:qr_code_pro/domain/usecases/read_qr_code_usecases/insert_read_qr_code_usecase.dart';
 import 'package:qr_code_pro/presentation/utils/qr_code_functions.dart';
 
-part "ler_qr_store.g.dart";
+part "read_qr_store.g.dart";
 
-class LerQrStore = _LerQrStoreBase with _$LerQrStore;
+class ReadQrStore = _ReadQrStoreBase with _$ReadQrStore;
 
-abstract class _LerQrStoreBase with Store {
+abstract class _ReadQrStoreBase with Store {
   final InsertReadQrCodeUsecase _insertQrCodeUsecase =
       InsertReadQrCodeUsecase();
   final InsertReadQrCodeSqlite _insertReadQrCodeSqlite =
@@ -31,12 +31,12 @@ abstract class _LerQrStoreBase with Store {
   bool load = false;
 
   @observable
-  double tamanho = 0;
+  double listviewHeight = 0;
 
   @action
-  setTamanho() {
-    tamanho = readQrList.length * 50;
-    tamanho > 200 ? tamanho = 200 : null;
+  setListviewHeight() {
+    listviewHeight = readQrList.length * 50;
+    listviewHeight > 200 ? listviewHeight = 200 : null;
   }
 
   @action
@@ -53,8 +53,8 @@ abstract class _LerQrStoreBase with Store {
           _insertReadQrCodeSqlite, qrCodeEntity);
       result.fold((l) => log(l.toString()), (r) => log(r.toString()));
       readQrList.insert(0, qrCodeEntity);
-      tamanho = readQrList.length * 50;
-      tamanho > 200 ? tamanho = 200 : null;
+      listviewHeight = readQrList.length * 50;
+      listviewHeight > 200 ? listviewHeight = 200 : null;
     }
   }
 
@@ -65,7 +65,7 @@ abstract class _LerQrStoreBase with Store {
     setCodigoLido(await QrCodeFunctions(context).scanQRCode());
     startLoading();
 
-    setTamanho();
+    setListviewHeight();
     setSelectedIndex(-1);
     Future.delayed(const Duration(seconds: 2), () {
       setListaQr().then((value) => stopLoading());
@@ -86,7 +86,7 @@ abstract class _LerQrStoreBase with Store {
       for (var element in r) {
         readQrList.insert(0, element);
       }
-      setTamanho();
+      setListviewHeight();
       // log(readQrList.toString(), name: 'finalList');
     });
   }
