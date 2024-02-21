@@ -43,10 +43,10 @@ class _CreateQrPageState extends State<CreateQrPage> {
                   const SizedBox(height: 10),
                   Observer(builder: (context) {
                     return QrCodePreview(
-                        firstValidation: (createQrStore.codigoCriadoMirror ==
+                        firstValidation: (createQrStore.createdCodeMirror ==
                             'Inserir texto...'),
                         secondvalidation: createQrStore.load,
-                        qrData: createQrStore.codigoCriadoMirror);
+                        qrData: createQrStore.createdCodeMirror);
                   }),
                   const SizedBox(height: 14),
                   Container(
@@ -75,7 +75,7 @@ class _CreateQrPageState extends State<CreateQrPage> {
                           child: TextFormField(
                             decoration:
                                 const InputDecoration(border: InputBorder.none),
-                            controller: createQrStore.codigoCriado,
+                            controller: createQrStore.createdCode,
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -91,8 +91,8 @@ class _CreateQrPageState extends State<CreateQrPage> {
                     children: [
                       ActionButton(
                           actionFunction: (() async {
-                            createQrStore.setCodigoMirrorCriado(
-                                createQrStore.codigoCriado.text);
+                            createQrStore.setCreatedCodeMirror(
+                                createQrStore.createdCode.text);
 
                             await createQrStore.createQrButton();
                           }),
@@ -102,9 +102,9 @@ class _CreateQrPageState extends State<CreateQrPage> {
                       const SizedBox(width: 20),
                       Observer(builder: (_) {
                         return SharedQrCodeButton(
-                            validation: (createQrStore.codigoCriadoMirror !=
+                            validation: (createQrStore.createdCodeMirror !=
                                 'Inserir texto...'),
-                            qrCodeData: createQrStore.codigoCriadoMirror,
+                            qrCodeData: createQrStore.createdCodeMirror,
                             sharedButtonColor: ProjectColors.lightRed);
                       })
                     ],
@@ -126,7 +126,7 @@ class _CreateQrPageState extends State<CreateQrPage> {
                             listHeight: createQrStore.listViewSize,
                             listItemCount: createQrStore.createdQrList.length,
                             selectedIndex: createQrStore.selectedIndex,
-                            setCodigoLido: createQrStore.setCodigoCriado,
+                            setCodigoLido: createQrStore.setCreatedCode,
                             setListaQr: createQrStore.setListaQr,
                             setselectedIndex: createQrStore.setSelectedIndex,
                             startLoading: createQrStore.startLoading,

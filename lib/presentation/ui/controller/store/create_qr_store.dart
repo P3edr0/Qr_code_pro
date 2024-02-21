@@ -33,17 +33,17 @@ abstract class _CreateQrStoreBase with Store {
   int selectedIndex = -1;
 
   @observable
-  TextEditingController codigoCriado =
+  TextEditingController createdCode =
       TextEditingController(text: 'Inserir texto...');
   @observable
-  String codigoCriadoMirror = 'Inserir texto...';
+  String createdCodeMirror = 'Inserir texto...';
 
   @action
   Future<void> setListaQr() async {
-    if (codigoCriado.text != '' && codigoCriado.text != 'Inserir texto...') {
-      codigoCriadoMirror = codigoCriado.text;
-      QrCodeEntity qrCodeEntity = QrCodeEntity(codigoCriadoMirror,
-          QrCodeTypes.createCode, DateTime.now().toString());
+    if (createdCode.text != '' && createdCode.text != 'Inserir texto...') {
+      createdCodeMirror = createdCode.text;
+      QrCodeEntity qrCodeEntity = QrCodeEntity(
+          createdCodeMirror, QrCodeTypes.createCode, DateTime.now().toString());
       var result = await _insertCreateQrCodeUsecase.call(
           _insertCreateQrCodeSqlite, qrCodeEntity);
       result.fold((l) => log(l.toString()), (r) => log(r.toString()));
@@ -54,18 +54,18 @@ abstract class _CreateQrStoreBase with Store {
   }
 
   @action
-  setCodigoCriado(String newCodigo) {
-    if (newCodigo == '-1') {
-      newCodigo = 'Inserir texto...';
+  setCreatedCode(String newCode) {
+    if (newCode == '-1') {
+      newCode = 'Inserir texto...';
     }
 
-    codigoCriado.text = newCodigo;
-    codigoCriadoMirror = newCodigo;
+    createdCode.text = newCode;
+    createdCodeMirror = newCode;
   }
 
   @action
-  setCodigoMirrorCriado(String value) {
-    codigoCriadoMirror = value;
+  setCreatedCodeMirror(String value) {
+    createdCodeMirror = value;
   }
 
   @action
@@ -85,7 +85,7 @@ abstract class _CreateQrStoreBase with Store {
 
   @action
   Future createQrButton() async {
-    if (codigoCriado.text != "Inserir texto..." && codigoCriado.text != "") {
+    if (createdCode.text != "Inserir texto..." && createdCode.text != "") {
       startLoading();
       Future.delayed(const Duration(seconds: 2), () {
         setListaQr();

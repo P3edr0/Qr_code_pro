@@ -27,7 +27,7 @@ abstract class _QrCodeImageStoreBase with Store {
   @observable
   String capturedCodeMirror = "Código capturado...";
   @observable
-  String codigoCapturado = "Código capturado...";
+  String capturedCode = "Código capturado...";
 
   @observable
   int selectedIndex = -1;
@@ -37,13 +37,12 @@ abstract class _QrCodeImageStoreBase with Store {
 
   @action
   Future<void> setListaQr() async {
-    if (codigoCapturado == '-1') {
-      codigoCapturado = "Código capturado...";
+    if (capturedCode == '-1') {
+      capturedCode = "Código capturado...";
       capturedCodeMirror = "Código capturado...";
-    } else if (codigoCapturado != "Código capturado..." &&
-        codigoCapturado != "") {
+    } else if (capturedCode != "Código capturado..." && capturedCode != "") {
       QrCodeEntity qrCodeEntity = QrCodeEntity(
-          codigoCapturado, QrCodeTypes.imageCode, DateTime.now().toString());
+          capturedCode, QrCodeTypes.imageCode, DateTime.now().toString());
       var result = await _insertQrCodeImageUsecase.call(
           _insertQrCodeImageSqlite, qrCodeEntity);
       result.fold((l) => log(l.toString()), (r) => log(r.toString()));
@@ -64,13 +63,13 @@ abstract class _QrCodeImageStoreBase with Store {
       String? result = await Scan.parse(pickedFile.path);
 
       if (result == null) {
-        setCodigoCapturado('Código não lido');
+        setCapturedCode('Código não lido');
         setcapturedCodeMirror('Código não lido');
       } else {
         setcapturedCodeMirror(result);
         Future.delayed(const Duration(seconds: 2), () {
           stopLoading();
-          setCodigoCapturado(result);
+          setCapturedCode(result);
 
           setListaQr();
         });
@@ -93,14 +92,13 @@ abstract class _QrCodeImageStoreBase with Store {
   }
 
   @action
-  void setCodigoCapturado(String newCodigo) {
-    codigoCapturado = newCodigo;
-    capturedCodeMirror = newCodigo;
+  void setCapturedCode(String newCode) {
+    capturedCode = newCode;
+    capturedCodeMirror = newCode;
   }
 
   @action
-  void setcapturedCodeMirror(String newCodigo) =>
-      capturedCodeMirror = newCodigo;
+  void setcapturedCodeMirror(String newCode) => capturedCodeMirror = newCode;
 
   @action
   void startLoading() {

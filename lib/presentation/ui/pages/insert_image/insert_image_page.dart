@@ -50,7 +50,7 @@ class _InsertImageState extends State<InsertImagePage> {
                                 _qrCodeImageStore.capturedCodeMirror ==
                                     'Código não lido'),
                         secondvalidation: _qrCodeImageStore.load,
-                        qrData: _qrCodeImageStore.codigoCapturado);
+                        qrData: _qrCodeImageStore.capturedCode);
                   }),
                   const SizedBox(height: 14),
                   Container(
@@ -77,7 +77,7 @@ class _InsertImageState extends State<InsertImagePage> {
                           const SizedBox(width: 30),
                           Flexible(
                               child: Text(
-                            _qrCodeImageStore.codigoCapturado,
+                            _qrCodeImageStore.capturedCode,
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -104,7 +104,7 @@ class _InsertImageState extends State<InsertImagePage> {
                                     'Código capturado...' &&
                                 _qrCodeImageStore.capturedCodeMirror !=
                                     'Código não lido'),
-                            qrCodeData: _qrCodeImageStore.codigoCapturado,
+                            qrCodeData: _qrCodeImageStore.capturedCode,
                             sharedButtonColor: ProjectColors.lightGreen);
                       })
                     ],
@@ -127,7 +127,7 @@ class _InsertImageState extends State<InsertImagePage> {
                             listItemCount:
                                 _qrCodeImageStore.capturedQrList.length,
                             selectedIndex: _qrCodeImageStore.selectedIndex,
-                            setCodigoLido: _qrCodeImageStore.setCodigoCapturado,
+                            setCodigoLido: _qrCodeImageStore.setCapturedCode,
                             setListaQr: _qrCodeImageStore.setListaQr,
                             setselectedIndex:
                                 _qrCodeImageStore.setSelectedIndex,

@@ -31,8 +31,6 @@ class SqlfliteProvider {
     String path = join(databasesPath, 'qrcodepro.db');
     _database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
-      await db.execute('DROP TABLE IF EXISTS qrcodes');
-
       await db.execute('''
           CREATE TABLE IF NOT EXISTS qrcodes (
             id INTEGER PRIMARY KEY,

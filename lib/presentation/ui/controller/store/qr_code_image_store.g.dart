@@ -41,19 +41,19 @@ mixin _$QrCodeImageStore on _QrCodeImageStoreBase, Store {
     });
   }
 
-  late final _$codigoCapturadoAtom =
-      Atom(name: '_QrCodeImageStoreBase.codigoCapturado', context: context);
+  late final _$capturedCodeAtom =
+      Atom(name: '_QrCodeImageStoreBase.capturedCode', context: context);
 
   @override
-  String get codigoCapturado {
-    _$codigoCapturadoAtom.reportRead();
-    return super.codigoCapturado;
+  String get capturedCode {
+    _$capturedCodeAtom.reportRead();
+    return super.capturedCode;
   }
 
   @override
-  set codigoCapturado(String value) {
-    _$codigoCapturadoAtom.reportWrite(value, super.codigoCapturado, () {
-      super.codigoCapturado = value;
+  set capturedCode(String value) {
+    _$capturedCodeAtom.reportWrite(value, super.capturedCode, () {
+      super.capturedCode = value;
     });
   }
 
@@ -139,22 +139,22 @@ mixin _$QrCodeImageStore on _QrCodeImageStoreBase, Store {
   }
 
   @override
-  void setCodigoCapturado(String newCodigo) {
+  void setCapturedCode(String newCode) {
     final _$actionInfo = _$_QrCodeImageStoreBaseActionController.startAction(
-        name: '_QrCodeImageStoreBase.setCodigoCapturado');
+        name: '_QrCodeImageStoreBase.setCapturedCode');
     try {
-      return super.setCodigoCapturado(newCodigo);
+      return super.setCapturedCode(newCode);
     } finally {
       _$_QrCodeImageStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setcapturedCodeMirror(String newCodigo) {
+  void setcapturedCodeMirror(String newCode) {
     final _$actionInfo = _$_QrCodeImageStoreBaseActionController.startAction(
         name: '_QrCodeImageStoreBase.setcapturedCodeMirror');
     try {
-      return super.setcapturedCodeMirror(newCodigo);
+      return super.setcapturedCodeMirror(newCode);
     } finally {
       _$_QrCodeImageStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -187,7 +187,7 @@ mixin _$QrCodeImageStore on _QrCodeImageStoreBase, Store {
     return '''
 listViewSize: ${listViewSize},
 capturedCodeMirror: ${capturedCodeMirror},
-codigoCapturado: ${codigoCapturado},
+capturedCode: ${capturedCode},
 selectedIndex: ${selectedIndex},
 load: ${load}
     ''';

@@ -57,35 +57,35 @@ mixin _$CreateQrStore on _CreateQrStoreBase, Store {
     });
   }
 
-  late final _$codigoCriadoAtom =
-      Atom(name: '_CreateQrStoreBase.codigoCriado', context: context);
+  late final _$createdCodeAtom =
+      Atom(name: '_CreateQrStoreBase.createdCode', context: context);
 
   @override
-  TextEditingController get codigoCriado {
-    _$codigoCriadoAtom.reportRead();
-    return super.codigoCriado;
+  TextEditingController get createdCode {
+    _$createdCodeAtom.reportRead();
+    return super.createdCode;
   }
 
   @override
-  set codigoCriado(TextEditingController value) {
-    _$codigoCriadoAtom.reportWrite(value, super.codigoCriado, () {
-      super.codigoCriado = value;
+  set createdCode(TextEditingController value) {
+    _$createdCodeAtom.reportWrite(value, super.createdCode, () {
+      super.createdCode = value;
     });
   }
 
-  late final _$codigoCriadoMirrorAtom =
-      Atom(name: '_CreateQrStoreBase.codigoCriadoMirror', context: context);
+  late final _$createdCodeMirrorAtom =
+      Atom(name: '_CreateQrStoreBase.createdCodeMirror', context: context);
 
   @override
-  String get codigoCriadoMirror {
-    _$codigoCriadoMirrorAtom.reportRead();
-    return super.codigoCriadoMirror;
+  String get createdCodeMirror {
+    _$createdCodeMirrorAtom.reportRead();
+    return super.createdCodeMirror;
   }
 
   @override
-  set codigoCriadoMirror(String value) {
-    _$codigoCriadoMirrorAtom.reportWrite(value, super.codigoCriadoMirror, () {
-      super.codigoCriadoMirror = value;
+  set createdCodeMirror(String value) {
+    _$createdCodeMirrorAtom.reportWrite(value, super.createdCodeMirror, () {
+      super.createdCodeMirror = value;
     });
   }
 
@@ -117,22 +117,22 @@ mixin _$CreateQrStore on _CreateQrStoreBase, Store {
       ActionController(name: '_CreateQrStoreBase', context: context);
 
   @override
-  dynamic setCodigoCriado(String newCodigo) {
+  dynamic setCreatedCode(String newCode) {
     final _$actionInfo = _$_CreateQrStoreBaseActionController.startAction(
-        name: '_CreateQrStoreBase.setCodigoCriado');
+        name: '_CreateQrStoreBase.setCreatedCode');
     try {
-      return super.setCodigoCriado(newCodigo);
+      return super.setCreatedCode(newCode);
     } finally {
       _$_CreateQrStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  dynamic setCodigoMirrorCriado(String value) {
+  dynamic setCreatedCodeMirror(String value) {
     final _$actionInfo = _$_CreateQrStoreBaseActionController.startAction(
-        name: '_CreateQrStoreBase.setCodigoMirrorCriado');
+        name: '_CreateQrStoreBase.setCreatedCodeMirror');
     try {
-      return super.setCodigoMirrorCriado(value);
+      return super.setCreatedCodeMirror(value);
     } finally {
       _$_CreateQrStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -188,8 +188,8 @@ mixin _$CreateQrStore on _CreateQrStoreBase, Store {
 load: ${load},
 listViewSize: ${listViewSize},
 selectedIndex: ${selectedIndex},
-codigoCriado: ${codigoCriado},
-codigoCriadoMirror: ${codigoCriadoMirror}
+createdCode: ${createdCode},
+createdCodeMirror: ${createdCodeMirror}
     ''';
   }
 }

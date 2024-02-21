@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 void main() {
   final ReadQrStore _readQrStore = ReadQrStore();
 
-  group('Test start, increment, decrement', () {
+  group('Teste de funcionalidades do módulo read_qr', () {
     test('Testando métodos de loading', () {
       _readQrStore.startLoading();
 
