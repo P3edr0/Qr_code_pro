@@ -1,8 +1,9 @@
 import 'dart:developer';
 
+import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
-import 'package:qr_code_pro/data/datasources/sqlite/insert_image_sqlite_datasources/fetch_qr_code_image_sqlite.dart';
+import 'package:qr_code_pro/data/datasources/qrcode_image_datasource.dart';
 import 'package:qr_code_pro/data/datasources/sqlite/insert_image_sqlite_datasources/insert_qr_code_image_sqlite.dart';
 import 'package:qr_code_pro/domain/entities/qr_code_entity.dart';
 import 'package:qr_code_pro/domain/usecases/qr_code_image_usecases/fetch_qr_code_image_usecase.dart';
@@ -15,12 +16,12 @@ class QrCodeImageStore = _QrCodeImageStoreBase with _$QrCodeImageStore;
 
 abstract class _QrCodeImageStoreBase with Store {
   ObservableList<QrCodeEntity> capturedQrList = ObservableList();
-  final InsertQrCodeImageUsecase _insertQrCodeImageUsecase =
-      InsertQrCodeImageUsecase();
-  final InsertQrCodeImageSqlite _insertQrCodeImageSqlite =
-      InsertQrCodeImageSqlite();
+  final _insertQrCodeImageUsecase = GetIt.instance<InsertQrCodeImageUsecase>();
+  final _fetchQrCodeImageSqlite =
+      GetIt.instance<IFetchAllQrCodeImageDatasource>();
+  final _fetchQrImageCodeUsecase = GetIt.instance<FetchQrImageCodeUsecase>();
+  final _insertQrCodeImageSqlite = GetIt.instance<InsertQrCodeImageSqlite>();
 
-  final FetcQrCodeImageSqlite _fetchQrCodeImageSqlite = FetcQrCodeImageSqlite();
   @observable
   double listViewSize = 0;
 
@@ -73,7 +74,6 @@ abstract class _QrCodeImageStoreBase with Store {
 
           setListaQr();
         });
-        // .then((value) => setlistViewSize());
       }
     } else {
       stopLoading();
@@ -112,8 +112,7 @@ abstract class _QrCodeImageStoreBase with Store {
 
   @action
   Future<void> fetchList() async {
-    var response =
-        await FetchReadQrImageCodeUsecase().call(_fetchQrCodeImageSqlite);
+    var response = await _fetchQrImageCodeUsecase(_fetchQrCodeImageSqlite);
 
     response.fold((l) => log(l.toString()), (r) {
       capturedQrList.clear();

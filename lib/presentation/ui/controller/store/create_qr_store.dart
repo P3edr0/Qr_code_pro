@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-import 'package:qr_code_pro/data/datasources/sqlite/create_qr_code_sqlite_datasources/fetch_create_qr_code_sqlite.dart';
-import 'package:qr_code_pro/data/datasources/sqlite/create_qr_code_sqlite_datasources/insert_create_qr_code_sqlite.dart';
+import 'package:qr_code_pro/data/datasources/create_qr_code_datasource.dart';
 import 'package:qr_code_pro/domain/entities/qr_code_entity.dart';
 import 'package:qr_code_pro/domain/usecases/create_qr_code_image_usecases/fetch_qr_code_image_usecase.dart';
 import 'package:qr_code_pro/domain/usecases/create_qr_code_image_usecases/insert_qr_code_image_usecase.dart';
@@ -14,14 +14,21 @@ class CreateQrStore = _CreateQrStoreBase with _$CreateQrStore;
 
 abstract class _CreateQrStoreBase with Store {
   ObservableList<QrCodeEntity> createdQrList = ObservableList();
-  final FetchCreateQrCodeUsecase _fetchCreateQrCodeUsecase =
-      FetchCreateQrCodeUsecase();
-  final InsertCreateQrCodeUsecase _insertCreateQrCodeUsecase =
-      InsertCreateQrCodeUsecase();
-  final InsertCreateQrCodeSqlite _insertCreateQrCodeSqlite =
-      InsertCreateQrCodeSqlite();
-  final FetchCreateQrCodeSqlite _fetchCreateQrCodeSqlite =
-      FetchCreateQrCodeSqlite();
+  // final FetchCreateQrCodeUsecase _fetchCreateQrCodeUsecase =
+  //     FetchCreateQrCodeUsecase();
+  // final InsertCreateQrCodeUsecase _insertCreateQrCodeUsecase =
+  //     InsertCreateQrCodeUsecase();
+  // final InsertCreateQrCodeSqlite _insertCreateQrCodeSqlite =
+  //     InsertCreateQrCodeSqlite();
+  // final FetchCreateQrCodeSqlite _fetchCreateQrCodeSqlite =
+  //     FetchCreateQrCodeSqlite();
+  final _fetchCreateQrCodeUsecase = GetIt.instance<FetchCreateQrCodeUsecase>();
+  final _insertCreateQrCodeUsecase =
+      GetIt.instance<InsertCreateQrCodeUsecase>();
+  final _fetchCreateQrCodeSqlite =
+      GetIt.instance<IFetchAllCreateQrCodeDatasource>();
+  final _insertCreateQrCodeSqlite =
+      GetIt.instance<IInsertCreateQrCodeDatasource>();
 
   @observable
   bool load = false;
@@ -44,7 +51,7 @@ abstract class _CreateQrStoreBase with Store {
       createdCodeMirror = createdCode.text;
       QrCodeEntity qrCodeEntity = QrCodeEntity(
           createdCodeMirror, QrCodeTypes.createCode, DateTime.now().toString());
-      var result = await _insertCreateQrCodeUsecase.call(
+      var result = await _insertCreateQrCodeUsecase(
           _insertCreateQrCodeSqlite, qrCodeEntity);
       result.fold((l) => log(l.toString()), (r) => log(r.toString()));
       createdQrList.insert(0, qrCodeEntity);
@@ -97,8 +104,7 @@ abstract class _CreateQrStoreBase with Store {
 
   @action
   Future<void> fetchList() async {
-    var response =
-        await _fetchCreateQrCodeUsecase.call(_fetchCreateQrCodeSqlite);
+    var response = await _fetchCreateQrCodeUsecase(_fetchCreateQrCodeSqlite);
 
     response.fold((l) => log(l.toString()), (r) {
       createdQrList.clear();

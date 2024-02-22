@@ -6,7 +6,7 @@ import 'package:qr_code_pro/domain/entities/qr_code_entity.dart';
 import 'package:qr_code_pro/domain/usecases/read_qr_code_exceptions.dart';
 import 'package:sqflite/sqflite.dart';
 
-class FetcReadQrCodeSqlite implements IFetchAllQrCodeDatasource {
+class FetcReadQrCodeSqlite implements IFetchAllReadQrCodeDatasource {
   @override
   Future<Either<IQrCodeUsecaseExceptions, List<QrCodeEntity>>> call() async {
     Database db = await SqlfliteProvider().database;

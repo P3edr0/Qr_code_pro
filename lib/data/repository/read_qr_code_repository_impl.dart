@@ -7,7 +7,7 @@ import 'package:qr_code_pro/domain/usecases/read_qr_code_exceptions.dart';
 class FetchQrCodeRepositoryImpl implements IFetchAllQrCodeRepository {
   @override
   Future<Either<IQrCodeUsecaseExceptions, List<QrCodeEntity>>> call(
-      IFetchAllQrCodeDatasource datasource) async {
+      IFetchAllReadQrCodeDatasource datasource) async {
     try {
       var result = await datasource.call();
       return result.fold((l) => Left(l), (r) {
@@ -22,7 +22,7 @@ class FetchQrCodeRepositoryImpl implements IFetchAllQrCodeRepository {
 class InsertQrcodeRepositoryImpl implements IInsertReadQrCodeRepository {
   @override
   Future<Either<IQrCodeUsecaseExceptions, int>> call(
-      IInsertQrCodeDatasource datasource, QrCodeEntity qrcode) async {
+      IInsertReadQrCodeDatasource datasource, QrCodeEntity qrcode) async {
     try {
       var result = await datasource.call(qrcode);
       return result.fold((l) => Left(l), (r) => Right(r));

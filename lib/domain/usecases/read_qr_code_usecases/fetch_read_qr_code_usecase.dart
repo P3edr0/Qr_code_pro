@@ -4,7 +4,7 @@ import 'package:qr_code_pro/domain/entities/qr_code_entity.dart';
 import 'package:qr_code_pro/domain/repositories/read_qr_code_repository.dart';
 import 'package:qr_code_pro/domain/usecases/read_qr_code_exceptions.dart';
 
-class FetchQrCodeUsecase implements IFetchAllQrCodeRepository {
+class FetchReadQrCodeUsecase implements IFetchAllQrCodeRepository {
   @override
   Future<Either<IQrCodeUsecaseExceptions, List<QrCodeEntity>>> call(
       datasource) async {

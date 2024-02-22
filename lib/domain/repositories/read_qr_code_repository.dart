@@ -5,10 +5,10 @@ import 'package:qr_code_pro/domain/usecases/read_qr_code_exceptions.dart';
 
 abstract class IFetchAllQrCodeRepository {
   Future<Either<IQrCodeUsecaseExceptions, List<QrCodeEntity>>> call(
-      IFetchAllQrCodeDatasource datasource);
+      IFetchAllReadQrCodeDatasource datasource);
 }
 
 abstract class IInsertReadQrCodeRepository {
   Future<Either<IQrCodeUsecaseExceptions, int>> call(
-      IInsertQrCodeDatasource datasource, QrCodeEntity qrcode);
+      IInsertReadQrCodeDatasource datasource, QrCodeEntity qrcode);
 }

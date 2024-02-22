@@ -51,6 +51,7 @@ dependencies:
   scan: ^1.6.0
   dartz: ^0.10.1
   sqflite: ^2.3.2
+  get_it: ^7.6.7
 
 dev_dependencies:
   flutter_test:
