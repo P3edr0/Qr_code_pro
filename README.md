@@ -1,6 +1,7 @@
 # Qr Code Pro
 
-Um parágrafo da descrição do projeto vai aqui
+Este é um aplicativo que apresenta uma solução completa para tratamento de QR codes, onde é possível o usuário, ler, criar, e importar uma foto de sua galeria
+que contenha um QR code e a aplicação fará a leitura. Além de conseguir acessar todos os QR codes que já leu, criou e importou, o usuário ainda pode compartilhar esse QR code em formato PNG.
 
 ## 🚀 Começando
 
@@ -11,11 +12,14 @@ Consulte **[Implantação](#-implanta%C3%A7%C3%A3o)** para saber como implantar 
 ### 📋 Pré-requisitos
 
 De que coisas você precisa para instalar o software e como instalá-lo?
-
+Versão do FLutter:
 ```
-Dar exemplos
+Flutter 3.13.8
 ```
-
+Versão do Dart:
+```
+Dart 3.1.4
+```
 ### 🔧 Instalação
 
 Uma série de exemplos passo-a-passo que informam o que você deve executar para ter um ambiente de desenvolvimento em execução.
