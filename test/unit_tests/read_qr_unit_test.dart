@@ -1,10 +1,11 @@
+import 'package:qr_code_pro/domain/injection/injection_container.dart';
 import 'package:qr_code_pro/presentation/ui/controller/store/read_qr_store.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final ReadQrStore _readQrStore = ReadQrStore();
-
   group('Teste de funcionalidades do módulo read_qr', () {
+    initInjection();
+    final ReadQrStore _readQrStore = ReadQrStore();
     test('Testando métodos de loading', () {
       _readQrStore.startLoading();
 
