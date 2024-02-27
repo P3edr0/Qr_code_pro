@@ -1,5 +1,6 @@
 # Qr Code Pro
-![read_qr_preview](assets/read_qr_preview.gif)
+
+<img src="assets/read_qr_preview.gif" width="200" alt="Texto Alternativo">
 
 
 Este é um aplicativo que apresenta uma solução completa para tratamento de QR codes, onde é possível o usuário, ler, criar, e importar uma foto de sua galeria
