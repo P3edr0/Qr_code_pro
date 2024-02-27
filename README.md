@@ -1,5 +1,7 @@
 # Qr Code Pro
 
+
+
 Este é um aplicativo que apresenta uma solução completa para tratamento de QR codes, onde é possível o usuário, ler, criar, e importar uma foto de sua galeria
 que contenha um QR code e a aplicação fará a leitura. Além de conseguir acessar todos os QR codes que já leu, criou e importou, o usuário ainda pode compartilhar esse QR code em formato PNG.
 
@@ -20,27 +22,24 @@ Versão do Dart:
 ```
 Dart 3.1.4
 ```
+
+
 ### 🔧 Instalação
 
-Uma série de exemplos passo-a-passo que informam o que você deve executar para ter um ambiente de desenvolvimento em execução.
+Se preferir temos o aplicativo já na [PlayStore](https://play.google.com/store/apps)
 
-Diga como essa etapa será:
+ou
 
-```
-Dar exemplos
-```
+Faça um clone do repositório, certifique-se que está com a versão do Dart e do Flutter correspondentes a do app em sua máquina.
+Em uma IDE de sua preferência abra o projeto, vá até o arquivo ```main ```  contido na ```lib``` do projeto, e execute.
 
-E repita:
-
-```
-Até finalizar
-```
-
-Termine com um exemplo de como obter dados do sistema ou como usá-los para uma pequena demonstração.
 
 ## ⚙️ Executando os testes
 
-Explicar como executar os testes automatizados para este sistema.
+Esta aplicação possui:
+* Testes Unitários
+* Testes de Widgets
+* Testes de Integração
 
 ### 🔩 Analise os testes de ponta a ponta
 
@@ -58,46 +57,20 @@ Explique que eles verificam esses testes e porquê.
 Dar exemplos
 ```
 
-## 📦 Implantação
 
-Adicione notas adicionais sobre como implantar isso em um sistema ativo
 
 ## 🛠️ Construído com
 
-Mencione as ferramentas que você usou para criar seu projeto
+* [Sqflite](https://pub.dev/packages/sqflite) - Para Armazenamento local dos QrCodes
+* [Get_it](https://pub.dev/packages/get_it) - Gerente de Dependência
+* [Mobx](https://pub.dev/packages/mobx) - Usado para gestão de estado 
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - O framework web usado
-* [Maven](https://maven.apache.org/) - Gerente de Dependência
-* [ROME](https://rometools.github.io/rome/) - Usada para gerar RSS
 
-## 🖇️ Colaborando
-
-Por favor, leia o [COLABORACAO.md](https://gist.github.com/usuario/linkParaInfoSobreContribuicoes) para obter detalhes sobre o nosso código de conduta e o processo para nos enviar pedidos de solicitação.
-
-## 📌 Versão
-
-Nós usamos [SemVer](http://semver.org/) para controle de versão. Para as versões disponíveis, observe as [tags neste repositório](https://github.com/suas/tags/do/projeto). 
-
-## ✒️ Autores
-
-Mencione todos aqueles que ajudaram a levantar o projeto desde o seu início
-
-* **Um desenvolvedor** - *Trabalho Inicial* - [umdesenvolvedor](https://github.com/linkParaPerfil)
-* **Fulano De Tal** - *Documentação* - [fulanodetal](https://github.com/linkParaPerfil)
-
-Você também pode ver a lista de todos os [colaboradores](https://github.com/usuario/projeto/colaboradores) que participaram deste projeto.
-
-## 📄 Licença
-
-Este projeto está sob a licença (sua licença) - veja o arquivo [LICENSE.md](https://github.com/usuario/projeto/licenca) para detalhes.
 
 ## 🎁 Expressões de gratidão
 
-* Conte a outras pessoas sobre este projeto 📢;
-* Convide alguém da equipe para uma cerveja 🍺;
-* Um agradecimento publicamente 🫂;
-* etc.
-
+*Este projeto foi desafiador, e me surpreendeu como uma solução relativamente simples, pode abrigar um leque de opções tão complexas
+desde a implementação dos testes, até a escolha do layout final a cada tomada de decisão sobre o desfecho da aplicação, pude perceber o quanto me desenvolvi como programador 📢;
 
 ---
-⌨️ com ❤️ por [Armstrong Lohãns](https://gist.github.com/lohhans) 😊
+
