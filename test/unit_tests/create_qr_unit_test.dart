@@ -1,10 +1,12 @@
+import 'package:qr_code_pro/domain/injection/injection_container.dart';
 import 'package:qr_code_pro/presentation/ui/controller/store/create_qr_store.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final CreateQrStore _createQrStore = CreateQrStore();
-
   group('Teste de funcionalidades do módulo create_qr', () {
+    initInjection();
+    final CreateQrStore _createQrStore = CreateQrStore();
+
     test('Testando métodos de loading', () {
       _createQrStore.startLoading();
 

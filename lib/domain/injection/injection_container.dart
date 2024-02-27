@@ -14,6 +14,9 @@ import 'package:qr_code_pro/domain/usecases/qr_code_image_usecases/fetch_qr_code
 import 'package:qr_code_pro/domain/usecases/qr_code_image_usecases/insert_qr_code_image_usecase.dart';
 import 'package:qr_code_pro/domain/usecases/read_qr_code_usecases/fetch_read_qr_code_usecase.dart';
 import 'package:qr_code_pro/domain/usecases/read_qr_code_usecases/insert_read_qr_code_usecase.dart';
+import 'package:qr_code_pro/presentation/ui/controller/store/create_qr_store.dart';
+import 'package:qr_code_pro/presentation/ui/controller/store/qr_code_image_store.dart';
+import 'package:qr_code_pro/presentation/ui/controller/store/read_qr_store.dart';
 
 final getIt = GetIt.instance;
 
@@ -21,15 +24,17 @@ void initInjection() {
   initReadQrCodeModule();
   initCreateQrCodeModule();
   initQrCodeImageModule();
+  initStoresModule();
 }
 
 void initReadQrCodeModule() {
+  getIt.registerLazySingleton<InsertReadQrCodeUsecase>(
+      () => InsertReadQrCodeUsecase());
   getIt.registerLazySingleton<InsertReadQrCodeSqlite>(
       () => InsertReadQrCodeSqlite());
   getIt.registerLazySingleton<FetcReadQrCodeSqlite>(
       () => FetcReadQrCodeSqlite());
-  getIt.registerLazySingleton<InsertReadQrCodeUsecase>(
-      () => InsertReadQrCodeUsecase());
+
   getIt.registerLazySingleton<FetchReadQrCodeUsecase>(
       () => FetchReadQrCodeUsecase());
   getIt.registerLazySingleton<IFetchAllReadQrCodeDatasource>(
@@ -66,4 +71,12 @@ void initQrCodeImageModule() {
       () => GetIt.instance<FetchQrCodeImageSqlite>());
   getIt.registerLazySingleton<IInsertQrCodeImageDatasource>(
       () => GetIt.instance<InsertQrCodeImageSqlite>());
+}
+
+void initStoresModule() {
+  getIt.registerLazySingleton<CreateQrStore>(() => CreateQrStore());
+
+  getIt.registerLazySingleton<QrCodeImageStore>(() => QrCodeImageStore());
+
+  getIt.registerLazySingleton<ReadQrStore>(() => ReadQrStore());
 }
