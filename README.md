@@ -1,5 +1,5 @@
 # Qr Code Pro
-![teste](assets/qrcode_loading.gif)
+![read_qr_preview](assets/read_qr_preview.gif)
 
 
 Este é um aplicativo que apresenta uma solução completa para tratamento de QR codes, onde é possível o usuário, ler, criar, e importar uma foto de sua galeria
