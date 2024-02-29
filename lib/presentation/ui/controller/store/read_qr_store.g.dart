@@ -76,8 +76,8 @@ mixin _$ReadQrStore on _ReadQrStoreBase, Store {
       AsyncAction('_ReadQrStoreBase.setListaQr', context: context);
 
   @override
-  Future<void> setListaQr() {
-    return _$setListaQrAsyncAction.run(() => super.setListaQr());
+  Future<void> InsertQrCodeReadQrList() {
+    return _$setListaQrAsyncAction.run(() => super.InsertQrCodeReadQrList());
   }
 
   late final _$readQrCodeFunctionAsyncAction =

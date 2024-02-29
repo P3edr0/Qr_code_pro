@@ -37,7 +37,7 @@ abstract class _QrCodeImageStoreBase with Store {
   bool load = false;
 
   @action
-  Future<void> setListaQr() async {
+  Future<void> InsertQrCodeImage() async {
     if (capturedCode == '-1') {
       capturedCode = "Código capturado...";
       capturedCodeMirror = "Código capturado...";
@@ -46,10 +46,11 @@ abstract class _QrCodeImageStoreBase with Store {
           capturedCode, QrCodeTypes.imageCode, DateTime.now().toString());
       var result = await _insertQrCodeImageUsecase.call(
           _insertQrCodeImageSqlite, qrCodeEntity);
-      result.fold((l) => log(l.toString()), (r) => log(r.toString()));
-      capturedQrList.insert(0, qrCodeEntity);
-      listViewSize = capturedQrList.length * 50;
-      listViewSize > 200 ? listViewSize = 200 : null;
+      result.fold((l) => log(l.toString()), (r) {
+        capturedQrList.insert(0, qrCodeEntity);
+        listViewSize = capturedQrList.length * 50;
+        listViewSize > 200 ? listViewSize = 200 : null;
+      });
     }
   }
 
@@ -72,7 +73,7 @@ abstract class _QrCodeImageStoreBase with Store {
           stopLoading();
           setCapturedCode(result);
 
-          setListaQr();
+          InsertQrCodeImage();
         });
       }
     } else {

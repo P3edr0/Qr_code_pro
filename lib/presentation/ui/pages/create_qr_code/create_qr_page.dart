@@ -127,7 +127,7 @@ class _CreateQrPageState extends State<CreateQrPage> {
                             listItemCount: createQrStore.createdQrList.length,
                             selectedIndex: createQrStore.selectedIndex,
                             setCodigoLido: createQrStore.setCreatedCode,
-                            setListaQr: createQrStore.setListaQr,
+                            setListaQr: createQrStore.InsertCreatedQrCode,
                             setselectedIndex: createQrStore.setSelectedIndex,
                             startLoading: createQrStore.startLoading,
                             stopLoading: createQrStore.stopLoading)

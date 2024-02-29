@@ -204,7 +204,7 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                           listItemCount: lerQrStore.readQrList.length,
                           selectedIndex: lerQrStore.selectedIndex,
                           setCodigoLido: lerQrStore.setCodigoLido,
-                          setListaQr: lerQrStore.setListaQr,
+                          setListaQr: lerQrStore.InsertQrCodeReadQrList,
                           setselectedIndex: lerQrStore.setSelectedIndex,
                           startLoading: lerQrStore.startLoading,
                           stopLoading: lerQrStore.stopLoading)

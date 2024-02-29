@@ -128,7 +128,7 @@ class _InsertImageState extends State<InsertImagePage> {
                                 _qrCodeImageStore.capturedQrList.length,
                             selectedIndex: _qrCodeImageStore.selectedIndex,
                             setCodigoLido: _qrCodeImageStore.setCapturedCode,
-                            setListaQr: _qrCodeImageStore.setListaQr,
+                            setListaQr: _qrCodeImageStore.InsertQrCodeImage,
                             setselectedIndex:
                                 _qrCodeImageStore.setSelectedIndex,
                             startLoading: _qrCodeImageStore.startLoading,

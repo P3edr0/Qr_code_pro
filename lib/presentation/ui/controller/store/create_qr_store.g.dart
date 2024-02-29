@@ -93,8 +93,8 @@ mixin _$CreateQrStore on _CreateQrStoreBase, Store {
       AsyncAction('_CreateQrStoreBase.setListaQr', context: context);
 
   @override
-  Future<void> setListaQr() {
-    return _$setListaQrAsyncAction.run(() => super.setListaQr());
+  Future<void> InsertCreatedQrCode() {
+    return _$setListaQrAsyncAction.run(() => super.InsertCreatedQrCode());
   }
 
   late final _$createQrButtonAsyncAction =

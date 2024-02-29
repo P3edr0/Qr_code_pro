@@ -2,31 +2,42 @@ import 'package:qr_code_pro/domain/injection/injection_container.dart';
 import 'package:qr_code_pro/presentation/ui/controller/store/read_qr_store.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:test/test.dart';
+
 // import 'package:sqflite_common/sqlite_api.dart';
 
 void main() {
   group('Teste de integração do read_qr', () {
-    test('Teste do método ', () async {
+    test('Teste do método Fetch', () async {
+      initInjection();
+
+      final ReadQrStore _readQrStore = ReadQrStore();
+
       sqfliteFfiInit();
 
-      // Configure a fábrica de banco de dados
+      databaseFactory = databaseFactoryFfi;
+
+      _readQrStore.codigoLido = "";
+
+      await _readQrStore.fetchList();
+      expect(_readQrStore.readQrList, isNotEmpty);
+    });
+
+    test('Teste do método insert', () async {
+      initInjection();
+
+      final ReadQrStore _readQrStore = ReadQrStore();
+
+      sqfliteFfiInit();
+
       databaseFactory = databaseFactoryFfi;
 
       initInjection();
-      // await SqlfliteProvider().starDatabase();
-
-      final ReadQrStore _readQrStore = ReadQrStore();
-      // await TestSqfliteProvider().starTestDatabase();
       _readQrStore.codigoLido = "tudo certo";
-
-      await _readQrStore.setListaQr();
+      int listLenght = _readQrStore.readQrList.length;
+      await _readQrStore.InsertQrCodeReadQrList();
 
       expect(_readQrStore.readQrList[0].code, "tudo certo");
-      // expect(_readQrStore.readQrList.length, 2);
-
-      await _readQrStore.fetchList();
-      expect(_readQrStore.readQrList[0].code, "tudo certo");
-      expect(_readQrStore.readQrList.length, 10);
+      expect(_readQrStore.readQrList.length, (++listLenght));
     });
   });
 }

@@ -93,8 +93,8 @@ mixin _$QrCodeImageStore on _QrCodeImageStoreBase, Store {
       AsyncAction('_QrCodeImageStoreBase.setListaQr', context: context);
 
   @override
-  Future<void> setListaQr() {
-    return _$setListaQrAsyncAction.run(() => super.setListaQr());
+  Future<void> InsertQrCodeImage() {
+    return _$setListaQrAsyncAction.run(() => super.InsertQrCodeImage());
   }
 
   late final _$readImageAsyncAction =

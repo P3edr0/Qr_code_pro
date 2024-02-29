@@ -14,14 +14,7 @@ class CreateQrStore = _CreateQrStoreBase with _$CreateQrStore;
 
 abstract class _CreateQrStoreBase with Store {
   ObservableList<QrCodeEntity> createdQrList = ObservableList();
-  // final FetchCreateQrCodeUsecase _fetchCreateQrCodeUsecase =
-  //     FetchCreateQrCodeUsecase();
-  // final InsertCreateQrCodeUsecase _insertCreateQrCodeUsecase =
-  //     InsertCreateQrCodeUsecase();
-  // final InsertCreateQrCodeSqlite _insertCreateQrCodeSqlite =
-  //     InsertCreateQrCodeSqlite();
-  // final FetchCreateQrCodeSqlite _fetchCreateQrCodeSqlite =
-  //     FetchCreateQrCodeSqlite();
+
   final _fetchCreateQrCodeUsecase = GetIt.instance<FetchCreateQrCodeUsecase>();
   final _insertCreateQrCodeUsecase =
       GetIt.instance<InsertCreateQrCodeUsecase>();
@@ -46,17 +39,18 @@ abstract class _CreateQrStoreBase with Store {
   String createdCodeMirror = 'Inserir texto...';
 
   @action
-  Future<void> setListaQr() async {
+  Future<void> InsertCreatedQrCode() async {
     if (createdCode.text != '' && createdCode.text != 'Inserir texto...') {
       createdCodeMirror = createdCode.text;
       QrCodeEntity qrCodeEntity = QrCodeEntity(
           createdCodeMirror, QrCodeTypes.createCode, DateTime.now().toString());
       var result = await _insertCreateQrCodeUsecase(
           _insertCreateQrCodeSqlite, qrCodeEntity);
-      result.fold((l) => log(l.toString()), (r) => log(r.toString()));
-      createdQrList.insert(0, qrCodeEntity);
-      listViewSize = createdQrList.length * 50;
-      listViewSize > 200 ? listViewSize = 200 : null;
+      result.fold((l) => log(l.toString()), (r) {
+        createdQrList.insert(0, qrCodeEntity);
+        listViewSize = createdQrList.length * 50;
+        listViewSize > 200 ? listViewSize = 200 : null;
+      });
     }
   }
 
@@ -95,7 +89,7 @@ abstract class _CreateQrStoreBase with Store {
     if (createdCode.text != "Inserir texto..." && createdCode.text != "") {
       startLoading();
       Future.delayed(const Duration(seconds: 2), () {
-        setListaQr();
+        InsertCreatedQrCode();
         // setlistViewSize();
         stopLoading();
       });

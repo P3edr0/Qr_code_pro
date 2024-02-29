@@ -42,18 +42,19 @@ abstract class _ReadQrStoreBase with Store {
   String setCodigoLido(String value) => codigoLido = value;
 
   @action
-  Future<void> setListaQr() async {
-    if (codigoLido == '-1') {
+  Future<void> InsertQrCodeReadQrList() async {
+    if (codigoLido == '-1' || codigoLido == "") {
       codigoLido = 'Leia um código...';
-    } else if (codigoLido != "" && codigoLido != "-1") {
+    } else if (codigoLido != "") {
       QrCodeEntity qrCodeEntity = QrCodeEntity(
           codigoLido, QrCodeTypes.readCode, DateTime.now().toString());
       var result =
           await _insertQrCodeUsecase(_insertReadQrCodeSqlite, qrCodeEntity);
-      result.fold((l) => log(l.toString()), (r) => log(r.toString()));
-      readQrList.insert(0, qrCodeEntity);
-      listviewHeight = readQrList.length * 50;
-      listviewHeight > 200 ? listviewHeight = 200 : null;
+      result.fold((l) => log(l.toString()), (r) {
+        readQrList.insert(0, qrCodeEntity);
+        listviewHeight = readQrList.length * 50;
+        listviewHeight > 200 ? listviewHeight = 200 : null;
+      });
     }
   }
 
@@ -67,7 +68,7 @@ abstract class _ReadQrStoreBase with Store {
     setListviewHeight();
     setSelectedIndex(-1);
     Future.delayed(const Duration(seconds: 2), () {
-      setListaQr().then((value) => stopLoading());
+      InsertQrCodeReadQrList().then((value) => stopLoading());
     });
   }
 
