@@ -102,10 +102,12 @@ class _CreateQrPageState extends State<CreateQrPage> {
                       const SizedBox(width: 20),
                       Observer(builder: (_) {
                         return SharedQrCodeButton(
-                            validation: (createQrStore.createdCodeMirror !=
-                                'Inserir texto...'),
-                            qrCodeData: createQrStore.createdCodeMirror,
-                            sharedButtonColor: ProjectColors.lightRed);
+                          validation: (createQrStore.createdCodeMirror !=
+                              'Inserir texto...'),
+                          qrCodeData: createQrStore.createdCodeMirror,
+                          sharedButtonColor: ProjectColors.lightRed,
+                          changeSharedButtonColor: () {},
+                        );
                       })
                     ],
                   ),

@@ -3,8 +3,6 @@ import 'package:qr_code_pro/presentation/ui/controller/store/create_qr_store.dar
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:test/test.dart';
 
-// import 'package:sqflite_common/sqlite_api.dart';
-
 void main() {
   group('Teste de integração do create_qr', () {
     test('Teste do método Fetch', () async {
@@ -33,7 +31,6 @@ void main() {
       int listLenght = _createQrStore.createdQrList.length;
       await _createQrStore.InsertCreatedQrCode();
 
-      // expect(_createQrStore.createdQrList[0].code, "tudo certo");
       expect(_createQrStore.createdQrList.length, (++listLenght));
     });
   });

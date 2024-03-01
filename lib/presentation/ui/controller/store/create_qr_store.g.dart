@@ -89,12 +89,13 @@ mixin _$CreateQrStore on _CreateQrStoreBase, Store {
     });
   }
 
-  late final _$setListaQrAsyncAction =
-      AsyncAction('_CreateQrStoreBase.setListaQr', context: context);
+  late final _$InsertCreatedQrCodeAsyncAction =
+      AsyncAction('_CreateQrStoreBase.InsertCreatedQrCode', context: context);
 
   @override
   Future<void> InsertCreatedQrCode() {
-    return _$setListaQrAsyncAction.run(() => super.InsertCreatedQrCode());
+    return _$InsertCreatedQrCodeAsyncAction
+        .run(() => super.InsertCreatedQrCode());
   }
 
   late final _$createQrButtonAsyncAction =

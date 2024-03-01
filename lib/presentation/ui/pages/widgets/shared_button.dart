@@ -14,11 +14,13 @@ class SharedQrCodeButton extends StatelessWidget {
       {Key? key,
       required this.validation,
       required this.qrCodeData,
-      required this.sharedButtonColor})
+      required this.sharedButtonColor,
+      required this.changeSharedButtonColor})
       : super(key: key);
   final bool validation;
   final String qrCodeData;
   final Color sharedButtonColor;
+  final void Function() changeSharedButtonColor;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,8 @@ class SharedQrCodeButton extends StatelessWidget {
       onTap: () async {
         log(validation.toString(), name: "Validador");
         if (validation) {
+          changeSharedButtonColor();
+
           try {
             ByteData? byteData = await QrPainter(
                     data: qrCodeData,
@@ -63,13 +67,9 @@ class SharedQrCodeButton extends StatelessWidget {
                     subject: pngBytes.toString(),
                     text:
                         'Conteúdo do qr code: \n\n$qrCodeData \n\n Gerado por Qr Code Pro.')
-                .then((value) async =>
-                    Future.delayed(const Duration(seconds: 4)).whenComplete(
-                        () => ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text(
-                                      'QR Code compartilhado com sucesso')),
-                            )));
+                .then((value) async => Future.delayed(
+                    const Duration(seconds: 2),
+                    () => changeSharedButtonColor()));
           } catch (e) {
             log('Erro ao compartilhar imagem: $e');
           }

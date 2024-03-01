@@ -72,12 +72,77 @@ mixin _$ReadQrStore on _ReadQrStoreBase, Store {
     });
   }
 
-  late final _$setListaQrAsyncAction =
-      AsyncAction('_ReadQrStoreBase.setListaQr', context: context);
+  late final _$copyButtonColorAtom =
+      Atom(name: '_ReadQrStoreBase.copyButtonColor', context: context);
 
   @override
-  Future<void> InsertQrCodeReadQrList() {
-    return _$setListaQrAsyncAction.run(() => super.InsertQrCodeReadQrList());
+  Color get copyButtonColor {
+    _$copyButtonColorAtom.reportRead();
+    return super.copyButtonColor;
+  }
+
+  @override
+  set copyButtonColor(Color value) {
+    _$copyButtonColorAtom.reportWrite(value, super.copyButtonColor, () {
+      super.copyButtonColor = value;
+    });
+  }
+
+  late final _$internetButtonColorAtom =
+      Atom(name: '_ReadQrStoreBase.internetButtonColor', context: context);
+
+  @override
+  Color get internetButtonColor {
+    _$internetButtonColorAtom.reportRead();
+    return super.internetButtonColor;
+  }
+
+  @override
+  set internetButtonColor(Color value) {
+    _$internetButtonColorAtom.reportWrite(value, super.internetButtonColor, () {
+      super.internetButtonColor = value;
+    });
+  }
+
+  late final _$actionButtonColorAtom =
+      Atom(name: '_ReadQrStoreBase.actionButtonColor', context: context);
+
+  @override
+  Color get actionButtonColor {
+    _$actionButtonColorAtom.reportRead();
+    return super.actionButtonColor;
+  }
+
+  @override
+  set actionButtonColor(Color value) {
+    _$actionButtonColorAtom.reportWrite(value, super.actionButtonColor, () {
+      super.actionButtonColor = value;
+    });
+  }
+
+  late final _$sharedButtonColorAtom =
+      Atom(name: '_ReadQrStoreBase.sharedButtonColor', context: context);
+
+  @override
+  Color get sharedButtonColor {
+    _$sharedButtonColorAtom.reportRead();
+    return super.sharedButtonColor;
+  }
+
+  @override
+  set sharedButtonColor(Color value) {
+    _$sharedButtonColorAtom.reportWrite(value, super.sharedButtonColor, () {
+      super.sharedButtonColor = value;
+    });
+  }
+
+  late final _$insertQrCodeReadQrListAsyncAction =
+      AsyncAction('_ReadQrStoreBase.insertQrCodeReadQrList', context: context);
+
+  @override
+  Future<void> insertQrCodeReadQrList() {
+    return _$insertQrCodeReadQrListAsyncAction
+        .run(() => super.insertQrCodeReadQrList());
   }
 
   late final _$readQrCodeFunctionAsyncAction =
@@ -123,6 +188,50 @@ mixin _$ReadQrStore on _ReadQrStoreBase, Store {
   }
 
   @override
+  void setCopyButtonColor(Color newColor) {
+    final _$actionInfo = _$_ReadQrStoreBaseActionController.startAction(
+        name: '_ReadQrStoreBase.setCopyButtonColor');
+    try {
+      return super.setCopyButtonColor(newColor);
+    } finally {
+      _$_ReadQrStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setInternetButtonColor(Color newColor) {
+    final _$actionInfo = _$_ReadQrStoreBaseActionController.startAction(
+        name: '_ReadQrStoreBase.setInternetButtonColor');
+    try {
+      return super.setInternetButtonColor(newColor);
+    } finally {
+      _$_ReadQrStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setActionButtonColor(Color newColor) {
+    final _$actionInfo = _$_ReadQrStoreBaseActionController.startAction(
+        name: '_ReadQrStoreBase.setActionButtonColor');
+    try {
+      return super.setActionButtonColor(newColor);
+    } finally {
+      _$_ReadQrStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setSharedButtonColor() {
+    final _$actionInfo = _$_ReadQrStoreBaseActionController.startAction(
+        name: '_ReadQrStoreBase.setSharedButtonColor');
+    try {
+      return super.setSharedButtonColor();
+    } finally {
+      _$_ReadQrStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setSelectedIndex(int newIndex) {
     final _$actionInfo = _$_ReadQrStoreBaseActionController.startAction(
         name: '_ReadQrStoreBase.setSelectedIndex');
@@ -161,7 +270,11 @@ mixin _$ReadQrStore on _ReadQrStoreBase, Store {
 codigoLido: ${codigoLido},
 selectedIndex: ${selectedIndex},
 load: ${load},
-listviewHeight: ${listviewHeight}
+listviewHeight: ${listviewHeight},
+copyButtonColor: ${copyButtonColor},
+internetButtonColor: ${internetButtonColor},
+actionButtonColor: ${actionButtonColor},
+sharedButtonColor: ${sharedButtonColor}
     ''';
   }
 }

@@ -19,11 +19,11 @@ class ReadQrCodePage extends StatefulWidget {
 
 class _ReadQrCodePageState extends State<ReadQrCodePage> {
   String qrCode = 'Unknown';
-  final ReadQrStore lerQrStore = ReadQrStore();
+  final ReadQrStore readQrStore = ReadQrStore();
 
   @override
   void initState() {
-    lerQrStore.fetchList();
+    readQrStore.fetchList();
     super.initState();
   }
 
@@ -43,7 +43,7 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: 20),
-                lerQrStore.codigoLido == 'Leia um código...'
+                readQrStore.codigoLido == 'Leia um código...'
                     ? const SizedBox()
                     : const Text(
                         'QR CODE LIDO',
@@ -57,9 +57,9 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                 Observer(builder: (context) {
                   return QrCodePreview(
                       firstValidation:
-                          (lerQrStore.codigoLido == 'Leia um código...'),
-                      secondvalidation: lerQrStore.load,
-                      qrData: lerQrStore.codigoLido);
+                          (readQrStore.codigoLido == 'Leia um código...'),
+                      secondvalidation: readQrStore.load,
+                      qrData: readQrStore.codigoLido);
                 }),
                 const SizedBox(height: 14),
                 Observer(builder: (_) {
@@ -69,7 +69,7 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                       InkWell(
                         child: Container(
                           decoration: BoxDecoration(
-                              color: ProjectColors.lightblue,
+                              color: readQrStore.copyButtonColor,
                               border: Border.all(width: 1),
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(10),
@@ -81,10 +81,12 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                             color: Colors.white,
                           ),
                         ),
-                        onTap: lerQrStore.codigoLido != 'Leia um código...'
+                        onTap: readQrStore.codigoLido != 'Leia um código...'
                             ? () async {
-                                Clipboard.setData(ClipboardData(
-                                        text: lerQrStore.codigoLido))
+                                readQrStore
+                                    .setCopyButtonColor(ProjectColors.darkblue);
+                                await Clipboard.setData(ClipboardData(
+                                        text: readQrStore.codigoLido))
                                     .then((_) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
@@ -94,6 +96,11 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                                             "Código QR copiado.",
                                             textAlign: TextAlign.center,
                                           )));
+                                  Future.delayed(const Duration(seconds: 2),
+                                      () {
+                                    readQrStore.setCopyButtonColor(
+                                        ProjectColors.lightblue);
+                                  });
                                 });
                               }
                             : null,
@@ -104,7 +111,7 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                       InkWell(
                         child: Container(
                           decoration: BoxDecoration(
-                              color: ProjectColors.lightblue,
+                              color: readQrStore.internetButtonColor,
                               border: Border.all(width: 1),
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(10),
@@ -117,8 +124,10 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                           ),
                         ),
                         onTap: () async {
+                          readQrStore
+                              .setInternetButtonColor(ProjectColors.darkblue);
                           bool launch = await QrCodeFunctions(context)
-                              .abrirUrl(lerQrStore.codigoLido);
+                              .abrirUrl(readQrStore.codigoLido);
                           if (!launch) {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 backgroundColor: ProjectColors.darkRed,
@@ -127,6 +136,10 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                                   textAlign: TextAlign.center,
                                 )));
                           }
+                          Future.delayed(const Duration(seconds: 2), () {
+                            readQrStore.setInternetButtonColor(
+                                ProjectColors.lightblue);
+                          });
                         },
                       ),
                       const SizedBox(
@@ -153,7 +166,7 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                             const SizedBox(width: 30),
                             Flexible(
                               child: SelectableText(
-                                lerQrStore.codigoLido,
+                                readQrStore.codigoLido,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   color: Colors.white,
@@ -167,25 +180,27 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                   );
                 }),
                 const SizedBox(height: 40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ActionButton(
-                        actionFunction: (() async =>
-                            await lerQrStore.readQrCodeFunction(context)),
-                        buttonText: 'LER QR CODE',
-                        iconbutton: FontAwesomeIcons.plusCircle,
-                        buttonColor: ProjectColors.lightblue),
-                    const SizedBox(width: 20),
-                    Observer(builder: (_) {
-                      return SharedQrCodeButton(
+                Observer(builder: (_) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ActionButton(
+                          actionFunction: (() async =>
+                              await readQrStore.readQrCodeFunction(context)),
+                          buttonText: 'LER QR CODE',
+                          iconbutton: FontAwesomeIcons.plusCircle,
+                          buttonColor: readQrStore.actionButtonColor),
+                      const SizedBox(width: 20),
+                      SharedQrCodeButton(
                           validation:
-                              (lerQrStore.codigoLido != 'Leia um código...'),
-                          qrCodeData: lerQrStore.codigoLido,
-                          sharedButtonColor: ProjectColors.lightblue);
-                    })
-                  ],
-                ),
+                              (readQrStore.codigoLido != 'Leia um código...'),
+                          qrCodeData: readQrStore.codigoLido,
+                          sharedButtonColor: readQrStore.sharedButtonColor,
+                          changeSharedButtonColor:
+                              readQrStore.setSharedButtonColor)
+                    ],
+                  );
+                }),
                 const SizedBox(height: 50),
                 const Text(
                   "Códigos lidos ",
@@ -196,18 +211,18 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                 ),
                 const SizedBox(height: 10),
                 Observer(builder: (_) {
-                  return lerQrStore.listviewHeight != 0.0
+                  return readQrStore.listviewHeight != 0.0
                       ? LinksListview(
-                          currentList: lerQrStore.readQrList,
+                          currentList: readQrStore.readQrList,
                           listColor: ProjectColors.darkblue,
-                          listHeight: lerQrStore.listviewHeight,
-                          listItemCount: lerQrStore.readQrList.length,
-                          selectedIndex: lerQrStore.selectedIndex,
-                          setCodigoLido: lerQrStore.setCodigoLido,
-                          setListaQr: lerQrStore.InsertQrCodeReadQrList,
-                          setselectedIndex: lerQrStore.setSelectedIndex,
-                          startLoading: lerQrStore.startLoading,
-                          stopLoading: lerQrStore.stopLoading)
+                          listHeight: readQrStore.listviewHeight,
+                          listItemCount: readQrStore.readQrList.length,
+                          selectedIndex: readQrStore.selectedIndex,
+                          setCodigoLido: readQrStore.setCodigoLido,
+                          setListaQr: readQrStore.insertQrCodeReadQrList,
+                          setselectedIndex: readQrStore.setSelectedIndex,
+                          startLoading: readQrStore.startLoading,
+                          stopLoading: readQrStore.stopLoading)
                       : Container(
                           alignment: Alignment.center,
                           height: 120,

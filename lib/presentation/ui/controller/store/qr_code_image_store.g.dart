@@ -89,12 +89,12 @@ mixin _$QrCodeImageStore on _QrCodeImageStoreBase, Store {
     });
   }
 
-  late final _$setListaQrAsyncAction =
-      AsyncAction('_QrCodeImageStoreBase.setListaQr', context: context);
+  late final _$InsertQrCodeImageAsyncAction =
+      AsyncAction('_QrCodeImageStoreBase.InsertQrCodeImage', context: context);
 
   @override
   Future<void> InsertQrCodeImage() {
-    return _$setListaQrAsyncAction.run(() => super.InsertQrCodeImage());
+    return _$InsertQrCodeImageAsyncAction.run(() => super.InsertQrCodeImage());
   }
 
   late final _$readImageAsyncAction =

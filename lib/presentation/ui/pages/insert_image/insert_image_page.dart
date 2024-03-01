@@ -100,12 +100,14 @@ class _InsertImageState extends State<InsertImagePage> {
                       const SizedBox(width: 20),
                       Observer(builder: (_) {
                         return SharedQrCodeButton(
-                            validation: (_qrCodeImageStore.capturedCodeMirror !=
-                                    'Código capturado...' &&
-                                _qrCodeImageStore.capturedCodeMirror !=
-                                    'Código não lido'),
-                            qrCodeData: _qrCodeImageStore.capturedCode,
-                            sharedButtonColor: ProjectColors.lightGreen);
+                          validation: (_qrCodeImageStore.capturedCodeMirror !=
+                                  'Código capturado...' &&
+                              _qrCodeImageStore.capturedCodeMirror !=
+                                  'Código não lido'),
+                          qrCodeData: _qrCodeImageStore.capturedCode,
+                          sharedButtonColor: ProjectColors.lightGreen,
+                          changeSharedButtonColor: (() {}),
+                        );
                       })
                     ],
                   ),
