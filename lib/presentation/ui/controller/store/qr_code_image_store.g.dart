@@ -89,12 +89,44 @@ mixin _$QrCodeImageStore on _QrCodeImageStoreBase, Store {
     });
   }
 
-  late final _$InsertQrCodeImageAsyncAction =
-      AsyncAction('_QrCodeImageStoreBase.InsertQrCodeImage', context: context);
+  late final _$actionButtonColorAtom =
+      Atom(name: '_QrCodeImageStoreBase.actionButtonColor', context: context);
 
   @override
-  Future<void> InsertQrCodeImage() {
-    return _$InsertQrCodeImageAsyncAction.run(() => super.InsertQrCodeImage());
+  Color get actionButtonColor {
+    _$actionButtonColorAtom.reportRead();
+    return super.actionButtonColor;
+  }
+
+  @override
+  set actionButtonColor(Color value) {
+    _$actionButtonColorAtom.reportWrite(value, super.actionButtonColor, () {
+      super.actionButtonColor = value;
+    });
+  }
+
+  late final _$sharedButtonColorAtom =
+      Atom(name: '_QrCodeImageStoreBase.sharedButtonColor', context: context);
+
+  @override
+  Color get sharedButtonColor {
+    _$sharedButtonColorAtom.reportRead();
+    return super.sharedButtonColor;
+  }
+
+  @override
+  set sharedButtonColor(Color value) {
+    _$sharedButtonColorAtom.reportWrite(value, super.sharedButtonColor, () {
+      super.sharedButtonColor = value;
+    });
+  }
+
+  late final _$insertQrCodeImageAsyncAction =
+      AsyncAction('_QrCodeImageStoreBase.insertQrCodeImage', context: context);
+
+  @override
+  Future<void> insertQrCodeImage() {
+    return _$insertQrCodeImageAsyncAction.run(() => super.insertQrCodeImage());
   }
 
   late final _$readImageAsyncAction =
@@ -115,6 +147,17 @@ mixin _$QrCodeImageStore on _QrCodeImageStoreBase, Store {
 
   late final _$_QrCodeImageStoreBaseActionController =
       ActionController(name: '_QrCodeImageStoreBase', context: context);
+
+  @override
+  void setSharedButtonColor() {
+    final _$actionInfo = _$_QrCodeImageStoreBaseActionController.startAction(
+        name: '_QrCodeImageStoreBase.setSharedButtonColor');
+    try {
+      return super.setSharedButtonColor();
+    } finally {
+      _$_QrCodeImageStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic setlistViewSize() {
@@ -189,7 +232,9 @@ listViewSize: ${listViewSize},
 capturedCodeMirror: ${capturedCodeMirror},
 capturedCode: ${capturedCode},
 selectedIndex: ${selectedIndex},
-load: ${load}
+load: ${load},
+actionButtonColor: ${actionButtonColor},
+sharedButtonColor: ${sharedButtonColor}
     ''';
   }
 }

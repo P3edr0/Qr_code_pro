@@ -86,31 +86,32 @@ class _CreateQrPageState extends State<CreateQrPage> {
                     ),
                   ),
                   const SizedBox(height: 40),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ActionButton(
-                          actionFunction: (() async {
-                            createQrStore.setCreatedCodeMirror(
-                                createQrStore.createdCode.text);
+                  Observer(builder: (_) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ActionButton(
+                            actionFunction: (() async {
+                              createQrStore.setCreatedCodeMirror(
+                                  createQrStore.createdCode.text);
 
-                            await createQrStore.createQrButton();
-                          }),
-                          buttonText: "GERAR QR CODE",
-                          iconbutton: FontAwesomeIcons.arrowCircleUp,
-                          buttonColor: ProjectColors.lightRed),
-                      const SizedBox(width: 20),
-                      Observer(builder: (_) {
-                        return SharedQrCodeButton(
+                              await createQrStore.createQrButton();
+                            }),
+                            buttonText: "GERAR QR CODE",
+                            iconbutton: FontAwesomeIcons.arrowCircleUp,
+                            buttonColor: createQrStore.actionButtonColor),
+                        const SizedBox(width: 20),
+                        SharedQrCodeButton(
                           validation: (createQrStore.createdCodeMirror !=
                               'Inserir texto...'),
                           qrCodeData: createQrStore.createdCodeMirror,
-                          sharedButtonColor: ProjectColors.lightRed,
-                          changeSharedButtonColor: () {},
-                        );
-                      })
-                    ],
-                  ),
+                          sharedButtonColor: createQrStore.sharedButtonColor,
+                          changeSharedButtonColor:
+                              createQrStore.setSharedButtonColor,
+                        )
+                      ],
+                    );
+                  }),
                   const SizedBox(height: 50),
                   Text(
                     "Códigos gerados",
@@ -129,7 +130,7 @@ class _CreateQrPageState extends State<CreateQrPage> {
                             listItemCount: createQrStore.createdQrList.length,
                             selectedIndex: createQrStore.selectedIndex,
                             setCodigoLido: createQrStore.setCreatedCode,
-                            setListaQr: createQrStore.InsertCreatedQrCode,
+                            setListaQr: createQrStore.insertCreatedQrCode,
                             setselectedIndex: createQrStore.setSelectedIndex,
                             startLoading: createQrStore.startLoading,
                             stopLoading: createQrStore.stopLoading)

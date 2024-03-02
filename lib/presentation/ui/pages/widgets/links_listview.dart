@@ -85,7 +85,7 @@ class LlinksListviewState extends State<LinksListview> {
                         ),
                       ),
                       SizedBox(
-                        width: 228,
+                        width: index < 9 ? 228 : 219,
                         child: Text(
                           widget.currentList[index].code!,
                           style: TextStyle(

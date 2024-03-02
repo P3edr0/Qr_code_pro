@@ -29,7 +29,7 @@ void main() {
 
       _createQrStore.setCreatedCode("tudo certo");
       int listLenght = _createQrStore.createdQrList.length;
-      await _createQrStore.InsertCreatedQrCode();
+      await _createQrStore.insertCreatedQrCode();
 
       expect(_createQrStore.createdQrList.length, (++listLenght));
     });

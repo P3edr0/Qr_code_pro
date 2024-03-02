@@ -123,24 +123,28 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                             color: Colors.white,
                           ),
                         ),
-                        onTap: () async {
-                          readQrStore
-                              .setInternetButtonColor(ProjectColors.darkblue);
-                          bool launch = await QrCodeFunctions(context)
-                              .abrirUrl(readQrStore.codigoLido);
-                          if (!launch) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                backgroundColor: ProjectColors.darkRed,
-                                content: const Text(
-                                  "Não foi possível acessar o site",
-                                  textAlign: TextAlign.center,
-                                )));
-                          }
-                          Future.delayed(const Duration(seconds: 2), () {
-                            readQrStore.setInternetButtonColor(
-                                ProjectColors.lightblue);
-                          });
-                        },
+                        onTap: readQrStore.codigoLido != 'Leia um código...'
+                            ? () async {
+                                readQrStore.setInternetButtonColor(
+                                    ProjectColors.darkblue);
+                                bool launch = await QrCodeFunctions(context)
+                                    .abrirUrl(readQrStore.codigoLido);
+                                if (!launch) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          backgroundColor:
+                                              ProjectColors.darkRed,
+                                          content: const Text(
+                                            "Não foi possível acessar o site",
+                                            textAlign: TextAlign.center,
+                                          )));
+                                }
+                                Future.delayed(const Duration(seconds: 2), () {
+                                  readQrStore.setInternetButtonColor(
+                                      ProjectColors.lightblue);
+                                });
+                              }
+                            : null,
                       ),
                       const SizedBox(
                         width: 5,

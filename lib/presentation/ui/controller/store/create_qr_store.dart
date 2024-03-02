@@ -7,6 +7,7 @@ import 'package:qr_code_pro/data/datasources/create_qr_code_datasource.dart';
 import 'package:qr_code_pro/domain/entities/qr_code_entity.dart';
 import 'package:qr_code_pro/domain/usecases/create_qr_code_image_usecases/fetch_qr_code_image_usecase.dart';
 import 'package:qr_code_pro/domain/usecases/create_qr_code_image_usecases/insert_qr_code_image_usecase.dart';
+import 'package:qr_code_pro/presentation/utils/constants.dart';
 
 part 'create_qr_store.g.dart';
 
@@ -27,6 +28,11 @@ abstract class _CreateQrStoreBase with Store {
   bool load = false;
 
   @observable
+  Color actionButtonColor = ProjectColors.lightRed;
+  @observable
+  Color sharedButtonColor = ProjectColors.lightRed;
+
+  @observable
   double listViewSize = 0;
 
   @observable
@@ -39,7 +45,7 @@ abstract class _CreateQrStoreBase with Store {
   String createdCodeMirror = 'Inserir texto...';
 
   @action
-  Future<void> InsertCreatedQrCode() async {
+  Future<void> insertCreatedQrCode() async {
     if (createdCode.text != '' && createdCode.text != 'Inserir texto...') {
       createdCodeMirror = createdCode.text;
       QrCodeEntity qrCodeEntity = QrCodeEntity(
@@ -55,11 +61,13 @@ abstract class _CreateQrStoreBase with Store {
   }
 
   @action
+  setActionButtonColor(Color newColor) => actionButtonColor = newColor;
+
+  @action
   setCreatedCode(String newCode) {
     if (newCode == '-1') {
       newCode = 'Inserir texto...';
     }
-
     createdCode.text = newCode;
     createdCodeMirror = newCode;
   }
@@ -87,12 +95,22 @@ abstract class _CreateQrStoreBase with Store {
   @action
   Future createQrButton() async {
     if (createdCode.text != "Inserir texto..." && createdCode.text != "") {
+      setActionButtonColor(ProjectColors.darkRed);
       startLoading();
       Future.delayed(const Duration(seconds: 2), () {
-        InsertCreatedQrCode();
-        // setlistViewSize();
+        insertCreatedQrCode();
         stopLoading();
+        setActionButtonColor(ProjectColors.lightRed);
       });
+    }
+  }
+
+  @action
+  void setSharedButtonColor() {
+    if (sharedButtonColor == ProjectColors.lightRed) {
+      sharedButtonColor = ProjectColors.darkRed;
+    } else {
+      sharedButtonColor = ProjectColors.lightRed;
     }
   }
 

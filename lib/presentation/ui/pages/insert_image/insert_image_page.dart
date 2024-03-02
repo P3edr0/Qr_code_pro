@@ -88,29 +88,31 @@ class _InsertImageState extends State<InsertImagePage> {
                     }),
                   ),
                   const SizedBox(height: 40),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ActionButton(
-                          actionFunction: (() async =>
-                              await _qrCodeImageStore.readImage()),
-                          buttonText: 'INSERIR',
-                          iconbutton: FontAwesomeIcons.image,
-                          buttonColor: ProjectColors.lightGreen),
-                      const SizedBox(width: 20),
-                      Observer(builder: (_) {
-                        return SharedQrCodeButton(
+                  Observer(builder: (_) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ActionButton(
+                            actionFunction: (() async =>
+                                await _qrCodeImageStore.readImage()),
+                            buttonText: 'INSERIR',
+                            iconbutton: FontAwesomeIcons.image,
+                            buttonColor: _qrCodeImageStore.actionButtonColor),
+                        const SizedBox(width: 20),
+                        SharedQrCodeButton(
                           validation: (_qrCodeImageStore.capturedCodeMirror !=
                                   'Código capturado...' &&
                               _qrCodeImageStore.capturedCodeMirror !=
                                   'Código não lido'),
                           qrCodeData: _qrCodeImageStore.capturedCode,
-                          sharedButtonColor: ProjectColors.lightGreen,
-                          changeSharedButtonColor: (() {}),
-                        );
-                      })
-                    ],
-                  ),
+                          sharedButtonColor:
+                              _qrCodeImageStore.sharedButtonColor,
+                          changeSharedButtonColor:
+                              _qrCodeImageStore.setSharedButtonColor,
+                        )
+                      ],
+                    );
+                  }),
                   const SizedBox(height: 50),
                   Text(
                     "Códigos capturados",
@@ -130,7 +132,7 @@ class _InsertImageState extends State<InsertImagePage> {
                                 _qrCodeImageStore.capturedQrList.length,
                             selectedIndex: _qrCodeImageStore.selectedIndex,
                             setCodigoLido: _qrCodeImageStore.setCapturedCode,
-                            setListaQr: _qrCodeImageStore.InsertQrCodeImage,
+                            setListaQr: _qrCodeImageStore.insertQrCodeImage,
                             setselectedIndex:
                                 _qrCodeImageStore.setSelectedIndex,
                             startLoading: _qrCodeImageStore.startLoading,

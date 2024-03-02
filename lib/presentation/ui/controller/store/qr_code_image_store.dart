@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
@@ -8,6 +9,7 @@ import 'package:qr_code_pro/data/datasources/sqlite/insert_image_sqlite_datasour
 import 'package:qr_code_pro/domain/entities/qr_code_entity.dart';
 import 'package:qr_code_pro/domain/usecases/qr_code_image_usecases/fetch_qr_code_image_usecase.dart';
 import 'package:qr_code_pro/domain/usecases/qr_code_image_usecases/insert_qr_code_image_usecase.dart';
+import 'package:qr_code_pro/presentation/utils/constants.dart';
 import 'package:scan/scan.dart';
 
 part 'qr_code_image_store.g.dart';
@@ -27,6 +29,7 @@ abstract class _QrCodeImageStoreBase with Store {
 
   @observable
   String capturedCodeMirror = "Código capturado...";
+
   @observable
   String capturedCode = "Código capturado...";
 
@@ -36,8 +39,16 @@ abstract class _QrCodeImageStoreBase with Store {
   @observable
   bool load = false;
 
+  @observable
+  Color actionButtonColor = ProjectColors.lightGreen;
+
+  @observable
+  Color sharedButtonColor = ProjectColors.lightGreen;
+
+  void setActionButtonColor(Color newColor) => actionButtonColor = newColor;
+
   @action
-  Future<void> InsertQrCodeImage() async {
+  Future<void> insertQrCodeImage() async {
     if (capturedCode == '-1') {
       capturedCode = "Código capturado...";
       capturedCodeMirror = "Código capturado...";
@@ -55,8 +66,19 @@ abstract class _QrCodeImageStoreBase with Store {
   }
 
   @action
+  void setSharedButtonColor() {
+    if (sharedButtonColor == ProjectColors.lightGreen) {
+      sharedButtonColor = ProjectColors.darkGreen;
+    } else {
+      sharedButtonColor = ProjectColors.lightGreen;
+    }
+  }
+
+  @action
   Future readImage() async {
     startLoading();
+    setActionButtonColor(ProjectColors.darkGreen);
+
     final pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
@@ -73,11 +95,13 @@ abstract class _QrCodeImageStoreBase with Store {
           stopLoading();
           setCapturedCode(result);
 
-          InsertQrCodeImage();
+          insertQrCodeImage();
         });
       }
+      setActionButtonColor(ProjectColors.lightGreen);
     } else {
       stopLoading();
+      setActionButtonColor(ProjectColors.lightGreen);
     }
   }
 

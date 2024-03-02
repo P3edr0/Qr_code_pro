@@ -25,6 +25,38 @@ mixin _$CreateQrStore on _CreateQrStoreBase, Store {
     });
   }
 
+  late final _$actionButtonColorAtom =
+      Atom(name: '_CreateQrStoreBase.actionButtonColor', context: context);
+
+  @override
+  Color get actionButtonColor {
+    _$actionButtonColorAtom.reportRead();
+    return super.actionButtonColor;
+  }
+
+  @override
+  set actionButtonColor(Color value) {
+    _$actionButtonColorAtom.reportWrite(value, super.actionButtonColor, () {
+      super.actionButtonColor = value;
+    });
+  }
+
+  late final _$sharedButtonColorAtom =
+      Atom(name: '_CreateQrStoreBase.sharedButtonColor', context: context);
+
+  @override
+  Color get sharedButtonColor {
+    _$sharedButtonColorAtom.reportRead();
+    return super.sharedButtonColor;
+  }
+
+  @override
+  set sharedButtonColor(Color value) {
+    _$sharedButtonColorAtom.reportWrite(value, super.sharedButtonColor, () {
+      super.sharedButtonColor = value;
+    });
+  }
+
   late final _$listViewSizeAtom =
       Atom(name: '_CreateQrStoreBase.listViewSize', context: context);
 
@@ -89,13 +121,13 @@ mixin _$CreateQrStore on _CreateQrStoreBase, Store {
     });
   }
 
-  late final _$InsertCreatedQrCodeAsyncAction =
-      AsyncAction('_CreateQrStoreBase.InsertCreatedQrCode', context: context);
+  late final _$insertCreatedQrCodeAsyncAction =
+      AsyncAction('_CreateQrStoreBase.insertCreatedQrCode', context: context);
 
   @override
-  Future<void> InsertCreatedQrCode() {
-    return _$InsertCreatedQrCodeAsyncAction
-        .run(() => super.InsertCreatedQrCode());
+  Future<void> insertCreatedQrCode() {
+    return _$insertCreatedQrCodeAsyncAction
+        .run(() => super.insertCreatedQrCode());
   }
 
   late final _$createQrButtonAsyncAction =
@@ -116,6 +148,17 @@ mixin _$CreateQrStore on _CreateQrStoreBase, Store {
 
   late final _$_CreateQrStoreBaseActionController =
       ActionController(name: '_CreateQrStoreBase', context: context);
+
+  @override
+  dynamic setActionButtonColor(Color newColor) {
+    final _$actionInfo = _$_CreateQrStoreBaseActionController.startAction(
+        name: '_CreateQrStoreBase.setActionButtonColor');
+    try {
+      return super.setActionButtonColor(newColor);
+    } finally {
+      _$_CreateQrStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic setCreatedCode(String newCode) {
@@ -184,9 +227,22 @@ mixin _$CreateQrStore on _CreateQrStoreBase, Store {
   }
 
   @override
+  void setSharedButtonColor() {
+    final _$actionInfo = _$_CreateQrStoreBaseActionController.startAction(
+        name: '_CreateQrStoreBase.setSharedButtonColor');
+    try {
+      return super.setSharedButtonColor();
+    } finally {
+      _$_CreateQrStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 load: ${load},
+actionButtonColor: ${actionButtonColor},
+sharedButtonColor: ${sharedButtonColor},
 listViewSize: ${listViewSize},
 selectedIndex: ${selectedIndex},
 createdCode: ${createdCode},
