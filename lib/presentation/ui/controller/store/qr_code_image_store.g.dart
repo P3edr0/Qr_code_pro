@@ -121,6 +121,38 @@ mixin _$QrCodeImageStore on _QrCodeImageStoreBase, Store {
     });
   }
 
+  late final _$copyButtonColorAtom =
+      Atom(name: '_QrCodeImageStoreBase.copyButtonColor', context: context);
+
+  @override
+  Color get copyButtonColor {
+    _$copyButtonColorAtom.reportRead();
+    return super.copyButtonColor;
+  }
+
+  @override
+  set copyButtonColor(Color value) {
+    _$copyButtonColorAtom.reportWrite(value, super.copyButtonColor, () {
+      super.copyButtonColor = value;
+    });
+  }
+
+  late final _$internetButtonColorAtom =
+      Atom(name: '_QrCodeImageStoreBase.internetButtonColor', context: context);
+
+  @override
+  Color get internetButtonColor {
+    _$internetButtonColorAtom.reportRead();
+    return super.internetButtonColor;
+  }
+
+  @override
+  set internetButtonColor(Color value) {
+    _$internetButtonColorAtom.reportWrite(value, super.internetButtonColor, () {
+      super.internetButtonColor = value;
+    });
+  }
+
   late final _$insertQrCodeImageAsyncAction =
       AsyncAction('_QrCodeImageStoreBase.insertQrCodeImage', context: context);
 
@@ -147,6 +179,39 @@ mixin _$QrCodeImageStore on _QrCodeImageStoreBase, Store {
 
   late final _$_QrCodeImageStoreBaseActionController =
       ActionController(name: '_QrCodeImageStoreBase', context: context);
+
+  @override
+  void setActionButtonColor(Color newColor) {
+    final _$actionInfo = _$_QrCodeImageStoreBaseActionController.startAction(
+        name: '_QrCodeImageStoreBase.setActionButtonColor');
+    try {
+      return super.setActionButtonColor(newColor);
+    } finally {
+      _$_QrCodeImageStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCopyButtonColor(Color newColor) {
+    final _$actionInfo = _$_QrCodeImageStoreBaseActionController.startAction(
+        name: '_QrCodeImageStoreBase.setCopyButtonColor');
+    try {
+      return super.setCopyButtonColor(newColor);
+    } finally {
+      _$_QrCodeImageStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setInternetButtonColor(Color newColor) {
+    final _$actionInfo = _$_QrCodeImageStoreBaseActionController.startAction(
+        name: '_QrCodeImageStoreBase.setInternetButtonColor');
+    try {
+      return super.setInternetButtonColor(newColor);
+    } finally {
+      _$_QrCodeImageStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setSharedButtonColor() {
@@ -234,7 +299,9 @@ capturedCode: ${capturedCode},
 selectedIndex: ${selectedIndex},
 load: ${load},
 actionButtonColor: ${actionButtonColor},
-sharedButtonColor: ${sharedButtonColor}
+sharedButtonColor: ${sharedButtonColor},
+copyButtonColor: ${copyButtonColor},
+internetButtonColor: ${internetButtonColor}
     ''';
   }
 }

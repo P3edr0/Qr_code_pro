@@ -26,8 +26,6 @@ class QrCodeFunctions {
   }
 
   Future<bool> abrirUrl(url) async {
-    await launchUrlString(url);
-
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
 

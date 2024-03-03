@@ -45,7 +45,16 @@ abstract class _QrCodeImageStoreBase with Store {
   @observable
   Color sharedButtonColor = ProjectColors.lightGreen;
 
+  @observable
+  Color copyButtonColor = ProjectColors.lightGreen;
+  @observable
+  Color internetButtonColor = ProjectColors.lightGreen;
+  @action
   void setActionButtonColor(Color newColor) => actionButtonColor = newColor;
+  @action
+  void setCopyButtonColor(Color newColor) => copyButtonColor = newColor;
+  @action
+  void setInternetButtonColor(Color newColor) => internetButtonColor = newColor;
 
   @action
   Future<void> insertQrCodeImage() async {
