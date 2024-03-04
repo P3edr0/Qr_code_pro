@@ -5,12 +5,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qr_code_pro/presentation/ui/controller/store/qr_code_image_store.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/action_button.dart';
+import 'package:qr_code_pro/presentation/ui/pages/widgets/alerts.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/custom_appbar.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/links_listview.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/qr_code_preview.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/shared_button.dart';
 import 'package:qr_code_pro/presentation/utils/constants.dart';
-import 'package:qr_code_pro/presentation/utils/qr_code_functions.dart';
+import 'package:qr_code_pro/presentation/utils/functions.dart';
 
 class InsertImagePage extends StatefulWidget {
   const InsertImagePage({Key? key}) : super(key: key);
@@ -86,14 +87,12 @@ class _InsertImageState extends State<InsertImagePage> {
                                           text: _qrCodeImageStore
                                               .capturedCodeMirror))
                                       .then((_) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            backgroundColor:
-                                                ProjectColors.darkGreen,
-                                            content: const Text(
-                                              "Código QR copiado.",
-                                              textAlign: TextAlign.center,
-                                            )));
+                                    Alerts(
+                                            context: context,
+                                            message: "Código Qr copiado!",
+                                            title: 'Sucesso!',
+                                            type: AlertType.sucess)
+                                        .dialog();
                                     Future.delayed(const Duration(seconds: 2),
                                         () {
                                       _qrCodeImageStore.setCopyButtonColor(
@@ -128,18 +127,17 @@ class _InsertImageState extends State<InsertImagePage> {
                               ? () async {
                                   _qrCodeImageStore.setInternetButtonColor(
                                       ProjectColors.darkGreen);
-                                  bool launch = await QrCodeFunctions(context)
+                                  bool launch = await ProjectFunctions(context)
                                       .abrirUrl(
                                           _qrCodeImageStore.capturedCodeMirror);
                                   if (!launch) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            backgroundColor:
-                                                ProjectColors.darkRed,
-                                            content: const Text(
-                                              "Não foi possível acessar o site",
-                                              textAlign: TextAlign.center,
-                                            )));
+                                    Alerts(
+                                            context: context,
+                                            message:
+                                                "Não foi possível acessar o site",
+                                            title: 'ERRO!',
+                                            type: AlertType.error)
+                                        .dialog();
                                   }
                                   Future.delayed(const Duration(seconds: 2),
                                       () {

@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class QrCodeFunctions {
+class ProjectFunctions {
   BuildContext context;
-  QrCodeFunctions(this.context);
+  ProjectFunctions(this.context);
 
   String qrCode = "";
 

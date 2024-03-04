@@ -1,5 +1,6 @@
 abstract class IQrCodeUsecaseExceptions implements Exception {
-  IQrCodeUsecaseExceptions([String message = "Falha ao buscar código qr."]);
+  String message = "Falha ao buscar código qr.";
+  IQrCodeUsecaseExceptions([message = "Falha ao buscar código qr."]);
 }
 
 class FetchUsercaseException extends IQrCodeUsecaseExceptions {

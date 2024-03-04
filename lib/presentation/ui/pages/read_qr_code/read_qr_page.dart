@@ -4,12 +4,13 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_code_pro/presentation/ui/controller/store/read_qr_store.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/action_button.dart';
+import 'package:qr_code_pro/presentation/ui/pages/widgets/alerts.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/custom_appbar.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/links_listview.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/qr_code_preview.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/shared_button.dart';
 import 'package:qr_code_pro/presentation/utils/constants.dart';
-import 'package:qr_code_pro/presentation/utils/qr_code_functions.dart';
+import 'package:qr_code_pro/presentation/utils/functions.dart';
 
 class ReadQrCodePage extends StatefulWidget {
   const ReadQrCodePage({Key? key}) : super(key: key);
@@ -88,14 +89,12 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                                 await Clipboard.setData(ClipboardData(
                                         text: readQrStore.codigoLido))
                                     .then((_) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          backgroundColor:
-                                              ProjectColors.darkGreen,
-                                          content: const Text(
-                                            "Código QR copiado.",
-                                            textAlign: TextAlign.center,
-                                          )));
+                                  Alerts(
+                                          context: context,
+                                          message: "Código QR copiado",
+                                          title: 'Sucesso!',
+                                          type: AlertType.sucess)
+                                      .dialog();
                                   Future.delayed(const Duration(seconds: 2),
                                       () {
                                     readQrStore.setCopyButtonColor(
@@ -127,17 +126,16 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                             ? () async {
                                 readQrStore.setInternetButtonColor(
                                     ProjectColors.darkblue);
-                                bool launch = await QrCodeFunctions(context)
+                                bool launch = await ProjectFunctions(context)
                                     .abrirUrl(readQrStore.codigoLido);
                                 if (!launch) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          backgroundColor:
-                                              ProjectColors.darkRed,
-                                          content: const Text(
-                                            "Não foi possível acessar o site",
-                                            textAlign: TextAlign.center,
-                                          )));
+                                  Alerts(
+                                          context: context,
+                                          message:
+                                              "Não foi possível acessar o site",
+                                          title: 'ERRO!',
+                                          type: AlertType.error)
+                                      .dialog();
                                 }
                                 Future.delayed(const Duration(seconds: 2), () {
                                   readQrStore.setInternetButtonColor(

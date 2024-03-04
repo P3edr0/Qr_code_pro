@@ -47,14 +47,14 @@ class _SplashScreenState extends State<SplashScreen>
                   style: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
-                      color: ProjectColors.darkblue),
+                      color: ProjectColors.darkRed),
                 ),
                 Text(
                   " CODE",
                   style: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
-                      color: ProjectColors.darkRed),
+                      color: ProjectColors.darkblue),
                 ),
                 Text(
                   " PRO",
@@ -68,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen>
             const SizedBox(
               height: 40,
             ),
-            Lottie.asset(ImageProjectPath.spashImage),
+            Lottie.asset(ImageProjectPath.splashImage),
             const SizedBox(
               height: 150,
             ),
