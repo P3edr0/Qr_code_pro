@@ -125,25 +125,25 @@ mixin _$CreateQrStore on _CreateQrStoreBase, Store {
       AsyncAction('_CreateQrStoreBase.insertCreatedQrCode', context: context);
 
   @override
-  Future<void> insertCreatedQrCode() {
+  Future<void> insertCreatedQrCode(BuildContext? context) {
     return _$insertCreatedQrCodeAsyncAction
-        .run(() => super.insertCreatedQrCode());
+        .run(() => super.insertCreatedQrCode(context));
   }
 
   late final _$createQrButtonAsyncAction =
       AsyncAction('_CreateQrStoreBase.createQrButton', context: context);
 
   @override
-  Future<dynamic> createQrButton() {
-    return _$createQrButtonAsyncAction.run(() => super.createQrButton());
+  Future<dynamic> createQrButton(BuildContext? context) {
+    return _$createQrButtonAsyncAction.run(() => super.createQrButton(context));
   }
 
   late final _$fetchListAsyncAction =
       AsyncAction('_CreateQrStoreBase.fetchList', context: context);
 
   @override
-  Future<void> fetchList() {
-    return _$fetchListAsyncAction.run(() => super.fetchList());
+  Future<void> fetchList(BuildContext? context) {
+    return _$fetchListAsyncAction.run(() => super.fetchList(context));
   }
 
   late final _$_CreateQrStoreBaseActionController =

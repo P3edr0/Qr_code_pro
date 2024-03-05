@@ -15,7 +15,7 @@ void main() {
 
       _createQrStore.createdCodeMirror = "";
 
-      await _createQrStore.fetchList();
+      await _createQrStore.fetchList(null);
       expect(_createQrStore.createdQrList, []);
     });
 
@@ -29,7 +29,7 @@ void main() {
 
       _createQrStore.setCreatedCode("tudo certo");
       int listLenght = _createQrStore.createdQrList.length;
-      await _createQrStore.insertCreatedQrCode();
+      await _createQrStore.insertCreatedQrCode(null);
 
       expect(_createQrStore.createdQrList.length, (++listLenght));
     });

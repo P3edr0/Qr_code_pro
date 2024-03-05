@@ -157,24 +157,25 @@ mixin _$QrCodeImageStore on _QrCodeImageStoreBase, Store {
       AsyncAction('_QrCodeImageStoreBase.insertQrCodeImage', context: context);
 
   @override
-  Future<void> insertQrCodeImage() {
-    return _$insertQrCodeImageAsyncAction.run(() => super.insertQrCodeImage());
+  Future<void> insertQrCodeImage(BuildContext? context) {
+    return _$insertQrCodeImageAsyncAction
+        .run(() => super.insertQrCodeImage(context));
   }
 
   late final _$readImageAsyncAction =
       AsyncAction('_QrCodeImageStoreBase.readImage', context: context);
 
   @override
-  Future<dynamic> readImage() {
-    return _$readImageAsyncAction.run(() => super.readImage());
+  Future<dynamic> readImage(BuildContext? context) {
+    return _$readImageAsyncAction.run(() => super.readImage(context));
   }
 
   late final _$fetchListAsyncAction =
       AsyncAction('_QrCodeImageStoreBase.fetchList', context: context);
 
   @override
-  Future<void> fetchList() {
-    return _$fetchListAsyncAction.run(() => super.fetchList());
+  Future<void> fetchList(BuildContext? context) {
+    return _$fetchListAsyncAction.run(() => super.fetchList(context));
   }
 
   late final _$_QrCodeImageStoreBaseActionController =

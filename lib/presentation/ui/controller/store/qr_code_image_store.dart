@@ -9,6 +9,7 @@ import 'package:qr_code_pro/data/datasources/sqlite/insert_image_sqlite_datasour
 import 'package:qr_code_pro/domain/entities/qr_code_entity.dart';
 import 'package:qr_code_pro/domain/usecases/qr_code_image_usecases/fetch_qr_code_image_usecase.dart';
 import 'package:qr_code_pro/domain/usecases/qr_code_image_usecases/insert_qr_code_image_usecase.dart';
+import 'package:qr_code_pro/presentation/ui/pages/widgets/alerts.dart';
 import 'package:qr_code_pro/presentation/utils/constants.dart';
 import 'package:scan/scan.dart';
 
@@ -23,6 +24,10 @@ abstract class _QrCodeImageStoreBase with Store {
       GetIt.instance<IFetchAllQrCodeImageDatasource>();
   final _fetchQrImageCodeUsecase = GetIt.instance<FetchQrImageCodeUsecase>();
   final _insertQrCodeImageSqlite = GetIt.instance<InsertQrCodeImageSqlite>();
+
+  Exception? currentFetchException;
+
+  Exception? currentInsertException;
 
   @observable
   double listViewSize = 0;
@@ -57,7 +62,7 @@ abstract class _QrCodeImageStoreBase with Store {
   void setInternetButtonColor(Color newColor) => internetButtonColor = newColor;
 
   @action
-  Future<void> insertQrCodeImage() async {
+  Future<void> insertQrCodeImage(BuildContext? context) async {
     if (capturedCode == '-1') {
       capturedCode = "Código capturado...";
       capturedCodeMirror = "Código capturado...";
@@ -66,7 +71,19 @@ abstract class _QrCodeImageStoreBase with Store {
           capturedCode, QrCodeTypes.imageCode, DateTime.now().toString());
       var result = await _insertQrCodeImageUsecase.call(
           _insertQrCodeImageSqlite, qrCodeEntity);
-      result.fold((l) => log(l.toString()), (r) {
+      result.fold((l) async {
+        if (context != null) {
+          await Alerts(
+            context: context,
+            message: l.message,
+            title: 'ERRO!',
+            type: AlertType.error,
+          ).dialog();
+        } else {
+          currentInsertException = l;
+        }
+      }, (r) {
+        currentInsertException = null;
         capturedQrList.insert(0, qrCodeEntity);
         listViewSize = capturedQrList.length * 50;
         listViewSize > 200 ? listViewSize = 200 : null;
@@ -84,7 +101,7 @@ abstract class _QrCodeImageStoreBase with Store {
   }
 
   @action
-  Future readImage() async {
+  Future readImage(BuildContext? context) async {
     startLoading();
     setActionButtonColor(ProjectColors.darkGreen);
 
@@ -104,7 +121,7 @@ abstract class _QrCodeImageStoreBase with Store {
           stopLoading();
           setCapturedCode(result);
 
-          insertQrCodeImage();
+          insertQrCodeImage(context);
         });
       }
       setActionButtonColor(ProjectColors.lightGreen);
@@ -145,10 +162,22 @@ abstract class _QrCodeImageStoreBase with Store {
   }
 
   @action
-  Future<void> fetchList() async {
+  Future<void> fetchList(BuildContext? context) async {
     var response = await _fetchQrImageCodeUsecase(_fetchQrCodeImageSqlite);
 
-    response.fold((l) => log(l.toString()), (r) {
+    response.fold((l) async {
+      if (context != null) {
+        await Alerts(
+          context: context,
+          message: l.message,
+          title: 'ERRO!',
+          type: AlertType.error,
+        ).dialog();
+      } else {
+        currentFetchException = l;
+      }
+    }, (r) {
+      currentFetchException = null;
       capturedQrList.clear();
       for (var element in r) {
         capturedQrList.insert(0, element);

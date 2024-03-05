@@ -140,9 +140,9 @@ mixin _$ReadQrStore on _ReadQrStoreBase, Store {
       AsyncAction('_ReadQrStoreBase.insertQrCodeReadQrList', context: context);
 
   @override
-  Future<void> insertQrCodeReadQrList() {
+  Future<void> insertQrCodeReadQrList(BuildContext? context) {
     return _$insertQrCodeReadQrListAsyncAction
-        .run(() => super.insertQrCodeReadQrList());
+        .run(() => super.insertQrCodeReadQrList(context));
   }
 
   late final _$readQrCodeFunctionAsyncAction =
@@ -158,8 +158,8 @@ mixin _$ReadQrStore on _ReadQrStoreBase, Store {
       AsyncAction('_ReadQrStoreBase.fetchList', context: context);
 
   @override
-  Future<void> fetchList() {
-    return _$fetchListAsyncAction.run(() => super.fetchList());
+  Future<void> fetchList(BuildContext? context) {
+    return _$fetchListAsyncAction.run(() => super.fetchList(context));
   }
 
   late final _$_ReadQrStoreBaseActionController =

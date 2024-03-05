@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -8,6 +6,7 @@ import 'package:qr_code_pro/data/datasources/sqlite/read_qr_code_sqlite_datasour
 import 'package:qr_code_pro/domain/entities/qr_code_entity.dart';
 import 'package:qr_code_pro/domain/usecases/read_qr_code_usecases/fetch_read_qr_code_usecase.dart';
 import 'package:qr_code_pro/domain/usecases/read_qr_code_usecases/insert_read_qr_code_usecase.dart';
+import 'package:qr_code_pro/presentation/ui/pages/widgets/alerts.dart';
 import 'package:qr_code_pro/presentation/utils/constants.dart';
 import 'package:qr_code_pro/presentation/utils/functions.dart';
 
@@ -21,6 +20,10 @@ abstract class _ReadQrStoreBase with Store {
   final _insertReadQrCodeSqlite = GetIt.instance<IInsertReadQrCodeDatasource>();
   final _fetcReadQrCodeSqlite = GetIt.instance<FetcReadQrCodeSqlite>();
   ObservableList<QrCodeEntity> readQrList = ObservableList();
+
+  Exception? currentFetchException;
+
+  Exception? currentInsertException;
   @observable
   String codigoLido = 'Leia um código...';
 
@@ -71,7 +74,7 @@ abstract class _ReadQrStoreBase with Store {
   }
 
   @action
-  Future<void> insertQrCodeReadQrList() async {
+  Future<void> insertQrCodeReadQrList(BuildContext? context) async {
     if (codigoLido == '-1' || codigoLido == "") {
       codigoLido = 'Leia um código...';
     } else if (codigoLido != "") {
@@ -79,7 +82,19 @@ abstract class _ReadQrStoreBase with Store {
           codigoLido, QrCodeTypes.readCode, DateTime.now().toString());
       var result =
           await _insertQrCodeUsecase(_insertReadQrCodeSqlite, qrCodeEntity);
-      result.fold((l) => log(l.message), (r) {
+      result.fold((l) async {
+        if (context != null) {
+          await Alerts(
+            context: context,
+            message: l.message,
+            title: 'ERRO!',
+            type: AlertType.error,
+          ).dialog();
+        } else {
+          currentInsertException = l;
+        }
+      }, (r) {
+        currentInsertException = null;
         readQrList.insert(0, qrCodeEntity);
         listviewHeight = readQrList.length * 50;
         listviewHeight > 200 ? listviewHeight = 200 : null;
@@ -98,7 +113,7 @@ abstract class _ReadQrStoreBase with Store {
     setListviewHeight();
     setSelectedIndex(-1);
     Future.delayed(const Duration(seconds: 2), () {
-      insertQrCodeReadQrList().then((value) => stopLoading());
+      insertQrCodeReadQrList(context).then((value) => stopLoading());
       setActionButtonColor(ProjectColors.lightblue);
     });
   }
@@ -109,10 +124,22 @@ abstract class _ReadQrStoreBase with Store {
   }
 
   @action
-  Future<void> fetchList() async {
+  Future<void> fetchList(BuildContext? context) async {
     var response = await _fetchReadQrCodeUsecase(_fetcReadQrCodeSqlite);
 
-    response.fold((l) => log(l.toString()), (r) {
+    response.fold((l) async {
+      if (context != null) {
+        await Alerts(
+          context: context,
+          message: l.message,
+          title: 'ERRO!',
+          type: AlertType.error,
+        ).dialog();
+      } else {
+        currentFetchException = l;
+      }
+    }, (r) {
+      currentFetchException = null;
       readQrList.clear();
       for (var element in r) {
         readQrList.insert(0, element);

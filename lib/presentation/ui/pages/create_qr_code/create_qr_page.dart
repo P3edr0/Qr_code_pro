@@ -20,7 +20,7 @@ class _CreateQrPageState extends State<CreateQrPage> {
 
   @override
   void initState() {
-    createQrStore.fetchList();
+    createQrStore.fetchList(context);
     super.initState();
   }
 
@@ -95,7 +95,7 @@ class _CreateQrPageState extends State<CreateQrPage> {
                               createQrStore.setCreatedCodeMirror(
                                   createQrStore.createdCode.text);
 
-                              await createQrStore.createQrButton();
+                              await createQrStore.createQrButton(context);
                             }),
                             buttonText: "GERAR QR CODE",
                             iconbutton: FontAwesomeIcons.arrowCircleUp,

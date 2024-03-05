@@ -27,7 +27,7 @@ class LinksListview extends StatefulWidget {
   final Function() stopLoading;
   final Function(String codigo) setCodigoLido;
   final Function(int index) setselectedIndex;
-  final Function() setListaQr;
+  final Function(BuildContext) setListaQr;
 
   @override
   State<LinksListview> createState() => LlinksListviewState();
@@ -104,7 +104,7 @@ class LlinksListviewState extends State<LinksListview> {
                 if (widget.selectedIndex == index) {
                   widget.setselectedIndex(-1);
                   widget.setCodigoLido('-1');
-                  widget.setListaQr();
+                  widget.setListaQr(context);
                 } else {
                   widget.startLoading();
                   widget.setCodigoLido(widget.currentList[index].code!);

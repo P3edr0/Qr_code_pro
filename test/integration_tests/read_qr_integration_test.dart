@@ -16,7 +16,7 @@ void main() {
 
       _readQrStore.codigoLido = "";
 
-      await _readQrStore.fetchList();
+      await _readQrStore.fetchList(null);
       expect(_readQrStore.readQrList, isNotEmpty);
     });
 
@@ -32,7 +32,7 @@ void main() {
       initInjection();
       _readQrStore.codigoLido = "tudo certo";
       int listLenght = _readQrStore.readQrList.length;
-      await _readQrStore.insertQrCodeReadQrList();
+      await _readQrStore.insertQrCodeReadQrList(null);
 
       expect(_readQrStore.readQrList[0].code, "tudo certo");
       expect(_readQrStore.readQrList.length, (++listLenght));

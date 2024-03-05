@@ -16,7 +16,7 @@ void main() {
 
       _qrCodeImageStore.capturedCode = "";
 
-      await _qrCodeImageStore.fetchList();
+      await _qrCodeImageStore.fetchList(null);
       expect(_qrCodeImageStore.capturedQrList, []);
     });
 
@@ -31,7 +31,7 @@ void main() {
 
       _qrCodeImageStore.capturedCode = "tudo certo";
       int listLenght = _qrCodeImageStore.capturedQrList.length;
-      await _qrCodeImageStore.insertQrCodeImage();
+      await _qrCodeImageStore.insertQrCodeImage(null);
 
       expect(_qrCodeImageStore.capturedQrList[0].code, "tudo certo");
       expect(_qrCodeImageStore.capturedQrList.length, (++listLenght));

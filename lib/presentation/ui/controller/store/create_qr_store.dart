@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -7,6 +5,7 @@ import 'package:qr_code_pro/data/datasources/create_qr_code_datasource.dart';
 import 'package:qr_code_pro/domain/entities/qr_code_entity.dart';
 import 'package:qr_code_pro/domain/usecases/create_qr_code_image_usecases/fetch_qr_code_image_usecase.dart';
 import 'package:qr_code_pro/domain/usecases/create_qr_code_image_usecases/insert_qr_code_image_usecase.dart';
+import 'package:qr_code_pro/presentation/ui/pages/widgets/alerts.dart';
 import 'package:qr_code_pro/presentation/utils/constants.dart';
 
 part 'create_qr_store.g.dart';
@@ -38,6 +37,10 @@ abstract class _CreateQrStoreBase with Store {
   @observable
   int selectedIndex = -1;
 
+  Exception? currentFetchException;
+
+  Exception? currentInsertException;
+
   @observable
   TextEditingController createdCode =
       TextEditingController(text: 'Inserir texto...');
@@ -45,14 +48,26 @@ abstract class _CreateQrStoreBase with Store {
   String createdCodeMirror = 'Inserir texto...';
 
   @action
-  Future<void> insertCreatedQrCode() async {
+  Future<void> insertCreatedQrCode(BuildContext? context) async {
     if (createdCode.text != '' && createdCode.text != 'Inserir texto...') {
       createdCodeMirror = createdCode.text;
       QrCodeEntity qrCodeEntity = QrCodeEntity(
           createdCodeMirror, QrCodeTypes.createCode, DateTime.now().toString());
       var result = await _insertCreateQrCodeUsecase(
           _insertCreateQrCodeSqlite, qrCodeEntity);
-      result.fold((l) => log(l.toString()), (r) {
+      result.fold((l) async {
+        if (context != null) {
+          await Alerts(
+            context: context,
+            message: l.message,
+            title: 'ERRO!',
+            type: AlertType.error,
+          ).dialog();
+        } else {
+          currentInsertException = l;
+        }
+      }, (r) {
+        currentInsertException = null;
         createdQrList.insert(0, qrCodeEntity);
         listViewSize = createdQrList.length * 50;
         listViewSize > 200 ? listViewSize = 200 : null;
@@ -93,12 +108,12 @@ abstract class _CreateQrStoreBase with Store {
   void stopLoading() => load = false;
 
   @action
-  Future createQrButton() async {
+  Future createQrButton(BuildContext? context) async {
     if (createdCode.text != "Inserir texto..." && createdCode.text != "") {
       setActionButtonColor(ProjectColors.darkRed);
       startLoading();
       Future.delayed(const Duration(seconds: 2), () {
-        insertCreatedQrCode();
+        insertCreatedQrCode(context);
         stopLoading();
         setActionButtonColor(ProjectColors.lightRed);
       });
@@ -115,16 +130,27 @@ abstract class _CreateQrStoreBase with Store {
   }
 
   @action
-  Future<void> fetchList() async {
+  Future<void> fetchList(BuildContext? context) async {
     var response = await _fetchCreateQrCodeUsecase(_fetchCreateQrCodeSqlite);
 
-    response.fold((l) => log(l.toString()), (r) {
+    response.fold((l) async {
+      if (context != null) {
+        await Alerts(
+          context: context,
+          message: l.message,
+          title: 'ERRO!',
+          type: AlertType.error,
+        ).dialog();
+      } else {
+        currentFetchException = l;
+      }
+    }, (r) {
+      currentFetchException = null;
       createdQrList.clear();
       for (var element in r) {
         createdQrList.insert(0, element);
       }
       setlistViewSize();
-      // log(readQrList.toString(), name: 'finalList');
     });
   }
 }

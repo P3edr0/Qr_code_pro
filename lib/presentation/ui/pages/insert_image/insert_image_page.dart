@@ -24,7 +24,7 @@ class _InsertImageState extends State<InsertImagePage> {
   final picker = ImagePicker();
   @override
   void initState() {
-    _qrCodeImageStore.fetchList();
+    _qrCodeImageStore.fetchList(context);
     super.initState();
   }
 
@@ -56,7 +56,6 @@ class _InsertImageState extends State<InsertImagePage> {
                         qrData: _qrCodeImageStore.capturedCode);
                   }),
                   const SizedBox(height: 14),
-
                   Observer(builder: (_) {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -184,42 +183,6 @@ class _InsertImageState extends State<InsertImagePage> {
                       ],
                     );
                   }),
-
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //       color: ProjectColors.darkGreen,
-                  //       border: Border.all(width: 1),
-                  //       borderRadius: const BorderRadius.all(
-                  //         Radius.circular(10),
-                  //       )),
-                  //   padding: const EdgeInsets.only(
-                  //     left: 20,
-                  //   ),
-                  //   height: 45,
-                  //   width: MediaQuery.of(context).size.width * 0.8,
-                  //   child: Observer(builder: (context) {
-                  //     return Row(
-                  //       mainAxisAlignment: MainAxisAlignment.start,
-                  //       crossAxisAlignment: CrossAxisAlignment.center,
-                  //       children: [
-                  //         const Icon(
-                  //           FontAwesomeIcons.qrcode,
-                  //           color: Colors.white,
-                  //         ),
-                  //         const SizedBox(width: 30),
-                  //         Flexible(
-                  //             child: Text(
-                  //           _qrCodeImageStore.capturedCode,
-                  //           style: const TextStyle(
-                  //             fontSize: 16,
-                  //             color: Colors.white,
-                  //           ),
-                  //         )),
-                  //       ],
-                  //     );
-                  //   }),
-                  // ),
-
                   const SizedBox(height: 40),
                   Observer(builder: (_) {
                     return Row(
@@ -227,7 +190,7 @@ class _InsertImageState extends State<InsertImagePage> {
                       children: [
                         ActionButton(
                             actionFunction: (() async =>
-                                await _qrCodeImageStore.readImage()),
+                                await _qrCodeImageStore.readImage(context)),
                             buttonText: 'INSERIR',
                             iconbutton: FontAwesomeIcons.image,
                             buttonColor: _qrCodeImageStore.actionButtonColor),

@@ -24,7 +24,7 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
 
   @override
   void initState() {
-    readQrStore.fetchList();
+    readQrStore.fetchList(context);
     super.initState();
   }
 
