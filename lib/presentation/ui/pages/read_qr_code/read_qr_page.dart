@@ -205,7 +205,7 @@ class _ReadQrCodePageState extends State<ReadQrCodePage> {
                 }),
                 const SizedBox(height: 50),
                 const Text(
-                  "Códigos lidos ",
+                  "Códigos lidos",
                   style: TextStyle(
                       fontSize: 16,
                       color: Colors.blue,

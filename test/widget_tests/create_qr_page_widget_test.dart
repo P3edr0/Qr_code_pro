@@ -4,7 +4,6 @@ import 'package:mobx/mobx.dart';
 import 'package:mockito/mockito.dart';
 import 'package:qr_code_pro/domain/entities/qr_code_entity.dart';
 import 'package:qr_code_pro/domain/injection/injection_container.dart';
-import 'package:qr_code_pro/presentation/ui/controller/store/create_qr_store.dart';
 import 'package:qr_code_pro/presentation/ui/pages/create_qr_code/create_qr_page.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/action_button.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/links_listview.dart';
@@ -12,19 +11,55 @@ import 'package:qr_code_pro/presentation/ui/pages/widgets/qr_code_preview.dart';
 import 'package:qr_code_pro/presentation/ui/pages/widgets/shared_button.dart';
 import 'package:qr_code_pro/presentation/utils/constants.dart';
 
-// Mock da classe CreateQrStore
-class MockCreateQrStore extends Mock implements CreateQrStore {}
+class MockCallbackFunction extends Mock {
+  void call(BuildContext context) {}
+}
+
+class MockSetCodigoQRCapturadoFunction extends Mock {
+  String createdCode = '';
+  String createdCodeMirror = '';
+  void call(String value) {
+    if (value == '-1') {
+      value = 'Inserir texto...';
+    }
+    createdCode = value;
+    createdCodeMirror = value;
+  }
+}
+
+class MockSetQrCodeListFunction extends Mock {
+  void call(int value) {}
+}
+
+class MockSetSelectedIndexFunction extends Mock {
+  void call(int value) {}
+}
+
+// Mock da função de startLoading
+class MockStartLoadingFunction extends Mock {
+  void call() {}
+}
+
+// Mock da função de stopLoading
+class MockStopLoadingFunction extends Mock {
+  void call() {}
+}
 
 void main() {
-  group('Testes da página ReadQrPage', () {
-    // late MockCreateQrStore mockCreateQrStore;
+  group('Testes de widget da página CreateQrPage', () {
     initInjection();
+    late ObservableList<QrCodeEntity> mockList;
+    int selectedIndex = -1;
 
     setUp(() {
-      // mockCreateQrStore = MockCreateQrStore();
+      mockList = ObservableList<QrCodeEntity>();
+      for (int i = 0; i < 3; i++) {
+        mockList.add((QrCodeEntity(
+            'item ${i + 1}', QrCodeTypes.createCode, "22/01/2024")));
+      }
     });
 
-    testWidgets('Teste  ReadQrPage', (WidgetTester tester) async {
+    testWidgets('Teste  CreateQrPage Resume', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: CreateQrPage(),
@@ -101,44 +136,41 @@ void main() {
     });
 
     testWidgets('Teste LinksListview', (WidgetTester tester) async {
-      bool functionTriggered = false;
-      final testList = ObservableList<QrCodeEntity>.of(
-          [QrCodeEntity('teste', QrCodeTypes.createCode, "22/01/2024")]);
-      String codigoCriado = 'teste codigo';
+      dynamic mockSetListQRFunction(BuildContext? code) {
+        mockList.add(
+            QrCodeEntity("Inserido", QrCodeTypes.createCode, '22/01/2024'));
+      }
+
+      dynamic mockSetCreatedCode(String value) {
+        if (value == '-1') {
+          value = 'Inserir texto...';
+        }
+      }
+
+      dynamic mockSetSelectedIndexFunction(int value) {
+        selectedIndex = value;
+      }
+
       await tester.pumpWidget(
         MaterialApp(
-          home: Scaffold(
-            body: LinksListview(
-                currentList: testList,
-                listColor: ProjectColors.darkRed,
-                listHeight: 200,
-                listItemCount: 1,
-                selectedIndex: -1,
-                setCodigoLido: (String value) {
-                  codigoCriado = "codigo alterado";
-                },
-                setListaQr: (BuildContext context) {
-                  testList.add(QrCodeEntity(
-                      'Inserido', QrCodeTypes.createCode, "22/01/2024"));
-                },
-                setselectedIndex: ((index) => index = 1),
-                startLoading: () {},
-                stopLoading: () {}),
+          home: LinksListview(
+            currentList: mockList,
+            listColor: Colors.red,
+            listHeight: 200,
+            listItemCount: mockList.length,
+            selectedIndex: selectedIndex,
+            setCodigoLido: mockSetCreatedCode,
+            setListaQr: mockSetListQRFunction,
+            setselectedIndex: mockSetSelectedIndexFunction,
+            startLoading: MockStartLoadingFunction(),
+            stopLoading: MockStopLoadingFunction(),
           ),
         ),
       );
 
-      // Encontre o botão pelo texto
-      final buttonFinder = find.byType(LinksListview);
-
-      // // Acione um toque no botão
-      // await tester.tap(buttonFinder);
-
-      // // Aguarde a reconstrução do widget
-      // await tester.pump();
-
-      // // Verifique se a função foi acionada
-      expect(buttonFinder, LinksListview);
+      expect(find.text('item 1'), findsOneWidget);
+      expect(find.text('item 2'), findsOneWidget);
+      expect(find.text('item 3'), findsOneWidget);
     });
   });
 }
