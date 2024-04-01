@@ -95,16 +95,6 @@ flutter test /test/widget_tests/read_qr_page_widget_test.dart
 flutter test /test/widget_tests/insert_image_page_widget_test.dart
 ```
 
-
-
-## 🛠️ Construído com
-* [Dart](https://dart.dev/) - Linguagem utilizada
-* [Flutter](https://flutter.dev/?gad_source=1&gclid=CjwKCAjwtqmwBhBVEiwAL-WAYTronPzZuhNXVgdBaJrtKCZJHoijr-hUmePSpBlN3Nw-XNZqZMf63RoCO_kQAvD_BwE&gclsrc=aw.ds) - Framework Utilizado
-* [Sqflite](https://pub.dev/packages/sqflite) -Library para Armazenamento local dos Qr Codes
-* [Get_it](https://pub.dev/packages/get_it) - Library Gerente de Dependência
-* [Mobx](https://pub.dev/packages/mobx) - Library para gestão de estado 
-
-
 ## 🛠️ Construído com
 * [Dart](https://dart.dev/) - Linguagem utilizada
 * [Flutter](https://flutter.dev/?gad_source=1&gclid=CjwKCAjwtqmwBhBVEiwAL-WAYTronPzZuhNXVgdBaJrtKCZJHoijr-hUmePSpBlN3Nw-XNZqZMf63RoCO_kQAvD_BwE&gclsrc=aw.ds) - Framework Utilizado
